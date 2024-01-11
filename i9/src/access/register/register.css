@@ -1,0 +1,122 @@
+/* Register.css */
+
+.register-auth-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.register-auth-container .register-auth-card {
+  background: linear-gradient(10deg, #00757c80, #000000);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 204, 245, 0.389);
+  width: 480px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  transition: background-color 0.3s ease, transform 0.9s ease;
+
+}
+
+.register-auth-container .register-auth-card:hover {
+  transform: scale(1.1);
+}
+
+.register-auth-container input {
+  box-shadow: 0px 0px 5px rgba(0, 245, 196, 0.389);
+  border: 0px solid #a1a1a1;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  padding-left: 10px;
+  height: 35px;
+}
+
+.register-auth-container input:focus {
+  outline: none;
+  border-color: lightgray;
+  background-color: rgba(0, 241, 245, 0.022);
+  box-shadow: 0 0 5px rgb(0, 154, 181);
+}
+
+.register-auth-container input:hover {
+  outline: none;
+  border-color: lightgray;
+  background-color: rgba(0, 241, 245, 0.022);
+  box-shadow: 0 0 5px rgb(0, 154, 181);
+}
+
+.register-auth-container form {
+  background-color: rgba(255, 255, 255, 0);
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 15px;
+}
+
+
+.register-card-full-name {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.register-card-full-name input {
+  width: 50%;
+
+}
+
+.register-card-other-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0;
+}
+
+.redirect-to-login {
+  text-decoration: none;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.643);
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+  text-align: left;
+  margin-top: -2%;
+  margin-bottom: -1%;
+}
+
+.redirect-to-login a {
+  text-decoration: none;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.708);
+  font-size: 12px;
+}
+
+.register-auth-container button {
+  padding: 10px;
+  background-color: #00615a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.register-auth-container button:hover {
+  background-color: #00100b;
+  box-shadow: 0px 0px 5px 2px #00614c;
+}

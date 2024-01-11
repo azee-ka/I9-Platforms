@@ -1,0 +1,66 @@
+.access-page {
+  background-color: rgba(157, 146, 146, 0) !important;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  color: white;
+}
+
+.content {
+  background-color: rgba(199, 0, 27, 0) !important;
+  flex: 1;
+  display: flex;
+}
+
+.access-container-holder {
+  background-color: rgba(23, 161, 182, 0.123);
+  background: linear-gradient(100deg, #00757c80, #001719);
+  flex: 0.7;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.access-container-holder h2 {
+  font-size: 25px;
+  text-align: center;
+  color: rgb(221, 221, 221);
+}
+
+.access-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 0%;
+  background-color: rgba(0, 0, 255, 0);
+}
+
+.access-buttons button {
+  padding: 15px;
+  width: 120px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  background-color: rgba(0, 95, 106, 0.8);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.access-buttons button:hover {
+  background-color: rgba(0, 124, 126, 0.323);
+}
+
+.access-side-container-holder {
+  background-color: #006668;
+  flex: 1;
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  z-index: 2;
+}
