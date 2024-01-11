@@ -72,7 +72,7 @@
 .right-side-menu-items {
   background-color: rgba(0, 255, 51, 0);
   position: relative;
-  width: 680px;
+  width: 100%;
   text-align: right;
   display: flex;
 }
