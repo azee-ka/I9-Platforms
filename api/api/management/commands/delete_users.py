@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from src.baseUser.models import BaseUser
+from src.user.models import BaseUser
 
 class Command(BaseCommand):
     help = 'Delete all registered users from the database'

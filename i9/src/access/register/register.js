@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../utils/context/authentication';
+import { useAuthContext } from '../../reducers/authReducer';
 import API_BASE_URL from '../../config';
 import './register.css';
 
-const RegisterForm = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
 
     const { login } = useAuthContext();
@@ -90,4 +90,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default RegisterPage;

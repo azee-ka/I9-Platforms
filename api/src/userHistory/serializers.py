@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from ..baseUser.models import BaseUser
+from ..user.models import BaseUser
 from ..calc.expression.models import Expression
 from .models import UserHistory
 

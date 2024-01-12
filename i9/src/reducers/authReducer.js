@@ -1,6 +1,6 @@
 // AuthContext.js
 import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
-import API_BASE_URL from '../../config';
+import API_BASE_URL from '../config';
 import axios from 'axios'; // Import axios
 
 
@@ -13,6 +13,7 @@ const initialAuthState = {
     last_name: '',
     email: '',
   },
+  token: null, // Add this line
 };
 
 const authActionTypes = {
@@ -20,11 +21,11 @@ const authActionTypes = {
   LOGOUT: 'LOGOUT',
 };
 
-const authReducer = (state, action) => {
+const authReducer = (state = initialAuthState, action) => {
   switch (action.type) {
     case authActionTypes.LOGIN:
       const { user, token } = action.payload;
-      return { ...state, isAuthenticated: true, user: user, token: token }; // Include token in authState
+      return { ...state, isAuthenticated: true, user: user, token: token };    
     case authActionTypes.LOGOUT:
       return { ...initialAuthState };
     default:
@@ -33,27 +34,19 @@ const authReducer = (state, action) => {
 };
 
 
+
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
-
   const [authState, authDispatch] = useReducer(authReducer, initialAuthState);
 
-  const [isAuthenticated, setIsAuthenticated] = useState((JSON.parse(localStorage.getItem('authState'))) !== null ? JSON.parse(localStorage.getItem('authState')).token !== null : false);
-
-  // Load authentication state from localStorage on component mount
   // Load authentication state from localStorage on component mount
   useEffect(() => {
     const storedAuthStateString = localStorage.getItem('authState');
 
     try {
       const storedAuthState = JSON.parse(storedAuthStateString);
-
-      // Check if a valid token is present
-      setIsAuthenticated((prevIsAuthenticated) => {
-        return storedAuthState && storedAuthState.token !== null && storedAuthState.token !== undefined;
-      });
 
       if (storedAuthState && storedAuthState.token) {
         authDispatch({
@@ -63,46 +56,29 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error parsing stored auth state:', error);
-      setIsAuthenticated(false);
     }
-  }, [setIsAuthenticated]);  // Ensure that the callback dependency is correct
+  }, []);
 
   // Update localStorage whenever authState changes
   useEffect(() => {
     localStorage.setItem('authState', JSON.stringify(authState));
   }, [authState]);
 
+  // Log Redux state whenever it changes
+  useEffect(() => {
+    console.log('Redux State:', authState);
+  }, [authState]);
 
   const login = (responseData) => {
+    console.log('Login Function Payload:', responseData);
     authDispatch({
       type: authActionTypes.LOGIN,
       payload: {
         user: responseData.user,
-        isAuthenticated: (responseData.message === "Login successful." || responseData.message === "User registered successfully.") ? true : false,
+        isAuthenticated: (responseData.message === "Login successful." || responseData.message === "User registered successfully."),
         token: responseData.token,
-      }
+      },
     });
-  }
-
-  const getUserInfo = async (credentials) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}user/get-user-info/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${credentials.token}`,
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        authDispatch({ type: authActionTypes.LOGIN, payload: { user: userData, token: credentials.token } });
-      } else {
-        console.error('Authentication failed');
-      }
-    } catch (error) {
-      console.error('Error during authentication:', error);
-    }
   };
 
   const logout = () => {
@@ -110,13 +86,13 @@ const AuthProvider = ({ children }) => {
     window.location.href = '/access/login';
   };
 
-
   return (
     <AuthContext.Provider value={{ authState, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 const useAuthContext = () => {
   const context = useContext(AuthContext);
@@ -126,4 +102,4 @@ const useAuthContext = () => {
   return context;
 };
 
-export { AuthProvider, useAuthContext };
+export { authReducer, AuthProvider, useAuthContext };

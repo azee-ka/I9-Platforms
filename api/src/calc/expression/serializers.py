@@ -1,7 +1,7 @@
 # serializers.py
 from rest_framework import serializers
 from .models import Expression
-from ...baseUser.models import BaseUser
+from ...user.models import BaseUser
 from ...userHistory.models import UserHistory
 
 class ExpressionSerializer(serializers.ModelSerializer):

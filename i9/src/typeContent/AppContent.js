@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import '../App.css';
 import PrivateRoute from '../PrivateRoute';
 import ErrorBoundary from '../ErrorBoundary';
-import { useAuthContext } from '../utils/context/authentication';
+import { useAuthContext } from '../reducers/authReducer';
 import Layout from '../struct/layout/layout';
 
 import Access from '../access/access';
 import RegisterForm from '../access/register/register';
 import LoginForm from '../access/login/login';
 
-import Calculator from '../app/tools/calculator/calculator';
-import LearnerDashboard from '../app/learner/dashboardLearner/learnerDashboard';
+import Calculator from '../components/tools/calculator/calculator';
+import LearnerDashboard from '../components/learner/learnerDashboard/learnerDashboard';
 
 
 function AppContent() {

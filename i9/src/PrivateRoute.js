@@ -1,7 +1,7 @@
 // PrivateRoute.js
 import React from 'react';
 import { Navigate, Route } from 'react-router-dom';
-import { useAuthContext } from './utils/context/authentication';
+import { useAuthContext } from './reducers/authReducer';
 
 function PrivateRoute({ element, ...rest }) {
   const { authState } = useAuthContext();

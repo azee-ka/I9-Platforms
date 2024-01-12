@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 import './navbar.css';
 import AppLogo from '../../assets/logo.png';
-import { useAuthContext } from '../../utils/context/authentication';
+import { useAuthContext } from '../../reducers/authReducer';
 
 const Navbar = () => {
     const { authState, logout } = useAuthContext();

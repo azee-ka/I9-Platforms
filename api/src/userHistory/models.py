@@ -1,6 +1,6 @@
 # models.py
 from django.db import models
-from src.baseUser.models import BaseUser
+from src.user.models import BaseUser
 
 class UserHistory(models.Model):
     user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)

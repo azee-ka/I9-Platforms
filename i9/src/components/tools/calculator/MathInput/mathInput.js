@@ -6,7 +6,7 @@ import MathOutput from '../MathOutput/mathOutput.js';
 import Tabs from '../tabs/tabs.js';
 import { processOutput } from '../MathOutput/processOutput.js';
 import { MathField } from './field/field.js';
-import { useAuthContext } from '../../../../utils/context/authentication.js';
+import { useAuthContext } from '../../../../reducers/authReducer.js';
 
 function MathInputField() {
   const { authState } = useAuthContext();
