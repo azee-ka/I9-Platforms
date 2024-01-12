@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../reducers/authReducer';
 import './login.css';
 import API_BASE_URL from '../../config';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -14,10 +15,16 @@ const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const [loginError, setLoginError] = useState(null);
 
     const handleLoginSuccess = () => {
         navigate('/calculator');
+    };
+
+    const handlePasswordToggle = () => {
+        setShowPassword(!showPassword);
     };
 
     // Handle form submission
@@ -45,23 +52,37 @@ const LoginPage = () => {
             <div className="login-auth-card">
                 <h2>Login</h2>
                 <form onSubmit={handleLoginSubmit}>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Username"
-                        required
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className='login-username-field-container'>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            required
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className='login-password-field-container'>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <div className='password-toggle-button-container'>
+                            <button
+                                type="button"
+                                className="password-toggle-button"
+                                onClick={handlePasswordToggle}
+                            >
+                                <div className="eye-icon-container">
+                                    {showPassword ? <FaEyeSlash className="eye-icon" /> : <FaEye className="eye-icon" />}
+                                </div>
+                            </button>
+                        </div>
+                    </div>
 
                     <div className='redirect-to-register'>
                         <a href="/access/register">Don't have an account? Sign Up</a>
