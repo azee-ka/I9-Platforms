@@ -25,10 +25,10 @@
   color: white !important;
   transition: background-color 0.3s ease, transform 0.9s ease;
 }
+
 .login-auth-container .login-auth-card:hover {
   transform: scale(1.1);
 }
-
 
 .login-auth-container input {
   box-shadow: 0px 0px 5px rgba(0, 245, 196, 0.389);
@@ -115,6 +115,7 @@
   background-color: rgba(255, 255, 255, 0);
 
 }
+
 .login-password-field-container {
   width: 100%;
   background-color: rgba(255, 255, 255, 0);
@@ -128,18 +129,19 @@
   position: relative;
 }
 
-.password-toggle-button-container {
+.login-password-field-container .password-toggle-button-container {
   position: absolute;
   top: 50%;
-  right: -10px; 
+  right: -10px;
   transform: translateY(-50%);
   transition: right 0.25s ease;
 }
-.login-password-field-container input:focus + .password-toggle-button-container {
+
+.login-password-field-container input:focus+.password-toggle-button-container {
   right: 18px !important;
 }
 
-.password-toggle-button {
+.login-password-field-container .password-toggle-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -152,7 +154,7 @@
   height: 25px !important;
 }
 
-.password-toggle-button-container button {
+.login-password-field-container .password-toggle-button-container button {
   width: 100%;
   height: 100%;
   background-color: transparent;
@@ -163,13 +165,15 @@
   font-size: 20px !important;
   color: rgb(151, 149, 149);
 }
-.password-toggle-button-container button:hover {
+
+.login-password-field-container .password-toggle-button-container button:hover {
   background-color: rgba(255, 255, 255, 0) !important;
   box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, .2) !important;
   border-radius: 10px;
   color: white;
 }
-.eye-icon-container {
+
+.login-password-field-container .eye-icon-container {
   display: flex;
   flex-direction: row;
   justify-content: center;

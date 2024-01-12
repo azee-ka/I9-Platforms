@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../reducers/authReducer';
 import API_BASE_URL from '../../config';
 import './register.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -17,8 +18,14 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+    const handlePasswordToggle = () => {
+        setShowPassword(!showPassword);
     };
 
     // Handle form submission
@@ -76,8 +83,24 @@ const RegisterPage = () => {
                         <input type="email" id="email" name="email" placeholder="Email" required
                             onChange={(e) => setEmail(e.target.value)} />
 
-                        <input type="password" id="password" name="password" placeholder="Password" required
-                            onChange={(e) => setPassword(e.target.value)} />
+
+                        <div className='register-password-field-container'>
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                id="password" name="password" placeholder="Password" required
+                                onChange={(e) => setPassword(e.target.value)} />
+                            <div className='password-toggle-button-container'>
+                                <button
+                                    type="button"
+                                    className="password-toggle-button"
+                                    onClick={handlePasswordToggle}
+                                >
+                                    <div className="eye-icon-container">
+                                        {showPassword ? <FaEyeSlash className="eye-icon" /> : <FaEye className="eye-icon" />}
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div className='redirect-to-login'>
                         <a href="/access/login">Already have an account? Login</a>
