@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './profileMenu.css';
+import API_BASE_URL from '../../config';
+
 const ProfileMenu = ({ user, logout }) => {
     const profileMenuLinks = [
         { label: 'Profile', url: '/learner/profile', role: 'learner' },
@@ -12,11 +14,13 @@ const ProfileMenu = ({ user, logout }) => {
         <div className="profile-menu-container">
             <div className='profile-menu-user-info-container'>
                 <div className='profile-menu-profile-picture-container'>
-                    
-                </div>
-                <div className='profile-menu-text-info-container'>
-                    <div>Username: {user.username}</div>
-                    <div>Name: {user.first_name} {user.last_name}</div>
+                    <div className='learner-profile-menu-user-profile-picture'>
+                        <img alt={`profile-picture`} src={`${API_BASE_URL}get-user/profile-picture`} />
+                    </div>
+                    <div className='learner-profile-menu-user-info-text'>
+                        <div className='learner-profile-menu-name-text'>{user.first_name} {user.last_name}</div>
+                        <div className='learner-profile-menu-username-text'>@{user.username}</div>
+                    </div>
                 </div>
             </div>
             <div className="profile-menu-links">

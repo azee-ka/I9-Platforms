@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import './layout.css';
 import Navbar from '../navbar/navbar';
+import Sidebar from '../sidebar/sidebars';
 
 function Layout({ children, pageName }) {
 
@@ -13,7 +14,7 @@ function Layout({ children, pageName }) {
                 </div>
                 <div className='layout-page'>
                     <div className='layout-sidebar'>
-
+                        <Sidebar />
                     </div>
                     <div className='layout-page-content'>
                         {children}

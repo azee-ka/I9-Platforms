@@ -80,7 +80,7 @@ const Navbar = () => {
                       ref={profileMenuRef}
                       id='navbar-access'
                     >
-                      <a onClick={() => setProfileMenuVisible(!profileMenuVisible)}>Profile</a>
+                      <a href={null} onClick={() => setProfileMenuVisible(!profileMenuVisible)}>Profile</a>
                       {profileMenuVisible && (
                         <ProfileMenu user={authState.user} logout={logout} />
                       )}
