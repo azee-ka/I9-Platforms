@@ -11,11 +11,18 @@ import { useAuth } from '../reducers/auth/useAuth';
 
 
 const Calculator = React.lazy(() => import('../components/tools/calculator/calculator'));
+
 const LearnerDashboard = React.lazy(() => import('../components/learner/learnerDashboard/learnerDashboard'));
+const LearnerProfile = React.lazy(() => import('../components/learner/learnerProfile/learnerProfile'));
+
+
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
 const roleBasedRoutes = [
     { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard' },
+    { name: 'Learner Profile', path: '/learner/profile', role: 'learner', component: LearnerProfile, key: 'LearnerPrfile' },
+
+
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard' },
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator' },
     { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression' },

@@ -4,7 +4,7 @@
   color: white;
   height: 100%;
   box-shadow: 0px 1px 10px 1px rgb(175, 162, 162, 0.5);
-  z-index: 0;
+  z-index: 20;
 
 }
 
@@ -99,7 +99,7 @@
 
 
 .top-nav .left-menu li,
-.top-nav .right-menu li {
+.top-nav .right-menu li:not(#exclude-link) {
   background-color: rgba(255, 255, 255, 0);
   display: inline-block;
 }
@@ -108,7 +108,7 @@
 
 
 .top-nav .left-menu li a,
-.top-nav .right-menu li a {
+.top-nav .right-menu li:not(#exclude-link) a {
   display: block;
   padding: 14px 18px;
   background-color: transparent;
@@ -121,7 +121,7 @@
 
 
 .top-nav.scrolled .left-menu li a:hover,
-.top-nav.scrolled .right-menu li a:hover {
+.top-nav.scrolled .right-menu li:not(#exclude-link) a:hover {
   color: #fff;
 }
 
@@ -163,7 +163,7 @@
 
 
 
-.top-nav .right-menu li a::after,
+.top-nav .right-menu li:not(#exclude-link) a::after,
 .top-nav .left-menu li a::after {
   content: "";
   position: absolute;
@@ -179,7 +179,7 @@
   transition: transform 0.3s ease;
 }
 
-.top-nav .right-menu li:not(#navbar-access, #navbar-access-logout) a:hover::after,
+.top-nav .right-menu li:not(#navbar-access, #navbar-access-logout, #exclude-link) a:hover::after,
 .top-nav .left-menu li:not(#navbar-access, #navbar-access-logout) a:hover::after {
   transform: scaleX(1);
   transform-origin: right;
@@ -188,7 +188,7 @@
 
 
 
-
+/* 
 .profile-menu {
     cursor: pointer;
     position: relative;
@@ -201,4 +201,4 @@
 
 .profile-menu.active span::after {
     content: '\25B2'; 
-}
+} */

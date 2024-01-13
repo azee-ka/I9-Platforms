@@ -5,7 +5,6 @@ import Navbar from '../navbar/navbar';
 
 function Layout({ children, pageName }) {
 
-
     return (
         <div className={`parent-layout`}>
             <div className='layout'>
@@ -13,6 +12,9 @@ function Layout({ children, pageName }) {
                     <Navbar />
                 </div>
                 <div className='layout-page'>
+                    <div className='layout-sidebar'>
+
+                    </div>
                     <div className='layout-page-content'>
                         {children}
                     </div>
