@@ -6,10 +6,11 @@ import MathOutput from '../MathOutput/mathOutput.js';
 import Tabs from '../tabs/tabs.js';
 import { processOutput } from '../MathOutput/processOutput.js';
 import { MathField } from './field/field.js';
-import { useAuthContext } from '../../../../reducers/authReducer.js';
+import { useAuth } from '../../../../reducers/auth/useAuth.js';
 
 function MathInputField() {
-  const { authState } = useAuthContext();
+  const { authState } = useAuth();
+
   const mathFieldRef = useRef(null);
   const [isCopied, setIsCopied] = useState(false);
   const [isCopied1, setIsCopied1] = useState(false);
@@ -23,6 +24,7 @@ function MathInputField() {
 
   const encodedExpression = encodeURIComponent(fieldData.generalField);
   const decodedExpression = decodeURIComponent(expression);
+
 
   const [initialInput, setInitial] = useState(decodedExpression);
 
@@ -49,9 +51,18 @@ function MathInputField() {
 
 
   const handleInputChange = (id, inputValue) => {
+  // Define the characters to filter out or replace
+  const filteredCharacters = ["!", "@", "#", "$", "%", "&"];
+
+  // Filter and replace certain characters with an empty string
+  const filteredInputValue = inputValue.replace(
+    new RegExp(`[${filteredCharacters.join('')}]`, 'g'),
+    ''
+  );
+
     setFieldData((prevData) => ({
       ...prevData,
-      [id]: inputValue,
+      [id]: filteredInputValue,
     }));
     setIsCopied(false);
     setIsCopied1(false);
@@ -69,21 +80,24 @@ function MathInputField() {
       setFieldData({ generalField: initialInput });
       handleInitialExpression();
     }
-  }, [initialInput, authState]);
+  }, [initialInput]);
 
 
 
   const handleEvaluateClick = () => {
     if (fieldData.generalField !== "") {
       setIsLoading(true);
-      sendLatex(mode === 'tex' ? fieldData.generalField : fieldData, handleApiResponse, selectedTabMode, authState);
-      // Update the URL with the current expression
-      navigate(`/calculator/${encodedExpression}`);
+      try {
+        sendLatex(mode === 'tex' ? fieldData.generalField : fieldData, handleApiResponse, selectedTabMode, authState);
+        // Update the URL with the current expression
+        navigate(`/calculator/${encodedExpression}`);
+      } catch(error) {
+        console.log(error)
+      }
     } else {
       navigate(`/calculator`);
     }
   };
-
 
 
   const handleApiResponse = (response) => {

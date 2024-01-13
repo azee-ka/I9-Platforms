@@ -1,5 +1,7 @@
 import axios from 'axios';
 import API_BASE_URL from '../../../../config';
+
+
 const sendLatex = (latex, handleApiResponse, mode, authState) => {
   const config = {
     headers: {
@@ -7,6 +9,8 @@ const sendLatex = (latex, handleApiResponse, mode, authState) => {
       Authorization: `Token ${authState.token}`,
     }
   };
+
+  
 
   let data;
   data = {

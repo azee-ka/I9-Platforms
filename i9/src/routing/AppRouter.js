@@ -1,32 +1,26 @@
 // AppRouter.js
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useAuthContext } from '../reducers/authReducer';
+import { Navigate, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { useAuthContext } from '../reducers/authReducer';
 import RoleBasedRouter from './RoleBasedRouter';
 import LoginPage from '../access/login/login';
 import RegisterPage from '../access/register/register';
 import Access from '../access/access';
 import Layout from '../struct/layout/layout';
-// import Calculator from '../components/tools/calculator/calculator';
-// import LearnerDashboard from '../components/learner/learnerDashboard/learnerDashboard';
-// import EducatorDashboard from '../components/educator/educatorDashbord/educatorDashboard';
+import { useAuth } from '../reducers/auth/useAuth';
+
 
 const Calculator = React.lazy(() => import('../components/tools/calculator/calculator'));
 const LearnerDashboard = React.lazy(() => import('../components/learner/learnerDashboard/learnerDashboard'));
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
-// const roleBasedRoutes = [
-//     { path: '/learner/dashboard', role: 'learner', component: <LearnerDashboard />, key: 'LearnerDashboard' },
-//     { path: '/educator/dashboard', role: 'educator', component: <EducatorDashboard />, key: 'EducatorDashboard' },
-//     { path: '/calculator', role: 'any', component: <Calculator />, key: 'Calculator' },
-//     { path: '/calculator/:expression', role: 'any', component: <Calculator />, key: 'Calculator-expression' },
-// ];
 const roleBasedRoutes = [
-    { path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard' },
-    { path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard' },
-    { path: '/calculator', role: 'any', component: Calculator, key: 'Calculator' },
-    { path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression' },
+    { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard' },
+    { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard' },
+    { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator' },
+    { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression' },
 ];
+
 
 const publicRoutes = [
     { name: 'Access', path: '/', component: <Access />, key: 'Access' },
@@ -37,12 +31,18 @@ const publicRoutes = [
 ];
 
 const AppRouter = () => {
-    const { authState } = useAuthContext();
-    const isAuthenticated = authState.isAuthenticated;
+    const { authState, isLoading } = useAuth();
 
+    const isAuthenticated = authState.isAuthenticated;
+    
     useEffect(() => {
-        console.log('Redux State on Mount:', isAuthenticated);
-    }, [isAuthenticated]);
+        console.log(authState);
+    }, [authState.isAuthenticated]);
+
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Router>
@@ -57,10 +57,15 @@ const AppRouter = () => {
                             >
                                 {route.component}
                             </Layout>
-                            // route.component
                         } />
                     ))}
-                    <Route path="/" element={<React.Fragment><RoleBasedRouter routes={roleBasedRoutes} isAuthenticated={isAuthenticated} /></React.Fragment>} />
+
+                    {isAuthenticated &&
+                    <Route
+                        path="/*"
+                        element={<RoleBasedRouter routes={roleBasedRoutes} isAuthenticated={isAuthenticated} />}
+                    />
+                    }
                 </Routes>
             </React.Suspense>
         </Router>

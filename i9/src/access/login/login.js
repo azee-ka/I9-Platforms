@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../reducers/authReducer';
+import { useAuth } from '../../reducers/auth/useAuth';
 import './login.css';
 import API_BASE_URL from '../../config';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -10,7 +10,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 const LoginPage = () => {
     const navigate = useNavigate();
 
-    const { authState, login } = useAuthContext();
+    const { login } = useAuth();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

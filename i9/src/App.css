@@ -6,6 +6,15 @@
   display: flex;
 }
 
+.sub-app {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+
 /*
 npm install react-router-dom axios react-mathquill react-katex react-router
 */

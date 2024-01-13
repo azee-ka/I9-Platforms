@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 import './navbar.css';
 import AppLogo from '../../assets/logo.png';
-import { useAuthContext } from '../../reducers/authReducer';
+import { useAuth } from '../../reducers/auth/useAuth';
+import ProfileMenu from './profileMenu';
 
 const Navbar = () => {
-    const { authState, logout } = useAuthContext();
+    const { authState, logout } = useAuth();
+    const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
     const location = useLocation();
     const history = useNavigate();
@@ -19,7 +21,7 @@ const Navbar = () => {
     const privatePagesNavbar = [
         { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase' },
         { path: '/calculator', label: 'Calculator', id: 'navbar-phrase' },
-        { path: '/access/login', label: 'Sign Out', id: 'navbar-access', action: logout },
+        // { path: '/access/login', label: 'Sign Out', id: 'navbar-access', action: logout },
     ];
 
 
@@ -58,6 +60,19 @@ const Navbar = () => {
                                             </Link>
                                         </li>
                                     ))}
+                                    {/* Profile Menu */}
+                                    {authState.isAuthenticated && (
+                                        <li
+                                            className={`profile-menu ${profileMenuVisible ? 'active' : ''}`}
+                                            onClick={() => setProfileMenuVisible(!profileMenuVisible)}
+                                            id='navbar-access'
+                                        >
+                                            <a>Profile</a>
+                                            {profileMenuVisible && (
+                                                <ProfileMenu user={authState.user} logout={logout} />
+                                            )}
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                         </div>

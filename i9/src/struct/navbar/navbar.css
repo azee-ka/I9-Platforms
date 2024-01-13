@@ -184,3 +184,21 @@
   transform: scaleX(1);
   transform-origin: right;
 }
+
+
+
+
+
+.profile-menu {
+    cursor: pointer;
+    position: relative;
+}
+
+.profile-menu span::after {
+    content: '\25BC';
+    margin-left: 5px;
+}
+
+.profile-menu.active span::after {
+    content: '\25B2'; 
+}

@@ -1,0 +1,29 @@
+/* Add these styles at the end of Navbar.css */
+
+.profile-menu-container {
+    position: absolute;
+    top: 40px; /* Adjust this value based on your design */
+    right: 0;
+    color: #000;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.profile-menu-container div {
+    margin-bottom: 8px;
+}
+
+.profile-menu-container button {
+    background-color: #ff5252;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
