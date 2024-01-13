@@ -27,7 +27,7 @@ yarn-error.log*
 # .gitignore
 .env
 api/api/config.py
-# api/api/settings.py
+api/api/settings.py
 
 api/db.sqlite3
 api/.zshrc
