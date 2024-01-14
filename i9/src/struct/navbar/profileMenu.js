@@ -11,7 +11,7 @@ const ProfileMenu = ({ user, logout, profile_data }) => {
 
     const profileMenuLinks = [
         { label: 'Profile', url: '/learner/profile', role: 'Learner' },
-        { label: 'Settings', url: '/learner/settings', role: 'Learner' },
+        { label: 'Preferences', url: '/learner/preferences', role: 'Learner' },
         { label: 'Messages', url: '/learner/messages', icon: '📬', role: 'Learner' },
 
         { label: 'Profile', url: '/educator/profile', role: 'educator' },

@@ -14,6 +14,7 @@ const Calculator = React.lazy(() => import('../components/tools/calculator/calcu
 
 const LearnerDashboard = React.lazy(() => import('../components/learner/learnerDashboard/learnerDashboard'));
 const LearnerProfile = React.lazy(() => import('../components/learner/learnerProfile/learnerProfile'));
+const LearnerSettings = React.lazy(() => import('../components/learner/learnerSettings/learnerSettings'));
 
 
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
@@ -21,7 +22,8 @@ const EducatorDashboard = React.lazy(() => import('../components/educator/educat
 
 const roleBasedRoutes = [
     { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'Learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
-    { name: 'Learner Profile', path: '/learner/profile', role: 'Learner', component: LearnerProfile, key: 'LearnerPrfile', showSidebar: true },
+    { name: 'Learner Profile', path: '/learner/profile', role: 'Learner', component: LearnerProfile, key: 'LearnerProfile', showSidebar: true },
+    { name: 'Learner Preferences', path: '/learner/preferences', role: 'Learner', component: LearnerSettings, key: 'LearnerPreferences', showSidebar: true },
 
 
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
