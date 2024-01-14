@@ -30,6 +30,7 @@ def register_view(request):
         print(f"Registration Failed. Errors: {serializer.errors}")
         return Response(serializer.errors, status=400)
 
+
 @api_view(['POST'])
 @csrf_exempt
 @permission_classes([AllowAny])

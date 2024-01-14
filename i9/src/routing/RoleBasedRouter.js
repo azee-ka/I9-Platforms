@@ -6,12 +6,9 @@ import '../App.css';
 
 const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     const userRole = useSelector((state) => {
-        return 'learner'; // Replace with state.auth.user.role;
+        return state.auth.user.role;
     });
-    const testUserRole = useSelector((state) => {
-        return state.auth
-    });
-    console.log(testUserRole);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,9 +21,8 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     const renderRoutes = () => {
         return routes.map((route) => {
             if (route.role === userRole || route.role === 'any') {
-                const Component = route.component; // Get component reference
+                const Component = route.component;
                 return (
-                    // Wrap the Route components in a Routes component
                     <Routes key={route.path}>
                         <Route
                             path={route.path}

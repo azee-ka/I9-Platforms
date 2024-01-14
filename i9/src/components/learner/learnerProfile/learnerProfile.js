@@ -13,26 +13,25 @@ const LearnerProfile = () => {
 
   const { authState } = useAuth();
 
+  const fetchProfileData = async () => {
+    try {
+      setUserInfo(authState.user);
+
+      // const infoResponse = await axios.get('/api/learner/profile');
+      // setLearnerInfo(infoResponse.data);
+
+
+      // const achievementsResponse = await axios.get('/api/learner/achievements');
+      // setAchievements(achievementsResponse.data);
+
+      // const preferencesResponse = await axios.get('/api/learner/preferences');
+      // setPreferences(preferencesResponse.data);
+    } catch (error) {
+      console.error('Error fetching learner profile data:', error.message);
+    }
+  };
+
   useEffect(() => {
-    // Fetch learner's profile data from your backend API
-    const fetchProfileData = async () => {
-      try {
-        setUserInfo(authState.user);
-
-        // const infoResponse = await axios.get('/api/learner/profile');
-        // setLearnerInfo(infoResponse.data);
-
-
-        // const achievementsResponse = await axios.get('/api/learner/achievements');
-        // setAchievements(achievementsResponse.data);
-
-        // const preferencesResponse = await axios.get('/api/learner/preferences');
-        // setPreferences(preferencesResponse.data);
-      } catch (error) {
-        console.error('Error fetching learner profile data:', error.message);
-      }
-    };
-
     fetchProfileData();
   }, []);
 

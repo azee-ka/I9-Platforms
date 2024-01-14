@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,6 +12,9 @@ import default_profile_picture from '../../assets/default_profile_picture.png'
 
 const Navbar = () => {
     const { authState, logout } = useAuth();
+    const userRole = useSelector((state) => state.auth.user.role);
+
+
     const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
     const location = useLocation();
@@ -18,6 +22,10 @@ const Navbar = () => {
     const profileMenuRef = useRef(null);
 
     const [profileData, setProfileData] = useState({});
+
+    const handleProfileMenuToggle = () => {
+        setProfileMenuVisible(!profileMenuVisible);
+    };
 
 
 
@@ -47,18 +55,19 @@ const Navbar = () => {
 
 
     useEffect(() => {
-        fetchProfileData();
+        if (authState.isAuthenticated) {
+            fetchProfileData();
+        }
     }, [authState.isAuthenticated]);
 
     const publicPagesNavbar = [
-        { path: '/', label: 'Home', id: 'navbar-phrase' },
-        { path: '/access', label: 'Access', id: 'navbar-access' },
+        { path: '/', label: 'Home', id: 'navbar-phrase', role: 'public' },
+        { path: '/access', label: 'Access', id: 'navbar-access', role: 'public'  },
     ];
 
     const privatePagesNavbar = [
-        { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase' },
-        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase' },
-        // { path: '/access/login', label: 'Sign Out', id: 'navbar-access', action: logout },
+        { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'learner' },
+        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'learner' },
     ];
 
     const handleMenuClick = (path, action) => {
@@ -85,7 +94,7 @@ const Navbar = () => {
                             <div className='right-side-menu-items'>
                                 <ul className="right-menu">
                                     {pagesNavbar && pagesNavbar.map((item, index) => (
-                                        <li
+                                        (userRole === item.role || 'public') && (<li
                                             key={index}
                                             className={location.pathname === item.path ? 'active' : ''}
                                             id={item.id}
@@ -93,7 +102,7 @@ const Navbar = () => {
                                             <Link to={item.path} onClick={() => handleMenuClick(item.path, item.action)}>
                                                 {item.label}
                                             </Link>
-                                        </li>
+                                        </li>)
                                     ))}
                                     {/* Profile Menu */}
                                     {authState.isAuthenticated && (
@@ -101,25 +110,24 @@ const Navbar = () => {
                                             className={`profile-menu ${profileMenuVisible ? 'active' : ''}`}
                                             ref={profileMenuRef}
                                         >
-                                            <button onClick={() => setProfileMenuVisible(!profileMenuVisible)}>
+                                            <button onClick={handleProfileMenuToggle}>
                                                 {profileData.profilePicture ?
-                                                (<img
-                                                    alt={`profile-icon`}
-                                                    src={`${API_BASE_URL}${profileData.profilePicture}`}
-                                                    className='profile-icon'
-                                                /> ) : (
-                                                    <img
-                                                    alt={`profile-icon`}
-                                                    src={default_profile_picture}
-                                                    className='profile-icon'
-                                                />
-                                                )
+                                                    (<img
+                                                        alt={`profile-icon`}
+                                                        src={`${API_BASE_URL}${profileData.profilePicture}`}
+                                                        className='profile-icon'
+                                                    />) : (
+                                                        <img
+                                                            alt={`profile-icon`}
+                                                            src={default_profile_picture}
+                                                            className='profile-icon'
+                                                        />
+                                                    )
                                                 }
                                             </button>
                                             {profileMenuVisible && <ProfileMenu user={authState.user} logout={logout} profileData={profileData} />}
                                         </li>
                                     )}
-
                                 </ul>
                             </div>
                         </div>

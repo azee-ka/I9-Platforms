@@ -2,14 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './profileMenu.css';
+import { useSelector } from 'react-redux';
 import API_BASE_URL from '../../config';
 import default_profile_picture from '../../assets/default_profile_picture.png'
 
 const ProfileMenu = ({ user, logout, profile_data }) => {
+    const userRole = useSelector((state) => state.auth.user.role);
+
     const profileMenuLinks = [
         { label: 'Profile', url: '/learner/profile', role: 'learner' },
         { label: 'Settings', url: '/learner/settings', role: 'learner' },
         { label: 'Messages', url: '/learner/messages', icon: '📬', role: 'learner' },
+
+        { label: 'Profile', url: '/educator/profile', role: 'educator' },
+        { label: 'Settings', url: '/educator/settings', role: 'educator' },
+        { label: 'Messages', url: '/educator/messages', icon: '📬', role: 'educator' },
     ];
     return (
         <div className="profile-menu-container">
@@ -27,7 +34,7 @@ const ProfileMenu = ({ user, logout, profile_data }) => {
             <div className="profile-menu-links">
                 <ul>
                     {profileMenuLinks.map((link) => (
-                        <a href={link.url} key={`${link.label}-${link.role}`}>
+                        (userRole === link.role) &&(<a href={link.url} key={`${link.label}-${link.role}`}>
                             <li id='exclude-link'>
                                 <div className='profile-menu-per-link'>
                                     <div className='profile-menu-link-label'>
@@ -37,6 +44,7 @@ const ProfileMenu = ({ user, logout, profile_data }) => {
                                 </div>
                             </li>
                         </a>
+                        )
                     ))}
                 </ul>
             </div>
