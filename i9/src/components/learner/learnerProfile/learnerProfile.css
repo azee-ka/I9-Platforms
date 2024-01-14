@@ -72,7 +72,7 @@
     gap: 20px;
 }
 
-.learner-profile-education-content {
+.learner-profile-module-content {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
     display: flex;
@@ -170,7 +170,7 @@
 }
 
 
-.learner-profile-user-education-info {
+.learner-profile-user-module-info {
     background-color: rgb(0, 27, 30);
     height: auto;
     max-width: 100%;
@@ -181,7 +181,7 @@
     align-items: center;
     text-align: left;
   }
-  .learner-profile-user-education-info-title-container {
+  .learner-profile-user-module-info-title-container {
     width: 97%;
     height: 60px;
     background-color: rgba(255, 255, 255, 0);
@@ -194,7 +194,7 @@
   }
 
 
-.learner-profile-user-education-info-inner {
+.learner-profile-user-module-info-inner {
     background-color: rgba(255, 255, 255, 0);
     width: 97%;
     height: auto;
@@ -207,7 +207,7 @@
     margin-top: 1%;
 }
 
-.learner-profile-user-education-per-institution {
+.learner-profile-user-module-per-institution {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
     height: auto;
@@ -222,7 +222,7 @@
   }
 
 
-.learner-profile-user-education-per-institution-inner {
+.learner-profile-user-module-per-institution-inner {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
     height: 100%;
@@ -235,17 +235,17 @@
     text-align: left;
   }
 
-  .learner-profile-education-institution-title-container h3 {
+  .learner-profile-module-institution-title-container h3 {
     color: white;
     background-color: red;
     line-height: 0;
   }
   
-  .learner-profile-education-institution-date-data-container p {
+  .learner-profile-module-institution-date-data-container p {
     color: rgb(159, 157, 157);
     font-size: 13px;
   }
-  .learner-profile-education-institution-date-data-container {
+  .learner-profile-module-institution-date-data-container {
     flex-grow: 1;
   }
   
