@@ -10,6 +10,25 @@ import { formatDateTime } from '../../../utils/formatDateTime';
 const LearnerProfile = () => {
   const [profileData, setProfileData] = useState({});
 
+  const [learnerInfo, setLearnerInfo] = useState([
+    {
+      module_title: 'Education',
+      properties: {
+        institution: 'Ohlone College',
+        attended_from_to: 'Jun 2022 - Present',
+        description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description)',
+      }
+    },
+    {
+      module_title: 'Education',
+      properties: {
+        institution: 'Ohlone College',
+        attended_from_to: 'Jun 2022 - Present',
+        description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description)',
+      }
+    },
+  ]);
+
   const [learnerEducationInfo, setaLearnerEducationInfo] = useState([
     {
       insitution: 'Ohlone College',
@@ -38,7 +57,6 @@ const LearnerProfile = () => {
     },
   ]);
 
-  const [learnerInfo, setLearnerInfo] = useState({});
   const [achievements, setAchievements] = useState([]);
   const [preferences, setPreferences] = useState({});
 

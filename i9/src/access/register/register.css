@@ -2,13 +2,23 @@
 
 .register-auth-container {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
 }
-
+.register-auth-container-inner {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-color: rgba(255, 255, 255, 0);
+}
 .register-auth-container .register-auth-card {
   background: linear-gradient(10deg, #00757c80, #000000);
   padding: 20px;
@@ -180,6 +190,17 @@
 .register-password-field-container .eye-icon-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.register-error-display {
+  background-color: rgba(0, 128, 0, 0);
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
 }

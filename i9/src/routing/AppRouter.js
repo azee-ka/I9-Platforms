@@ -45,9 +45,9 @@ const AppRouter = () => {
 
     const isAuthenticated = authState.isAuthenticated;
     
-    useEffect(() => {
-        console.log(authState);
-    }, [authState.isAuthenticated]);
+    // useEffect(() => {
+    //     console.log(authState);
+    // }, [authState.isAuthenticated]);
 
 
     if (isLoading) {

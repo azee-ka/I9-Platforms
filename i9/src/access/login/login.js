@@ -7,8 +7,12 @@ import './login.css';
 import API_BASE_URL from '../../config';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
+import AlertModule from '../../alert/alert';
+
 const LoginPage = () => {
     const navigate = useNavigate();
+
+    const [showAlert, setShowAlert] = useState(true);
 
     const { login } = useAuth();
 
@@ -41,14 +45,16 @@ const LoginPage = () => {
 
             // Handle successful login here, for example, update state or redirect
         } catch (error) {
-            console.error('Error logging in:', error.message);
+            // console.error('Error logging in:', error.message);
             // Handle the error as needed
-            setLoginError(error.response.data.message)
+            setLoginError(error.response.data.message);
+            setShowAlert(true);
         }
     };
 
     return (
         <div className="login-auth-container">
+            <div className="login-auth-container-inner">
             <div className="login-auth-card">
                 <h2>Login</h2>
                 <form onSubmit={handleLoginSubmit}>
@@ -90,11 +96,13 @@ const LoginPage = () => {
 
                     <button type="submit">Login</button>
                 </form>
-                <div className='login-error-display'>
-                    {loginError !== null &&
-                        loginError}
-                </div>
             </div>
+            </div>
+            <div className='login-error-display'>
+                    {loginError !== null &&
+                       <AlertModule message={loginError} showAlert={showAlert} setShowAlert={setShowAlert} />
+                    }
+                </div>
         </div>
     );
 };
