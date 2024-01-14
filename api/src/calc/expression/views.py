@@ -27,7 +27,7 @@ def submit_expression(request):
                 UserHistory.objects.create(
                     user=user,
                     expression=expression_instance.expression,
-                    result=result['output'],  # Assuming 'output' contains the result
+                    result=result['output'],
                 )
 
         # Add the result to the serialized data
