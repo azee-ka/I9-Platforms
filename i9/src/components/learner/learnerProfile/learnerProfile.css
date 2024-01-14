@@ -7,6 +7,7 @@
     justify-content: right;
     align-items: end;
     overflow-y: auto;
+    text-align: left;
 }
 
 .learner-profile-header {
@@ -19,7 +20,24 @@
 }
 .learner-profile-header h3 {
     color: rgb(159, 157, 157);
+    line-height: 0;
 }
+
+.learner-profile-description {
+    background-color: rgba(255, 0, 0, 0);
+    height: 100%;
+    width: 40%;
+    gap: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+.learner-profile-description div {
+    font-size: 10px;
+    color: gray;
+}
+
 .learner-profile-container-inner {
     background-color: rgb(43, 184, 99, 0);
     width: 98%;
@@ -33,7 +51,7 @@
 
 .learner-profile-content {
     background-color: rgba(255, 0, 0, 0);
-    width: 100%;
+    width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -54,11 +72,22 @@
     gap: 20px;
 }
 
+.learner-profile-education-content {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
 .learner-profile-user-basic-info {
     background-color: rgb(0, 27, 30);
     min-height: 30%;
     height: auto;
-    width: 70%;
+    width: 100%;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -144,13 +173,26 @@
 .learner-profile-user-education-info {
     background-color: rgb(0, 27, 30);
     height: auto;
-    max-width: 70%;
+    max-width: 100%;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: left;
   }
+  .learner-profile-user-education-info-title-container {
+    width: 97%;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: left;
+    font-size: 16px;
+  }
+
 
 .learner-profile-user-education-info-inner {
     background-color: rgba(255, 255, 255, 0);

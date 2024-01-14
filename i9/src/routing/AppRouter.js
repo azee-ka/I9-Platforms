@@ -77,6 +77,12 @@ const AppRouter = () => {
                         element={<RoleBasedRouter routes={roleBasedRoutes} isAuthenticated={isAuthenticated} />}
                     />
                     }
+                    {
+                    <Route
+                      path="/*"
+                      element={<Navigate to={'/access/login'} />}
+                  />  
+                    }
                 </Routes>
             </React.Suspense>
         </Router>
