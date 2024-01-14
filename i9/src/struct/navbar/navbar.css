@@ -85,6 +85,11 @@
   background-color: rgba(255, 0, 0, 0);
   text-align: right;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(0, 128, 0, 0);
+  justify-content: center;
+  align-items: center;
 }
 
 .left-menu {
@@ -99,7 +104,7 @@
 
 
 .top-nav .left-menu li,
-.top-nav .right-menu li:not(#exclude-link) {
+.top-nav .right-menu li:not(.profile-menu-per-link) {
   background-color: rgba(255, 255, 255, 0);
   display: inline-block;
 }
@@ -108,7 +113,7 @@
 
 
 .top-nav .left-menu li a,
-.top-nav .right-menu li:not(#exclude-link) a {
+.top-nav .right-menu li a:not(.profile-menu-per-link a) {
   display: block;
   padding: 14px 18px;
   background-color: transparent;
@@ -121,7 +126,7 @@
 
 
 .top-nav.scrolled .left-menu li a:hover,
-.top-nav.scrolled .right-menu li:not(#exclude-link) a:hover {
+.top-nav.scrolled .right-menu li a:hover:not(.profile-menu-per-link) {
   color: #fff;
 }
 
@@ -155,7 +160,7 @@
 }
 
 #navbar-access-logout a:hover,
-#navbar-access a:hover {
+#navbar-access a:not(.profile-menu-links a):hover {
   background-color: rgb(222, 222, 222);
   border-radius: 10px 10px 10px 10px;
   color: black;
@@ -163,7 +168,7 @@
 
 
 
-.top-nav .right-menu li:not(#exclude-link) a::after,
+.top-nav .right-menu li a:not(.profile-menu-links a)::after,
 .top-nav .left-menu li a::after {
   content: "";
   position: absolute;
@@ -173,7 +178,7 @@
   text-align: center;
   width: 90%;
   height: 2px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -185,20 +190,24 @@
   transform-origin: right;
 }
 
-
-
-
-/* 
+.profile-menu.active,
 .profile-menu {
-    cursor: pointer;
-    position: relative;
+  background-color: rgba(255, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  margin-right: 8%;
 }
 
-.profile-menu span::after {
-    content: '\25BC';
-    margin-left: 5px;
+.profile-menu button {
+  background-color: rgb(0, 255, 76, 0);
+  width: 57px;
+  height: 50px;
+  border-radius: 50%;
+  border: 0;
 }
-
-.profile-menu.active span::after {
-    content: '\25B2'; 
-} */
+.profile-menu button img {
+  background-color: rgba(0, 51, 255, 0);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}

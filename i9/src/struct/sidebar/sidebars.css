@@ -10,7 +10,7 @@
 }
 
 .sidebar-container .sidebar-visible {
-    border-right: 0.5px solid rgba(255, 255, 255, 0.264);
+    border-right: 0px solid rgba(255, 255, 255, 0.264);
 }
 
 .sidebar-menu-toggle {
@@ -111,7 +111,7 @@
 .sidebar-small-container.shrink {
     width: 80px;
     transition: width 1s ease;
-    border-right: 0.5px solid rgba(255, 255, 255, 0.264);
+    border-right: 0px solid rgba(255, 255, 255, 0.264);
 }
 
 .sidebar-large-container {
@@ -141,13 +141,13 @@
 }
 
 .sidebar-small-container-content {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.5);
     width: 95%;
     height: 100%;
 }
 
 .sidebar-large-container-content {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.7);
     width: 95%;
     height: 100%;
 }

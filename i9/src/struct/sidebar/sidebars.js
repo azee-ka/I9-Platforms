@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './sidebars.css';
 
 const Sidebar = () => {

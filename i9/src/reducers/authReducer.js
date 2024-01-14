@@ -3,6 +3,7 @@ const initialAuthState = {
   isAuthenticated: false,
   user: {
     id: null,
+    role: '',
     username: '',
     first_name: '',
     last_name: '',

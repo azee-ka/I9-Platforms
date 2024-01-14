@@ -5,10 +5,10 @@
     top: 45px; 
     right: 10px;
     color: #ffffff;
-    background-color: #0c0c0c;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    background-color: rgba(15, 15, 15, 0.9);
+    box-shadow: 0 8px 16px rgba(45, 45, 45, 0.5);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -18,13 +18,18 @@
     height: auto;
     gap: 10px;
     z-index: 100;
+    border: 0.1px solid rgba(88, 88, 88, 0.6);
+    transition: box-shadow 0.3s ease;
+    backdrop-filter: blur(3px);
 }
+
 
 .profile-menu-user-info-container {
     width: 100%;
-    background-color: rgb(42, 42, 42);
+    background-color: rgba(42, 42, 42, 0.765);
     text-align: left;
     padding: 4px;
+    border-radius: 8px;
 }
 
 .profile-menu-links {
@@ -63,6 +68,8 @@
 
 .profile-menu-links a:hover {
     background-color: rgba(59, 170, 126, 0.5) !important;
+    border: 0;
+    border-bottom: 0px solid gray;
 }
 
 .profile-menu-links li {
@@ -103,10 +110,28 @@
 
 .profile-menu-sign-out-button-container {
     width: 100%;
+    height: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgba(255, 0, 0, 0);
+}
+.profile-menu-sign-out-button-container button {
+    width: 80%;
+    height: 90%;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(76, 76, 76);
+}
+.profile-menu-sign-out-button-container button:hover {
+    background-color: rgb(48, 48, 48);
+    cursor: pointer;
 }
 
 
@@ -115,8 +140,9 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    gap: 10px;
 }
 
 .learner-profile-menu-user-profile-picture {

@@ -4,7 +4,7 @@ import './layout.css';
 import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebars';
 
-function Layout({ children, pageName }) {
+function Layout({ children, pageName, showSidebar }) {
 
     return (
         <div className={`parent-layout`}>
@@ -13,9 +13,11 @@ function Layout({ children, pageName }) {
                     <Navbar />
                 </div>
                 <div className='layout-page'>
-                    <div className='layout-sidebar'>
-                        <Sidebar />
-                    </div>
+                    {showSidebar &&
+                        <div className='layout-sidebar'>
+                            <Sidebar />
+                        </div>
+                    }
                     <div className='layout-page-content'>
                         {children}
                     </div>

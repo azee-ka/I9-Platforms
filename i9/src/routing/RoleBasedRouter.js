@@ -6,8 +6,12 @@ import '../App.css';
 
 const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     const userRole = useSelector((state) => {
-        return 'learner'; // Replace with state.auth.role;
+        return 'learner'; // Replace with state.auth.user.role;
     });
+    const testUserRole = useSelector((state) => {
+        return state.auth
+    });
+    console.log(testUserRole);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,6 +35,7 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     key={route.key}
                                     className={`${route.path.substring(1)}`}
                                     pageName={route.pageName}
+                                    showSidebar={route.showSidebar}
                                 >
                                     <Component />
                                 </Layout>

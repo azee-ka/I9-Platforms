@@ -18,22 +18,25 @@ const LearnerProfile = React.lazy(() => import('../components/learner/learnerPro
 
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
+
 const roleBasedRoutes = [
-    { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard' },
-    { name: 'Learner Profile', path: '/learner/profile', role: 'learner', component: LearnerProfile, key: 'LearnerPrfile' },
+    { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
+    { name: 'Learner Profile', path: '/learner/profile', role: 'learner', component: LearnerProfile, key: 'LearnerPrfile', showSidebar: true },
 
 
-    { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard' },
-    { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator' },
-    { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression' },
+    { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
+    
+    
+    { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },
+    { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression', showSidebar: true },
 ];
 
 
 const publicRoutes = [
-    { name: 'Access', path: '/', component: <Access />, key: 'Access' },
-    { name: 'Access', path: '/access', component: <Access />, key: 'Access-1' },
-    { name: 'Login', path: '/access/login', component: <LoginPage />, key: 'Login' },
-    { name: 'Register', path: '/access/register', component: <RegisterPage />, key: 'Register' },
+    { name: 'Access', path: '/', component: <Access />, key: 'Access', showSidebar: false },
+    { name: 'Access', path: '/access', component: <Access />, key: 'Access-1', showSidebar: false },
+    { name: 'Login', path: '/access/login', component: <LoginPage />, key: 'Login', showSidebar: false },
+    { name: 'Register', path: '/access/register', component: <RegisterPage />, key: 'Register', showSidebar: false },
 
 ];
 
@@ -61,6 +64,7 @@ const AppRouter = () => {
                                 key={route.key}
                                 className={`${route.path.substring(1)}`}
                                 pageName={route.pageName}
+                                showSidebar={route.showSidebar}
                             >
                                 {route.component}
                             </Layout>
