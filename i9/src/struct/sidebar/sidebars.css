@@ -48,7 +48,7 @@
     background-color: rgb(7, 230, 85, 0);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     justify-content: center;
 }
 
@@ -123,9 +123,11 @@
 }
 
 .sidebar-small-container.shrink {
-    width: 80px;
+    width: 70px;
     transition: width 1s ease;
     border-right: 0px solid rgba(255, 255, 255, 0.264);
+    justify-content: right;
+    align-items: center;
 }
 
 .sidebar-large-container {

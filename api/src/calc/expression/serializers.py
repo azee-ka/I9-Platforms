@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from .models import Expression
 from ...user.models import BaseUser
-from ...userHistory.models import UserHistory
+# from ...userHistory.models import UserHistory
 
 class ExpressionSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=BaseUser.objects.all(), required=False)
@@ -13,6 +13,7 @@ class ExpressionSerializer(serializers.ModelSerializer):
 
 
 class ExpressionResultSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Expression
         fields = ['id', 'user', 'expression', 'category', 'description', 'result']

@@ -45,9 +45,15 @@ const Navbar = () => {
 
 
     const fetchProfileData = async () => {
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${authState.token}`
+            }
+          };
         try {
-            const response = await axios.get(`${API_BASE_URL}api/learner/profile`);
-            setProfileData(response.data); // Assuming the response contains the profile picture URL
+            const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
+            setProfileData(response.data);
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }

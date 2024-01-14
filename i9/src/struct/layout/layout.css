@@ -30,8 +30,8 @@
 
 .layout-sidebar {
     background-color: rgb(27, 27, 194, 0);
-    min-width: 0px;
-    max-width: 300px;
+    /* min-width: 80px;
+    max-width: 300px; */
     /* width: 250px; */
     width: auto;
     height: 100%;

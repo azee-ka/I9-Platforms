@@ -1,12 +1,12 @@
 # models.py
-from django.db import models
-from src.user.models import BaseUser
+# from django.db import models
+# from src.user.models import BaseUser
 
-class UserHistory(models.Model):
-    user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
-    expression = models.TextField()
-    result = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+# class UserHistory(models.Model):
+#     user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
+#     expression = models.TextField()
+#     result = models.TextField()
+#     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user.username} - {self.expression}"
+#     def __str__(self):
+#         return f"{self.user.username} - {self.expression}"

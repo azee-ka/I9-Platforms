@@ -20,11 +20,11 @@ const EducatorDashboard = React.lazy(() => import('../components/educator/educat
 
 
 const roleBasedRoutes = [
-    { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
-    { name: 'Learner Profile', path: '/learner/profile', role: 'learner', component: LearnerProfile, key: 'LearnerPrfile', showSidebar: true },
+    { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'Learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
+    { name: 'Learner Profile', path: '/learner/profile', role: 'Learner', component: LearnerProfile, key: 'LearnerPrfile', showSidebar: true },
 
 
-    { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
+    { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
     
     
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },

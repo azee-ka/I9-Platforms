@@ -49,7 +49,7 @@ const RegisterPage = () => {
                 email: email,
                 first_name: capitalizedFirstName,
                 last_name: capitalizedLastName,
-                role: 'learner',
+                role: 'Learner',
             };
             // Send registration data to the backend
             const response = await axios.post(`${API_BASE_URL}access/register/`, data, config);

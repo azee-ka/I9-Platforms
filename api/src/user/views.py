@@ -1,8 +1,8 @@
 # views.py
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from .models import BaseUser
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .models import BaseUser, Learner, Educator
 from .serializers import BaseUserSerializer
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -12,6 +12,17 @@ from rest_framework.authtoken.models import Token
 @permission_classes([AllowAny])
 def register_view(request):
     serializer = BaseUserSerializer(data=request.data)
+    if serializer.is_valid():
+        role = request.data.get('role')
+        
+        # Choose the appropriate model based on the 'role' field
+        if role.lower() == 'learner':
+            user = Learner()
+        elif role.lower() == 'educator':
+            user = Educator()
+        else:
+            return Response({"message": "Invalid role"}, status=400)
+ 
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])
@@ -57,3 +68,19 @@ def login_view(request):
             return Response({"message": "User account is inactive"}, status=401)
     else:
         return Response({"message": "Invalid credentials"}, status=401)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_info(request):
+    user = request.user
+    # # Choose the appropriate serializer based on the user's role
+    # if isinstance(user, Learner):
+    #     serializer = BaseUserSerializer(user)
+    # elif isinstance(user, Educator):
+    #     serializer = EducatorSerializer(user)
+    # else:
+    serializer = BaseUserSerializer(user)
+
+    return Response(serializer.data, status=200)
