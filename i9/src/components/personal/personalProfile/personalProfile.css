@@ -54,18 +54,18 @@
 
 .personal-profile-content {
     background-color: rgba(255, 0, 0, 0);
-    width: 70%;
-    height: 100%;
+    width: 100%;
+    /* height: 100%; */
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: flex-start;
-    text-align: center;
+    /* text-align: center; */
 }
 
-.personal-profile-content-inner {
+.personal-profile-content-left {
     background-color: rgb(0, 136, 255, 0);
-    width: 100%;
+    width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -74,6 +74,107 @@
     text-align: center;
     gap: 20px;
 }
+
+
+.personal-profile-content-right {
+    background-color: rgba(0, 128, 0, 0);
+    flex-grow: 1;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+.personal-profile-content-right-sub {
+    background-color: rgba(255, 255, 0, 0);
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.personal-profile-right-edit-bar-toggle-chevron {
+    height: 100%;
+    width: 30px;
+    background-color: rgb(176, 22, 22, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.personal-profile-right-edit-bar-toggle-chevron .chevron-icon {
+    font-size: 20px;
+    color: #8c8c8c;
+    transition: transform 0.8s ease, color 0.3s ease;;
+}
+.personal-profile-right-edit-bar-toggle-chevron .chevron-icon:hover {
+    color: #ffffff;
+}
+.personal-profile-right-edit-bar-toggle-chevron .chevron-icon.collapsed {
+    transform: rotate(180deg);
+}
+
+.personal-profile-content-right-inner {
+    background-color: rgba(255, 0, 0, 0);
+    width: 80%;
+    height: 100%;
+    border-left: 0px solid rgba(128, 128, 128, 0.434);
+    transition: width 1s ease, visibility 0s ease-in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: visible;
+    box-shadow: -2px -1px 5px 1px rgb(115, 115, 115, 0.5);
+}
+
+.personal-profile-content-right-inner.collapsed {
+    background-color: rgba(0, 255, 30, 0);
+    width: 0%;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+
+
+.personal-profile-content-right-inner-inner {
+    background-color: rgba(0, 0, 255, 0);
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.personal-profile-edit-per-tab {
+    background-color: rgba(0, 128, 0, 0);
+    width: 90%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+.personal-profile-edit-per-tab:hover {
+    background-color: rgba(0, 172, 164, 0.371);
+    cursor: pointer;
+}
+.personal-profile-edit-per-tab-inner {
+    background-color: rgba(255, 255, 0, 0);
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 
 .personal-profile-module-content {
     background-color: rgba(255, 0, 0, 0);
@@ -88,8 +189,8 @@
 
 .personal-profile-user-basic-info {
     background-color: rgb(0, 27, 30);
-    min-height: 30%;
-    height: auto;
+    min-height: 8%;
+    /* height: auto; */
     width: 100%;
     border-radius: 15px;
     display: flex;

@@ -1,14 +1,23 @@
 // personalProfile.js
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../../reducers/auth/useAuth';
 import './personalProfile.css';
 import API_BASE_URL from '../../../config';
 import default_profile_picture from '../../../assets/default_profile_picture.png';
 import { formatDateTime } from '../../../utils/formatDateTime';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import OverlayContent from './overlayContent';
 
 const PersonalProfile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { overlay } = useParams();
   const [profileData, setProfileData] = useState({});
+  const [moduleDataToSend, setModuleDataToSend] = useState(null);
 
   const [personalInfo, setpersonalInfo] = useState([
     {
@@ -112,10 +121,23 @@ const PersonalProfile = () => {
     },
   ]);
 
-  const [achievements, setAchievements] = useState([]);
-  const [preferences, setPreferences] = useState({});
+  const editTabs = [
+    {
+      edit_tab_title: 'Add Projects',
+      value: 'projects',
+    },
+    {
+      edit_tab_title: 'Add Education',
+      value: 'education',
+    },
+    {
+      edit_tab_title: 'Add Industry Experience',
+      value: 'industry_experience',
+    },
+  ];
 
   const { authState } = useAuth();
+
 
   const fetchProfileData = async () => {
     try {
@@ -132,8 +154,42 @@ const PersonalProfile = () => {
     }
   };
 
+
+
+  const [editBarCollapsed, setEditBarCollapsed] = useState(true);
+  const [activeEditOverlay, setActiveEditOverlay] = useState(null);
+
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  const openOverlay = () => {
+    setIsOverlayVisible(true);
+  };
+
+  const closeOverlay = () => {
+    setIsOverlayVisible(false);
+    navigate(null, { replace: true });
+  };
+
+
+
+  const handleEditBarClick = (activeBar) => {
+    setActiveEditOverlay(activeBar);
+    navigate(`#${activeBar}`, { replace: true });
+    openOverlay();
+  };
+
+
   useEffect(() => {
     fetchProfileData();
+  }, []);
+
+  useEffect(() => {
+    const hasOverlayParam = editTabs.some((tab) => location.hash.includes(tab.value));
+    // Conditionally open the overlay based on the parameter
+    if (hasOverlayParam) {
+      openOverlay();
+    }
+
   }, []);
 
 
@@ -148,7 +204,7 @@ const PersonalProfile = () => {
           </div>
         </div>
         <div className='personal-profile-content'>
-          <div className='personal-profile-content-inner'>
+          <div className='personal-profile-content-left'>
             <div className='personal-profile-user-basic-info'>
               <div className='personal-profile-user-basic-info-inner'>
                 <div className='personal-profile-user-basic-info-left-side'>
@@ -197,9 +253,33 @@ const PersonalProfile = () => {
               </div>
             ))}
           </div>
+          <div className='personal-profile-content-right'>
+            <div className='personal-profile-content-right-sub'>
+              <div className='personal-profile-right-edit-bar-toggle-chevron'>
+                <div className='personal-profile-right-edit-bar-toggle-chevron-inner' onClick={() => setEditBarCollapsed(!editBarCollapsed)}>
+                  <FontAwesomeIcon icon={faChevronRight} className={`chevron-icon ${editBarCollapsed ? 'collapsed' : ''}`} />
+                </div>
+              </div>
+              <div className={`personal-profile-content-right-inner ${editBarCollapsed ? 'collapsed' : ''}`}>
+                  <div className='personal-profile-content-right-inner-inner'>
+                    {editTabs.map((tab, index) => (
+                      <div className='personal-profile-edit-per-tab' key={`${index}-${tab.edit_tab_title}`} onClick={() => handleEditBarClick(tab.value)} >
+                        <div className='personal-profile-edit-per-tab-inner'>
+                          {tab.edit_tab_title}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
+      {isOverlayVisible && (
+        <div className="overlay-container" onClick={closeOverlay}>
+          <OverlayContent activeEditOverlay={activeEditOverlay} onClose={closeOverlay} setModuleDataToSend={setModuleDataToSend} />
+        </div>
+      )}
     </div>
   );
 };

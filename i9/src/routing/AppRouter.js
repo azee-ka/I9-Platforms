@@ -37,6 +37,7 @@ const roleBasedRoutes = [
     { name: 'Personal Dashboard', path: '/', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
     { name: 'Personal Dashboard', path: '/personal/dashboard', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
     { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Profile', path: '/personal/profile#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
 

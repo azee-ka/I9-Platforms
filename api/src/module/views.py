@@ -1,6 +1,4 @@
 # src/user/views.py
-
-# src/user/views.py
 from rest_framework import generics
 from ..user.models import Personal
 from .models import Module

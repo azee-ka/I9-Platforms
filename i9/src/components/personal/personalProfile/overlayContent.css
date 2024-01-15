@@ -1,0 +1,43 @@
+/* overlayContent.css */
+
+.bar {
+    cursor: pointer;
+  }
+  
+  .overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .overlay-content {
+    background: rgba(26, 26, 26, 0.942);
+    padding: 20px;
+    border-radius: 8px;
+    width: 65%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay-content-inner {
+    background-color: rgba(255, 0, 0, 0.342);
+    width: 98%;
+    height: 98%;
+  }
+  
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  
