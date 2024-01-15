@@ -82,7 +82,7 @@ const LearnerProfile = () => {
       ]
     },
   ]);
-  
+
 
   const [learnermoduleInfo, setaLearnermoduleInfo] = useState([
     {
@@ -174,24 +174,24 @@ const LearnerProfile = () => {
                 </div>
                 <div className='learner-profile-user-module-info'>
                   <div className='learner-profile-user-module-info-inner'>
-                  {item.properties.map((property, propertyIndex) => (
+                    {item.properties.map((property, propertyIndex) => (
 
-                        <div className='learner-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
-                          <div className='learner-profile-user-educator-per-institution-inner'>
-                            <div className='learner-profile-module-institution-title-container'>
-                              <h3>{property.association_name}</h3>
-                            </div>
-                            <div className='learner-profile-module-institution-date-data-container'>
-                              <p>{property.duration}</p>
-                            </div>
-                            <div className='learner-profile-module-institution-description-container'>
-                              <div className='learner-eduacation-institution-description-text-container'>
-                                <p>{property.description}</p>
-                              </div>
+                      <div className='learner-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
+                        <div className='learner-profile-user-educator-per-institution-inner'>
+                          <div className='learner-profile-module-institution-title-container'>
+                            <h3>{property.association_name}</h3>
+                          </div>
+                          <div className='learner-profile-module-institution-date-data-container'>
+                            <p>{property.duration}</p>
+                          </div>
+                          <div className='learner-profile-module-institution-description-container'>
+                            <div className='learner-eduacation-institution-description-text-container'>
+                              <p>{property.description}</p>
                             </div>
                           </div>
                         </div>
-                      ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

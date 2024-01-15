@@ -18,6 +18,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .learner-profile-header h3 {
     color: rgb(159, 157, 157);
     line-height: 0;
@@ -33,6 +34,7 @@
     justify-content: center;
     align-items: flex-end;
 }
+
 .learner-profile-description div {
     font-size: 10px;
     color: gray;
@@ -117,6 +119,7 @@
     width: 50%;
     height: 100%;
 }
+
 .learner-profile-user-basic-info-left-side-inner {
     display: flex;
     flex-direction: row;
@@ -134,12 +137,14 @@
     border-radius: 50%;
     background-color: rgb(178, 12, 12, 0);
 }
+
 .learner-profile-user-profile-picture img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0);
 }
+
 .learner-profile-user-info-text {
     text-align: left;
     background-color: rgb(0, 247, 255, 0);
@@ -155,6 +160,7 @@
 .learner-profile-name-text {
     font-size: 16px;
 }
+
 .learner-profile-username-text {
     color: rgb(168, 168, 168);
     font-size: 14px;
@@ -180,8 +186,9 @@
     justify-content: center;
     align-items: center;
     text-align: left;
-  }
-  .learner-profile-user-module-info-title-container {
+}
+
+.learner-profile-user-module-info-title-container {
     width: 97%;
     height: 60px;
     background-color: rgba(255, 255, 255, 0);
@@ -192,7 +199,7 @@
     text-align: left;
     font-size: 15px;
     color: rgb(231, 231, 231);
-  }
+}
 
 
 .learner-profile-user-module-info-inner {
@@ -220,7 +227,7 @@
     gap: 5px;
     text-align: left;
     border-bottom: 0px solid gray;
-  }
+}
 
 
 .learner-profile-user-module-per-institution-inner {
@@ -234,24 +241,25 @@
     align-items: left;
     gap: 5px;
     text-align: left;
-  }
+}
 
-  .learner-profile-module-institution-title-container h3 {
+.learner-profile-module-institution-title-container h3 {
     color: rgb(236, 236, 236);
     background-color: red;
     line-height: 0;
     font-size: 16px;
-  }
-  
-  .learner-profile-module-institution-date-data-container p {
+}
+
+.learner-profile-module-institution-date-data-container p {
     color: rgb(159, 157, 157);
     font-size: 13px;
-  }
-  .learner-profile-module-institution-date-data-container {
+}
+
+.learner-profile-module-institution-date-data-container {
     flex-grow: 1;
-  }
-  
-  .learner-eduacation-institution-description-text-container {
+}
+
+.learner-eduacation-institution-description-text-container {
     color: rgb(209, 209, 209);
     font-size: 14px;
-  }
+}

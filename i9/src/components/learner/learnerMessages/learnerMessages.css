@@ -31,6 +31,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .learner-messages-header h2 {
     color: rgb(249, 249, 249);
     width: 50%;
@@ -75,6 +76,7 @@
     transition: height 1s ease, visibility 0.8s ease !important;
 
 }
+
 .learner-messages-content-server-container.collapsed {
     visibility: hidden !important;
     height: 0 !important;
@@ -94,6 +96,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .server-container-closer-icon-container-inner {
     width: 95%;
     height: 100%;
@@ -115,15 +118,18 @@
     overflow-x: auto;
     gap: 5px;
 }
+
 .chevron-icon {
     font-size: 20px;
-    color: #8c8c8c; 
+    color: #8c8c8c;
     transition: transform 0.8s ease, color 0.3s ease;
     ;
 }
+
 .chevron-icon:hover {
-    color: #ffffff; 
+    color: #ffffff;
 }
+
 .chevron-icon.collapsed {
     transform: rotate(180deg);
 }
@@ -137,6 +143,7 @@
     align-items: center;
     background-color: rgba(255, 255, 255, 0);
 }
+
 .learner-messages-content-per-server-inner {
     width: 95px;
     height: 80%;
@@ -148,9 +155,11 @@
     border-radius: 10px;
     transition: background-color 0.3s ease;
 }
+
 .learner-messages-content-per-server-inner:hover {
     background-color: rgba(67, 67, 67, 0.449);
 }
+
 .learner-messages-content-per-server-inner img {
     border-radius: 50%;
     width: 50px;
@@ -175,6 +184,7 @@
     text-align: center;
     gap: 20px;
 }
+
 .learner-messages-content-inner-inner.collapsed {
     height: 640px;
     background-color: rgba(255, 255, 255, 0);
@@ -229,7 +239,7 @@
 
 }
 
-.learner-messages-all-messages-per-list{
+.learner-messages-all-messages-per-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -261,6 +271,7 @@
     align-items: center;
     border-radius: 8px;
 }
+
 .learner-messages-list-per-message-inner:hover {
     background-color: rgba(57, 57, 57, 0.523);
 }
@@ -302,6 +313,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .learner-messages-per-user-info-inner {
     width: 95%;
     height: 90%;

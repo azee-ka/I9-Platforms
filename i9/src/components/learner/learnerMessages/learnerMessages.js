@@ -76,26 +76,6 @@ const LearnerMessages = () => {
             server_name: 'Server 15',
             server_cover_picture: '',
         },
-        {
-            server_name: 'Server 16',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 17',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 18',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 19',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 20',
-            server_cover_picture: '',
-        },
 
 
     ])

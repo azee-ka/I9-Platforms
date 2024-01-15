@@ -121,7 +121,7 @@ const LearnerSettings = () => {
                                     </div>
                                 );
                             }
-                            return null; // Render nothing if the setting is not active
+                            return null;
                         })}
                     </div>
                     <div className='learner-settings-right-sidebar'>
