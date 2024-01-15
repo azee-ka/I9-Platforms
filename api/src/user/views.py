@@ -20,6 +20,8 @@ def register_view(request):
             user = Learner()
         elif role.lower() == 'educator':
             user = Educator()
+        elif role.lower() == 'personal':
+            user = Educator()
         else:
             return Response({"message": "Invalid role"}, status=400)
  

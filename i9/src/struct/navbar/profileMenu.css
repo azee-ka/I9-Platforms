@@ -16,7 +16,7 @@
     justify-content: top;
     width: auto;
     max-width: 310px;
-    min-width: 210px;
+    min-width: 220px;
     height: auto;
     max-height: 400px;
     gap: 10px;
@@ -35,10 +35,10 @@
 
 
 .profile-menu-user-info-container {
-    width: 98%;
+    width: 96%;
     background-color: rgba(42, 42, 42, 0.585);
     text-align: left;
-    padding: 4px;
+    padding: 8px;
     border-radius: 8px;
 }
 

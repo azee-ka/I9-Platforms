@@ -7,25 +7,24 @@ const LearnerDashboard = () => {
   const [progress, setProgress] = useState([]);
   const [assignments, setAssignments] = useState([]);
 
-  useEffect(() => {
-    // Fetch learner-specific data from your backend API
-    const fetchData = async () => {
-      try {
-        const coursesResponse = await axios.get('/api/learner/courses');
-        setCourses(coursesResponse.data);
+  //   const fetchData = async () => {
+  //     try {
+  //       const coursesResponse = await axios.get('/api/learner/courses');
+  //       setCourses(coursesResponse.data);
 
-        const progressResponse = await axios.get('/api/learner/progress');
-        setProgress(progressResponse.data);
+  //       const progressResponse = await axios.get('/api/learner/progress');
+  //       setProgress(progressResponse.data);
 
-        const assignmentsResponse = await axios.get('/api/learner/assignments');
-        setAssignments(assignmentsResponse.data);
-      } catch (error) {
-        console.error('Error fetching learner data:', error.message);
-      }
-    };
+  //       const assignmentsResponse = await axios.get('/api/learner/assignments');
+  //       setAssignments(assignmentsResponse.data);
+  //     } catch (error) {
+  //       console.error('Error fetching learner data:', error.message);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <div>

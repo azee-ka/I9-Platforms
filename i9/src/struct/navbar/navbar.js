@@ -47,10 +47,10 @@ const Navbar = () => {
     const fetchProfileData = async () => {
         const config = {
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${authState.token}`
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
             }
-          };
+        };
         try {
             const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
             setProfileData(response.data);
@@ -68,12 +68,17 @@ const Navbar = () => {
 
     const publicPagesNavbar = [
         { path: '/', label: 'Home', id: 'navbar-phrase', role: 'public' },
-        { path: '/access', label: 'Access', id: 'navbar-access', role: 'public'  },
+        { path: '/access', label: 'Access', id: 'navbar-access', role: 'public' },
     ];
 
     const privatePagesNavbar = [
-        { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'learner' },
-        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'learner' },
+        { path: '/personal/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Personal' },
+
+        { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Learner' },
+
+        { path: '/educator/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Educator' },
+
+        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'any' },
     ];
 
     const handleMenuClick = (path, action) => {
@@ -100,15 +105,16 @@ const Navbar = () => {
                             <div className='right-side-menu-items'>
                                 <ul className="right-menu">
                                     {pagesNavbar && pagesNavbar.map((item, index) => (
-                                        (userRole === item.role || 'public') && (<li
-                                            key={index}
-                                            className={location.pathname === item.path ? 'active' : ''}
-                                            id={item.id}
-                                        >
-                                            <Link to={item.path} onClick={() => handleMenuClick(item.path, item.action)}>
-                                                {item.label}
-                                            </Link>
-                                        </li>)
+                                        (userRole === item.role || item.role === 'public' || item.role === 'any') && (
+                                            <li
+                                                key={index}
+                                                className={location.pathname === item.path ? 'active' : ''}
+                                                id={item.id}
+                                            >
+                                                <Link to={item.path} onClick={() => handleMenuClick(item.path, item.action)}>
+                                                    {item.label}
+                                                </Link>
+                                            </li>)
                                     ))}
                                     {/* Profile Menu */}
                                     {authState.isAuthenticated && (

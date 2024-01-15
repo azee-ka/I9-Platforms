@@ -10,12 +10,16 @@ const ProfileMenu = ({ user, logout, profile_data }) => {
     const userRole = useSelector((state) => state.auth.user.role);
 
     const profileMenuLinks = [
+        { label: 'Profile', url: '/personal/profile', role: 'Personal' },
+        { label: 'Settings', url: '/personal/preferences', role: 'Personal' },
+        { label: 'Messages', url: '/personal/messages', role: 'Personal' },
+
         { label: 'Profile', url: '/learner/profile', role: 'Learner' },
         { label: 'Preferences', url: '/learner/preferences', role: 'Learner' },
         { label: 'Messages', url: '/learner/messages', icon: '📬', role: 'Learner' },
 
         { label: 'Profile', url: '/educator/profile', role: 'educator' },
-        { label: 'Settings', url: '/educator/settings', role: 'educator' },
+        { label: 'Settings', url: '/educator/preferences', role: 'educator' },
         { label: 'Messages', url: '/educator/messages', icon: '📬', role: 'educator' },
     ];
     return (

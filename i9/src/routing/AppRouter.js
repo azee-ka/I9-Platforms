@@ -15,22 +15,35 @@ const Calculator = React.lazy(() => import('../components/tools/calculator/calcu
 const LearnerDashboard = React.lazy(() => import('../components/learner/learnerDashboard/learnerDashboard'));
 const LearnerProfile = React.lazy(() => import('../components/learner/learnerProfile/learnerProfile'));
 const LearnerSettings = React.lazy(() => import('../components/learner/learnerSettings/learnerSettings'));
-const LearnerMessages =React.lazy(() => import('../components/learner/learnerMessages/learnerMessages'));
+const LearnerMessages = React.lazy(() => import('../components/learner/learnerMessages/learnerMessages'));
+
+const PersonalDashboard = React.lazy(() => import('../components/personal/personalTimeline/personalTimeline'));
+const PersonalProfile = React.lazy(() => import('../components/personal/personalProfile/personalProfile'));
+const PersonalSettings = React.lazy(() => import('../components/personal/personalSettings/personalSettings'));
+const PersonalMessages = React.lazy(() => import('../components/personal/personalMessages/personalMessages'));
 
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
 
 const roleBasedRoutes = [
+    // Learner Pages
     { name: 'Learner Dashboard', path: '/', role: 'Learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
     { name: 'Learner Dashboard', path: '/learner/dashboard', role: 'Learner', component: LearnerDashboard, key: 'LearnerDashboard', showSidebar: true },
     { name: 'Learner Profile', path: '/learner/profile', role: 'Learner', component: LearnerProfile, key: 'LearnerProfile', showSidebar: true },
     { name: 'Learner Preferences', path: '/learner/preferences', role: 'Learner', component: LearnerSettings, key: 'LearnerPreferences', showSidebar: true },
     { name: 'Learner Messages', path: '/learner/messages', role: 'Learner', component: LearnerMessages, key: 'LearnerMessages', showSidebar: true },
 
+    // Personal Pages
+    { name: 'Personal Dashboard', path: '/', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
+    { name: 'Personal Dashboard', path: '/personal/dashboard', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
+    { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
+    { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
 
+    // Educator Pages
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
     
-    
+    // Any Role Pages
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },
     { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression', showSidebar: true },
 ];
