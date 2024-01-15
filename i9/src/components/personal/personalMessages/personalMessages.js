@@ -241,7 +241,7 @@ const PersonalMessages = () => {
                                 </div>
                             </div>
                         }
-                        <div className={`personal-messages-content-inner-inner ${collapsed ? 'collapsed' : ''}`}>
+                        <div className={`personal-messages-content-inner-inner`}>
                             <div className='personal-messages-left-container'>
                                 <div className='personal-messages-list-container'>
                                     <div className='personal-messages-list-container-inner'>
