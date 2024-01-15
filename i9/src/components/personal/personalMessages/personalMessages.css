@@ -1,6 +1,5 @@
 .personal-messages-container {
     width: 100%;
-    /* max-height: 100%; */
     background-color: rgba(255, 255, 255, 0.007);
     display: flex;
     flex-direction: row;
@@ -23,7 +22,7 @@
 }
 
 .personal-messages-header {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0);
     width: 100%;
     height: 9%;
     display: flex;
@@ -41,12 +40,11 @@
 .personal-messages-content {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
-    /* height: 100%; */
-    /* flex-grow: 1; */
-    /* height: auto; */
     height: 91%;
+    flex-grow: 1;
+    position: relative;
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -60,14 +58,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
     gap: 0px;
 }
 
 .personal-messages-content-server-container {
     background-color: rgba(128, 0, 128, 0);
     max-width: 100%;
-    height: 115px;
+    /* min-height: 0% !important;
+    max-height: 15% !important; */
+    height: 18% !important;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -75,16 +74,16 @@
     text-align: center;
     gap: 0px;
     transition: height 1s ease, visibility 0.8s ease !important;
-
 }
 
 .personal-messages-content-server-container.collapsed {
     visibility: hidden !important;
-    height: 0 !important;
+    height: 0% !important;
+    background-color: rgba(255, 255, 255, 0);
 }
 
 .personal-messages-content-server-container-inner {
-    height: 110px !important;
+    height: 100% !important;
     background-color: rgba(255, 255, 255, 0) !important;
 }
 
@@ -175,11 +174,10 @@
 
 
 .personal-messages-content-inner-inner {
-    background-color: rgb(0, 136, 255, 0.5);
+    background-color: rgba(43, 255, 0, 0);
     width: 100%;
-    height: 100%;
-    /* height: 530px; */
-    /* min-height: 100%; */
+    height: 82%;
+    flex-grow: 1;
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -189,8 +187,7 @@
 
 .personal-messages-left-container {
     width: 34%;
-    /* max-height: 100%; */
-    background-color: rgba(255, 0, 0, 0.4);
+    background-color: rgba(255, 0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -199,7 +196,7 @@
     overflow-y: auto !important;
     box-shadow: 3px 0px 5px 0px rgba(128, 128, 128, 0.127);
     z-index: 0;
-    border: 1px solid red;
+    border: 1px solid rgba(255, 0, 0, 0);
 }
 
 .personal-messages-list-container {
@@ -215,7 +212,6 @@
 
 .personal-messages-list-container-inner {
     width: 100%;
-    /* height: 100%; */
     display: flex;
     flex-direction: column;
     align-items: stretch;
