@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
-from .models import Module
+from .models import Module, ModuleItem
 from .serializers import ModuleSerializer
 
 @api_view(['POST'])
@@ -14,17 +14,19 @@ def create_module(request):
         return Response({"message": "Only personal users can create modules"}, status=403)
 
     module_title = request.data.get('module_title')
-    details = request.data.get('details')
-
+    
     if not module_title:
         return Response({"message": "Module title is required"}, status=400)
 
-    module = Module.objects.create(module_title=module_title, details=details, user=request.user.personal)
-    
+    module = Module.objects.create(module_title=module_title, user=request.user.personal)
+
+    # Create associated ModuleItems
+    module_items_data = request.data.get('module_items', [])  # Assuming 'module_items' is the key for associated items
+    for item_data in module_items_data:
+        ModuleItem.objects.create(module=module, **item_data)
+
     serializer = ModuleSerializer(module)
     return Response(serializer.data, status=201)
-
-
 
 
 @api_view(['GET'])

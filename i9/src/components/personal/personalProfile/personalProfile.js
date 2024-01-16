@@ -36,17 +36,13 @@ const PersonalProfile = () => {
     };
 
     const dataToSend = {
-      // 'user': authState.user.id,
       'module_title': activeEditTabName,
-      'details': descriptionField
-      // [
-      //   {
-      //     'association_name': titleField,
-      //     'start_date': startDate,
-      //     'end_date': endDate,
-      //     'description': descriptionField,
-      //   }
-      // ]
+      'module_items': [
+        {
+          'association': titleField,
+          'description': descriptionField,
+        }
+      ]
     };
 
     try {
