@@ -1,13 +1,14 @@
-# src/module/models.py
+# src/user/models.py
 from django.db import models
-from ..user.models import Personal
+from ..user.models import Personal, BaseUser
 
 class ModuleProperty(models.Model):
     association_name = models.CharField(max_length=100)
-    duration = models.DurationField()
+    start_date = models.DateField(default=None)
+    end_date = models.DateField(default=None)
     description = models.TextField()
-    
-class Module(models.Model):
-    personal = models.ForeignKey(Personal, on_delete=models.CASCADE)
-    property = models.ManyToManyField(ModuleProperty)
 
+class Module(models.Model):
+    # user = models.ForeignKey(BaseUser, on_delete=models.CASCADE, related_name='modules')
+    module_title = models.TextField()
+    property = models.ManyToManyField(ModuleProperty)

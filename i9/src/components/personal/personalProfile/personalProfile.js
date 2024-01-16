@@ -17,122 +17,67 @@ const PersonalProfile = () => {
 
   const { overlay } = useParams();
   const [profileData, setProfileData] = useState({});
-  const [moduleDataToSend, setModuleDataToSend] = useState(null);
 
-  const [personalInfo, setpersonalInfo] = useState([
-    {
-      module_title: 'Education',
-      properties: [
+
+  const [titleField, setTitleField] = useState('');
+  const [descriptionField, setDescriptionField] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  const [personalProfileInfo, setPersonalProfileInfo] = useState(null);
+
+
+  const handleOverlaySubmit = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${authState.token}`
+      }
+    };
+
+    const dataToSend = {
+      'user': authState.user.id,
+      'module_title': activeEditTabName,
+      'property': [
         {
-          association_name: 'College',
-          duration: 'Jun 2022 - Present',
-          description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'Another College',
-          duration: 'Sep 2020 - May 2022',
-          description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
+          'association_name': titleField,
+          'start_date': startDate,
+          'end_date': endDate,
+          'description': descriptionField,
         }
       ]
-    },
-    {
-      module_title: 'Experience',
-      properties: [
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'ABC Corp',
-          duration: 'Mar 2018 - Nov 2019',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (another long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        }
-      ]
-    },
-    {
-      module_title: 'Industry Experience',
-      properties: [
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'ABC Corp',
-          duration: 'Mar 2018 - Nov 2019',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (another long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-        {
-          association_name: 'XYZ Corp',
-          duration: 'Jan 2020 - Dec 2021',
-          description: 'dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh ... (your long description) dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-        },
-      ]
-    },
-  ]);
+    };
+
+    try {
+      console.log(dataToSend);
+      console.log(authState.token);
+
+      const response = await axios.post(`${API_BASE_URL}personal/module/create/`, dataToSend, config);
+      console.log(response.data);
+      personalProfileInfo(response.data)
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  };
 
 
-  const [personalmoduleInfo, setapersonalmoduleInfo] = useState([
-    {
-      insitution: 'Ohlone College',
-      attended_from_to: 'Jun 2022 - Present',
-      description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-    },
-    {
-      insitution: 'Ohlone College',
-      attended_from_to: 'Jun 2022 - Present',
-      description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-    },
-    {
-      insitution: 'Ohlone College',
-      attended_from_to: 'Jun 2022 - Present',
-      description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-    },
-    {
-      insitution: 'Ohlone College',
-      attended_from_to: 'Jun 2022 - Present',
-      description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-    },
-    {
-      insitution: 'Ohlone College',
-      attended_from_to: 'Jun 2022 - Present',
-      description: 'dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh  rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh  r hrgh rgrgrg rg grrggrgh ghrggdfshh  r hrgh rgrgrg rg grrggrgh ghrgg dfshh r hrgh rgrgrg rg grrggrgh ghrgg dfshh  dfshh   r hrgh rgrgrg rg grrggrgh  ghrgg dfshh dfshh  r hrgh rgrgrggrgrg g rgh ghrgg dfshh  rg grrggrgh ghrgg rgh rgrgrg rg grrggrgh ghrgg dfs r hrgh rgrgrg rg grrggrgh',
-    },
-  ]);
+
 
   const editTabs = [
     {
       edit_tab_title: 'Add Projects',
       value: 'projects',
+      name: 'Project'
     },
     {
       edit_tab_title: 'Add Education',
       value: 'education',
+      name: 'Education'
     },
     {
       edit_tab_title: 'Add Industry Experience',
       value: 'industry_experience',
+      name: 'Industry Experience'
     },
   ];
 
@@ -149,6 +94,10 @@ const PersonalProfile = () => {
       };
       const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
       setProfileData(response.data); // Assuming the response contains the profile picture URL
+
+      const response_module = await axios.get(`${API_BASE_URL}personal/module/get-data/`, config);
+      console.log(response_module.data);
+      setPersonalProfileInfo(response_module.data);
     } catch (error) {
       console.error('Error fetching profile data:', error);
     }
@@ -157,7 +106,10 @@ const PersonalProfile = () => {
 
 
   const [editBarCollapsed, setEditBarCollapsed] = useState(true);
+
   const [activeEditOverlay, setActiveEditOverlay] = useState(null);
+  const [activeEditTabTitle, setActiveEditTabTitle] = useState(null);
+  const [activeEditTabName, setActiveEditTabName] = useState(null);
 
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
@@ -172,9 +124,11 @@ const PersonalProfile = () => {
 
 
 
-  const handleEditBarClick = (activeBar) => {
+  const handleEditBarClick = (activeBar, activeBarTtitle, activeBarName) => {
     setActiveEditOverlay(activeBar);
     navigate(`#${activeBar}`, { replace: true });
+    setActiveEditTabTitle(activeBarTtitle);
+    setActiveEditTabName(activeBarName);
     openOverlay();
   };
 
@@ -183,13 +137,19 @@ const PersonalProfile = () => {
     fetchProfileData();
   }, []);
 
+
   useEffect(() => {
     const hasOverlayParam = editTabs.some((tab) => location.hash.includes(tab.value));
     // Conditionally open the overlay based on the parameter
     if (hasOverlayParam) {
       openOverlay();
-    }
+      setEditBarCollapsed(false);
+      setActiveEditOverlay(location.hash.replace('#', ''));
 
+      const activeTabObject = editTabs.find((tab) => tab.value === (location.hash.replace('#', '')));
+      setActiveEditTabTitle(activeTabObject ? activeTabObject.edit_tab_title : null);
+      setActiveEditTabName(activeTabObject ? activeTabObject.name : null);
+    }
   }, []);
 
 
@@ -223,35 +183,36 @@ const PersonalProfile = () => {
                 </div>
               </div>
             </div>
-            {personalInfo.map((item, index) => (
-              <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
-                <div className='personal-profile-user-module-info-title-container'>
-                  <h2>{item.module_title}</h2>
-                </div>
-                <div className='personal-profile-user-module-info'>
-                  <div className='personal-profile-user-module-info-inner'>
-                    {item.properties.map((property, propertyIndex) => (
+            {personalProfileInfo && (
+              personalProfileInfo.map((item, index) => (
+                <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
+                  <div className='personal-profile-user-module-info-title-container'>
+                    <h2>{item.module_title}</h2>
+                  </div>
+                  <div className='personal-profile-user-module-info'>
+                    <div className='personal-profile-user-module-info-inner'>
+                      {item.property.map((property, propertyIndex) => (
 
-                      <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
-                        <div className='personal-profile-user-educator-per-institution-inner'>
-                          <div className='personal-profile-module-institution-title-container'>
-                            <h3>{property.association_name}</h3>
-                          </div>
-                          <div className='personal-profile-module-institution-date-data-container'>
-                            <p>{property.duration}</p>
-                          </div>
-                          <div className='personal-profile-module-institution-description-container'>
-                            <div className='personal-eduacation-institution-description-text-container'>
-                              <p>{property.description}</p>
+                        <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
+                          <div className='personal-profile-user-educator-per-institution-inner'>
+                            <div className='personal-profile-module-institution-title-container'>
+                              <h3>{property.association_name}</h3>
+                            </div>
+                            <div className='personal-profile-module-institution-date-data-container'>
+                              <p>{property.duration}</p>
+                            </div>
+                            <div className='personal-profile-module-institution-description-container'>
+                              <div className='personal-eduacation-institution-description-text-container'>
+                                <p>{property.description}</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )))}
           </div>
           <div className='personal-profile-content-right'>
             <div className='personal-profile-content-right-sub'>
@@ -261,15 +222,15 @@ const PersonalProfile = () => {
                 </div>
               </div>
               <div className={`personal-profile-content-right-inner ${editBarCollapsed ? 'collapsed' : ''}`}>
-                  <div className='personal-profile-content-right-inner-inner'>
-                    {editTabs.map((tab, index) => (
-                      <div className='personal-profile-edit-per-tab' key={`${index}-${tab.edit_tab_title}`} onClick={() => handleEditBarClick(tab.value)} >
-                        <div className='personal-profile-edit-per-tab-inner'>
-                          {tab.edit_tab_title}
-                        </div>
+                <div className='personal-profile-content-right-inner-inner'>
+                  {editTabs.map((tab, index) => (
+                    <div className='personal-profile-edit-per-tab' key={`${index}-${tab.edit_tab_title}`} onClick={() => handleEditBarClick(tab.value, tab.edit_tab_title, tab.name)} >
+                      <div className='personal-profile-edit-per-tab-inner'>
+                        {tab.edit_tab_title}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -277,7 +238,7 @@ const PersonalProfile = () => {
       </div>
       {isOverlayVisible && (
         <div className="overlay-container" onClick={closeOverlay}>
-          <OverlayContent activeEditOverlay={activeEditOverlay} onClose={closeOverlay} setModuleDataToSend={setModuleDataToSend} />
+          <OverlayContent activeEditOverlay={activeEditOverlay} onClose={closeOverlay} activeEditTabTitle={activeEditTabTitle} activeEditTabName={activeEditTabName} setTitleField={setTitleField} setDescriptionField={setDescriptionField} setStartDate={setStartDate} setEndDate={setEndDate} handleOverlaySubmit={handleOverlaySubmit} titleField={titleField} descriptionField={descriptionField} />
         </div>
       )}
     </div>

@@ -1,7 +1,8 @@
+# src/user/urls.py
 from django.urls import path
-from .views import PersonalDetail, ModuleCreate
+from .views import get_modules, create_module
 
 urlpatterns = [
-    path('<int:pk>/', PersonalDetail.as_view(), name='personal-detail'),
-    path('module/create/', ModuleCreate.as_view(), name='module-create'),
+    path('module/get-data/', get_modules, name='personal-detail'),
+    path('module/create/', create_module, name='module-create'),
 ]

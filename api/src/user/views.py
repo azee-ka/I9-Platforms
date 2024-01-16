@@ -2,7 +2,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .models import BaseUser, Learner, Educator
+from .models import BaseUser, Learner, Educator, Personal
 from .serializers import BaseUserSerializer
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -21,7 +21,8 @@ def register_view(request):
         elif role.lower() == 'educator':
             user = Educator()
         elif role.lower() == 'personal':
-            user = Educator()
+            print("role here", role)
+            user = Personal()
         else:
             return Response({"message": "Invalid role"}, status=400)
  

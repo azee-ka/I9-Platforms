@@ -2,9 +2,18 @@
 
 .bar {
     cursor: pointer;
-  }
-  
-  .overlay-container {
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+
+.overlay-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,30 +23,393 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .overlay-content {
-    background: rgba(26, 26, 26, 0.942);
+}
+
+.overlay-content {
+    background: rgb(19, 19, 19);
     padding: 20px;
     border-radius: 8px;
-    width: 65%;
-    height: 65%;
+    width: 60%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .overlay-content-inner {
-    background-color: rgba(255, 0, 0, 0.342);
-    width: 98%;
+}
+
+.overlay-active-tab-title-container {
+    width: 90%;
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 20px;
+    gap: 8px;
+}
+
+
+.overlay-content-inner {
+    background-color: rgba(255, 0, 0, 0);
+    width: 90%;
     height: 98%;
-  }
-  
-  .close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+}
+
+.overlay-add-modules-container {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 128, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.module-overlay-info-input-container {
+    background-color: rgba(0, 0, 255, 0);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 60px;
+}
+
+.module-overlay-info-input-container-inner {
+    background-color: rgba(165, 165, 211, 0);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+
+
+
+
+
+
+
+
+.module-overlay-duration {
+    flex-grow: 1;
+    height: 100%;
+    background-color: rgba(255, 255, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.module-overlay-duration-inner {
+    background-color: rgb(30, 255, 0, 0);
+    width: 100%;
+    height: 69%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    align-items: center;
+    gap: 5px;
+}
+.module-overlay-duration-inner-inner {
+    background-color: rgba(229, 255, 0, 0);
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.module-overlay-duration-inner input {
+    background-color: transparent;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 16px;
+    height: 100%;
+}
+
+.module-overlay-duration-inner input:hover {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.module-overlay-duration-inner input:focus {
+    border: 1px solid #00bdc0;
+}
+
+
+
+
+
+.module-overlay-checkbox {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 255, 0);
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 15px;
+    gap: 3px;
+}
+.module-overlay-checkbox div {
+    background-color: rgba(21, 255, 0, 0);
+    height: 100%;
+    width: 90% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     cursor: pointer;
-    font-size: 30px;
-  }
-  
+    font-size: 11px;
+    flex-direction: row;
+    gap: 10px;
+    background-color: rgba(255, 0, 0, 0);
+    height: 100%;
+}
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    height: 100%;
+}
+.checkmark {
+    /* position: absolute; */
+    /* top: 0;
+    left: 0; */
+    height: 20px;
+    width: 20px;
+    background-color: rgba(95, 95, 95, 0);
+    border: 1px solid #7f7f7f;
+    border-radius: 3px;
+}
+.checkbox-container input:checked + .checkmark {
+    background-color: #2195f300;
+}
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+.checkbox-container input:checked + .checkmark:after {
+    display: block;
+}
+.checkbox-container .checkmark:after {
+    left: 6px;
+    top: 10px;
+    width: 6px; 
+    height: 14px;
+    border: 1px solid rgb(38, 174, 142);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+
+
+
+
+
+
+
+
+.module-overlay-title {
+    background-color: rgba(255, 0, 0, 0);
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.module-overlay-title-inner {
+    position: relative;
+    width: 90%;
+    height: 48%;
+}
+
+.module-overlay-title-inner textarea {
+    height: 90%;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid gray;
+    line-height: 25px;
+    background-color: transparent;
+    resize: none;
+    color: #fff;
+    padding: 9px;
+    padding-left: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.module-overlay-title-inner textarea:hover {
+    border: 1px solid white;
+}
+
+.module-overlay-title-inner textarea:focus {
+    outline: none;
+    border: 1px solid #00bdc0;
+}
+
+.module-overlay-title-inner label {
+    position: absolute;
+    top: 9px;
+    color: #888;
+    left: 13px;
+    width: fit-content;
+    font-size: 18px;
+    padding: 3px;
+    background: rgb(19, 19, 19);
+    transition: 0.3s;
+}
+
+.module-overlay-title-inner textarea:focus+label,
+.module-overlay-title-inner textarea:not(:placeholder-shown)+label {
+    top: -12px;
+    font-size: 13px;
+    color: #00bdc0;
+}
+
+
+
+
+
+
+
+.module-overlay-description {
+    height: 75%;
+    width: 100%;
+    background-color: rgba(162, 255, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.module-overlay-description-inner {
+    position: relative;
+    height: 90%;
+    width: 97%;
+    margin-top: 2%;
+}
+
+.module-overlay-description-inner textarea {
+    height: 90%;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid gray;
+    line-height: 25px;
+    background-color: transparent;
+    resize: none;
+    color: #fff;
+    padding: 9px;
+    padding-left: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.module-overlay-description-inner label:hover + textarea,
+.module-overlay-description-inner textarea:hover {
+    border: 1px solid white;
+}
+
+
+.module-overlay-description-inner textarea:focus {
+    outline: none;
+    border: 1px solid #00bdc0;
+}
+
+.module-overlay-description-inner label {
+    position: absolute;
+    top: 9px;
+    color: #888;
+    left: 13px;
+    width: fit-content;
+    font-size: 18px;
+    padding: 3px;
+    background: rgb(19, 19, 19);
+    transition: 0.3s;
+}
+
+.module-overlay-description-inner textarea:focus+label,
+.module-overlay-description-inner textarea:not(:placeholder-shown)+label {
+    top: -12px;
+    font-size: 13px;
+    color: #00bdc0;
+}
+
+
+
+
+.module-overlay-title-inner label,
+.module-overlay-description-inner label,
+.module-overlay-title-inner label:hover,
+.module-overlay-description-inner label:hover {
+    cursor: text;
+}
+
+
+
+
+
+.overlay-module-submit-button-container {
+    background-color: rgba(255, 255, 255, 0);
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+
+.overlay-module-submit-button-container-inner {
+    background-color: rgb(163, 41, 41, 0);
+    width: 90%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.overlay-module-submit-button-container-inner button {
+    width: 100px;
+    height: 100%;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 0;
+    background-color: rgba(0, 182, 146, 0.599);
+    color: rgb(255, 255, 255);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 0px 0px 0px rgba(0, 150, 145, 0.615);
+}
+.overlay-module-submit-button-container-inner button:hover {
+    box-shadow: 0px 0px 4px 4px rgba(0, 150, 145, 0.615);
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
