@@ -193,10 +193,10 @@ const PersonalProfile = () => {
                         <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
                           <div className='personal-profile-user-educator-per-institution-inner'>
                             <div className='personal-profile-module-institution-title-container'>
-                              <h3>{property.association_name}</h3>
+                              <h3>{property.association}</h3>
                             </div>
                             <div className='personal-profile-module-institution-date-data-container'>
-                              <p>{property.duration}</p>
+                              <p>{property.start_Date}</p>
                             </div>
                             <div className='personal-profile-module-institution-description-container'>
                               <div className='personal-eduacation-institution-description-text-container'>

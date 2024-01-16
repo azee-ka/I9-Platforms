@@ -5,10 +5,10 @@ from .models import Module, ModuleItem
 class ModuleItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModuleItem
-        fields = ['description', 'association']
+        fields = ['id', 'description', 'association']
 
 class ModuleSerializer(serializers.ModelSerializer):
-    module_items = ModuleItemSerializer(many=True, read_only=True)
+    module_items = ModuleItemSerializer(many=True, read_only=True, source='module_items.all')
 
     class Meta:
         model = Module

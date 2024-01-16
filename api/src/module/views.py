@@ -18,15 +18,28 @@ def create_module(request):
     if not module_title:
         return Response({"message": "Module title is required"}, status=400)
 
-    module = Module.objects.create(module_title=module_title, user=request.user.personal)
+    # Check if a module with the specified title already exists for the user
+    existing_module = Module.objects.filter(user=request.user.personal, module_title=module_title).first()
 
-    # Create associated ModuleItems
-    module_items_data = request.data.get('module_items', [])  # Assuming 'module_items' is the key for associated items
-    for item_data in module_items_data:
-        ModuleItem.objects.create(module=module, **item_data)
+    if existing_module:
+        # If the module exists, add new module_items to it
+        module_items_data = request.data.get('module_items', [])
+        for item_data in module_items_data:
+            ModuleItem.objects.create(module=existing_module, **item_data)
 
-    serializer = ModuleSerializer(module)
-    return Response(serializer.data, status=201)
+        serializer = ModuleSerializer(existing_module)
+        return Response(serializer.data, status=201)
+    else:
+        # If the module doesn't exist, create a new module with module_items
+        module = Module.objects.create(module_title=module_title, user=request.user.personal)
+
+        module_items_data = request.data.get('module_items', [])
+        for item_data in module_items_data:
+            ModuleItem.objects.create(module=module, **item_data)
+
+        serializer = ModuleSerializer(module)
+        return Response(serializer.data, status=201)
+
 
 
 @api_view(['GET'])
