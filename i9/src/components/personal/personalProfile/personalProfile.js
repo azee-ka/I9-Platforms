@@ -180,17 +180,17 @@ const PersonalProfile = () => {
                 </div>
               </div>
             </div>
-            {/* {personalProfileInfo && console.log(personalProfileInfo) && ( */}
-              {/* {personalProfileInfo.map((item, index) => (
+            {personalProfileInfo.length > 0 ? (
+            personalProfileInfo.map((item, index) => (
                 <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
                   <div className='personal-profile-user-module-info-title-container'>
                     <h2>{item.module_title}</h2>
                   </div>
                   <div className='personal-profile-user-module-info'>
                     <div className='personal-profile-user-module-info-inner'>
-                      {item.property.map((property, propertyIndex) => (
+                      {item.module_items.map((property, propertyIndex) => (
 
-                        <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association_name}`}>
+                        <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association}`}>
                           <div className='personal-profile-user-educator-per-institution-inner'>
                             <div className='personal-profile-module-institution-title-container'>
                               <h3>{property.association}</h3>
@@ -209,8 +209,11 @@ const PersonalProfile = () => {
                     </div>
                   </div>
                 </div>
-              ))} */}
-          </div>
+              ))) : (
+                <div>
+                </div>
+              )}
+            </div>    
           <div className='personal-profile-content-right'>
             <div className='personal-profile-content-right-sub'>
               <div className='personal-profile-right-edit-bar-toggle-chevron'>
