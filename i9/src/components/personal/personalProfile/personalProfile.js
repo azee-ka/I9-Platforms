@@ -41,7 +41,9 @@ const PersonalProfile = () => {
         {
           'association': titleField,
           'description': descriptionField,
-        }
+          'start_date': startDate === '' ? null : startDate,
+          'end_date': endDate === '' ? null : endDate,
+        },
       ]
     };
 
@@ -52,8 +54,10 @@ const PersonalProfile = () => {
       const response = await axios.post(`${API_BASE_URL}personal/module/create/`, dataToSend, config);
       console.log(response.data);
       // personalProfileInfo(response.data)
+      navigate('/personal/profile');
+      window.location.reload();
     } catch (error) {
-      console.error('Error fetching profile data:', error);
+      console.error('Error creating module:', error.response.data.message);
     }
   };
 
@@ -196,7 +200,7 @@ const PersonalProfile = () => {
                               <h3>{property.association}</h3>
                             </div>
                             <div className='personal-profile-module-institution-date-data-container'>
-                              <p>{property.start_Date}</p>
+                              <p>{formatDateTime(property.start_date)} - {formatDateTime(property.end_date)}</p>
                             </div>
                             <div className='personal-profile-module-institution-description-container'>
                               <div className='personal-eduacation-institution-description-text-container'>

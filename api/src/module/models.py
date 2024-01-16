@@ -9,6 +9,6 @@ class Module(models.Model):
 class ModuleItem(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='module_items')
     description = models.TextField()
-    association = models.CharField(max_length=100)
+    association = models.CharField(max_length=100, unique=True)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)

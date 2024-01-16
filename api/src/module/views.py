@@ -20,25 +20,29 @@ def create_module(request):
 
     # Check if a module with the specified title already exists for the user
     existing_module = Module.objects.filter(user=request.user.personal, module_title=module_title).first()
+    try :
+        if existing_module:
+            # If the module exists, add new module_items to it
+            module_items_data = request.data.get('module_items', [])
+            for item_data in module_items_data:
+                ModuleItem.objects.create(module=existing_module, **item_data)
 
-    if existing_module:
-        # If the module exists, add new module_items to it
-        module_items_data = request.data.get('module_items', [])
-        for item_data in module_items_data:
-            ModuleItem.objects.create(module=existing_module, **item_data)
+            serializer = ModuleSerializer(existing_module)
+            return Response(serializer.data, status=201)
+        else:
+            # If the module doesn't exist, create a new module with module_items
+            module = Module.objects.create(module_title=module_title, user=request.user.personal)
 
-        serializer = ModuleSerializer(existing_module)
-        return Response(serializer.data, status=201)
-    else:
-        # If the module doesn't exist, create a new module with module_items
-        module = Module.objects.create(module_title=module_title, user=request.user.personal)
+            module_items_data = request.data.get('module_items', [])
+            for item_data in module_items_data:
+                ModuleItem.objects.create(module=module, **item_data)
 
-        module_items_data = request.data.get('module_items', [])
-        for item_data in module_items_data:
-            ModuleItem.objects.create(module=module, **item_data)
-
-        serializer = ModuleSerializer(module)
-        return Response(serializer.data, status=201)
+            serializer = ModuleSerializer(module)
+            return Response(serializer.data, status=201)
+    except Exception as e:
+        print(f'Exception: {e}')
+        return Response({"message": "Title with this name already exists"}, status=500)
+ 
 
 
 

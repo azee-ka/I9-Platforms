@@ -1,4 +1,8 @@
 export const formatDateTime = (dateTimeString, includeTime) => {
+    if(dateTimeString === null) {
+        return '';
+    }
+
     let options;
   
     if (includeTime) {
