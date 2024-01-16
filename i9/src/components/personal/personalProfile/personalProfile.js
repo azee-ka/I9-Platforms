@@ -24,7 +24,7 @@ const PersonalProfile = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const [personalProfileInfo, setPersonalProfileInfo] = useState(null);
+  const [personalProfileInfo, setPersonalProfileInfo] = useState({});
 
 
   const handleOverlaySubmit = async () => {
@@ -38,7 +38,7 @@ const PersonalProfile = () => {
     const dataToSend = {
       // 'user': authState.user.id,
       'module_title': activeEditTabName,
-      'property': descriptionField
+      'details': descriptionField
       // [
       //   {
       //     'association_name': titleField,
@@ -55,7 +55,7 @@ const PersonalProfile = () => {
 
       const response = await axios.post(`${API_BASE_URL}personal/module/create/`, dataToSend, config);
       console.log(response.data);
-      personalProfileInfo(response.data)
+      // personalProfileInfo(response.data)
     } catch (error) {
       console.error('Error fetching profile data:', error);
     }
@@ -184,8 +184,8 @@ const PersonalProfile = () => {
                 </div>
               </div>
             </div>
-            {personalProfileInfo && (
-              personalProfileInfo.map((item, index) => (
+            {/* {personalProfileInfo && console.log(personalProfileInfo) && ( */}
+              {/* {personalProfileInfo.map((item, index) => (
                 <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
                   <div className='personal-profile-user-module-info-title-container'>
                     <h2>{item.module_title}</h2>
@@ -213,7 +213,7 @@ const PersonalProfile = () => {
                     </div>
                   </div>
                 </div>
-              )))}
+              ))} */}
           </div>
           <div className='personal-profile-content-right'>
             <div className='personal-profile-content-right-sub'>

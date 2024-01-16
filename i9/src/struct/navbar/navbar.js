@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import './navbar.css';
 import AppLogo from '../../assets/logo.png';
@@ -21,12 +20,9 @@ const Navbar = () => {
     const history = useNavigate();
     const profileMenuRef = useRef(null);
 
-    const [profileData, setProfileData] = useState({});
-
     const handleProfileMenuToggle = () => {
         setProfileMenuVisible(!profileMenuVisible);
     };
-
 
 
     useEffect(() => {
@@ -43,28 +39,6 @@ const Navbar = () => {
         };
     }, []);
 
-
-    const fetchProfileData = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-            }
-        };
-        try {
-            const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
-            setProfileData(response.data);
-        } catch (error) {
-            console.error('Error fetching profile data:', error);
-        }
-    };
-
-
-    useEffect(() => {
-        if (authState.isAuthenticated) {
-            fetchProfileData();
-        }
-    }, [authState.isAuthenticated]);
 
     const publicPagesNavbar = [
         { path: '/', label: 'Home', id: 'navbar-phrase', role: 'public' },
@@ -123,10 +97,10 @@ const Navbar = () => {
                                             ref={profileMenuRef}
                                         >
                                             <button onClick={handleProfileMenuToggle}>
-                                                {profileData.profilePicture ?
+                                                {authState.user.profilePicture ?
                                                     (<img
                                                         alt={`profile-icon`}
-                                                        src={`${API_BASE_URL}${profileData.profilePicture}`}
+                                                        src={`${API_BASE_URL}${authState.user.profilePicture}`}
                                                         className='profile-icon'
                                                     />) : (
                                                         <img
@@ -137,7 +111,7 @@ const Navbar = () => {
                                                     )
                                                 }
                                             </button>
-                                            {profileMenuVisible && <ProfileMenu user={authState.user} logout={logout} profileData={profileData} />}
+                                            {profileMenuVisible && <ProfileMenu user={authState.user} logout={logout} />}
                                         </li>
                                     )}
                                 </ul>

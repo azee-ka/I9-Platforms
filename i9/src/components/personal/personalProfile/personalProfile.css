@@ -189,7 +189,8 @@
 
 .personal-profile-user-basic-info {
     background-color: rgb(0, 27, 30);
-    min-height: 8%;
+    /* min-height: 8%; */
+    height: 200px;
     /* height: auto; */
     width: 100%;
     border-radius: 15px;

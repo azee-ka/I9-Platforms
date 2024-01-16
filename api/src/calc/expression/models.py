@@ -7,7 +7,7 @@ class ExpressionHistory(models.Model):
     expression = models.TextField()
     category = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    result = models.JSONField(null=True, blank=True)  # Assuming result is a JSONField
+    result = models.JSONField(null=True, blank=True)
 
 
 class Expression(models.Model):
