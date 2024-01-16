@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.db import models
-from .models import BaseUser, Learner, Educator, Personal, Module
+from .models import BaseUser, Learner, Educator, Personal
+from ..module.serializers import ModuleSerializer
 
 class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,11 +20,6 @@ class EducatorSerializer(BaseUserSerializer):
         fields = BaseUserSerializer.Meta.fields + ['institution']
 
 
-
-class ModuleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Module
-        fields = ['id', 'module_title', 'details']
 
 class PersonalSerializer(BaseUserSerializer):
     module = ModuleSerializer(read_only=True)
