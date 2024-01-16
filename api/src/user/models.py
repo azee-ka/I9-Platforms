@@ -2,7 +2,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# from ..module.models import Module
 
 class BaseUser(AbstractUser):
     username = models.CharField(unique=True, max_length=150)
@@ -16,5 +15,4 @@ class Educator(BaseUser):
     institution = models.CharField(max_length=50)
 
 class Personal(BaseUser):
-    # modules = models.ManyToManyField(Module, related_name='users')
     pass

@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import BaseUser, Learner, Educator, Personal
-from .serializers import BaseUserSerializer
+from .serializers import BaseUserSerializer, LearnerSerializer, EducatorSerializer, PersonalSerializer
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -11,64 +11,56 @@ from rest_framework.authtoken.models import Token
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
-    serializer = BaseUserSerializer(data=request.data)
-    if serializer.is_valid():
-        role = request.data.get('role')
+    role = request.data.get('role')
+
+    # Choose the appropriate model based on the 'role' field
+    if role.lower() == 'learner':
+        serializer = LearnerSerializer(data=request.data)
+    elif role.lower() == 'educator':
+        serializer = EducatorSerializer(data=request.data)
+    elif role.lower() == 'personal':
+        serializer = PersonalSerializer(data=request.data)
+    else:
+        return Response({"message": "Invalid role"}, status=400)
         
-        # Choose the appropriate model based on the 'role' field
-        if role.lower() == 'learner':
-            user = Learner()
-        elif role.lower() == 'educator':
-            user = Educator()
-        elif role.lower() == 'personal':
-            print("role here", role)
-            user = Personal()
-        else:
-            return Response({"message": "Invalid role"}, status=400)
- 
     if serializer.is_valid():
         user = serializer.save()
+
+        # Use set_password to handle password hashing
         user.set_password(request.data['password'])
         user.save()
 
-        # Obtain a token for the user
         token, created = Token.objects.get_or_create(user=user)
 
-        # Serialize the user without including the password
-        user_data = BaseUserSerializer(user).data
-
-        # Return the response with the token separate from the user
-        response_data = {'user': user_data, 'token': token.key}
+        response_data = {'user': serializer.data, 'token': token.key}
         return Response(response_data, status=201)
     else:
         print(f"Registration Failed. Errors: {serializer.errors}")
         return Response(serializer.errors, status=400)
 
 
-@api_view(['POST'])
+
 @csrf_exempt
+@api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
     username = request.data.get('username')
     password = request.data.get('password')
+    role = request.data.get('role')
 
-    user = authenticate(request, username=username, password=password)
+    user = authenticate(username=username, password=password)
 
     if user:
-        if user.is_active:
-            login(request, user)
+        # # Check if the user has the specified role
+        # if user.role.lower() != role.lower():
+        #     return Response({"message": "Invalid role for the user"}, status=400)
 
-            # Create a new token for the authenticated user
-            token, created = Token.objects.get_or_create(user=user)
+        # Login the user and generate a new token
+        login(request, user)
+        token, created = Token.objects.get_or_create(user=user)
 
-            # You may also include additional user information in the response
-            user_data = BaseUserSerializer(user).data
-
-            # Return the response with the token separate from the user
-            response_data = {'user': user_data, 'token': token.key}
-            return Response(response_data, status=200)
-        else:
-            return Response({"message": "User account is inactive"}, status=401)
+        response_data = {'user': {'id': user.id, 'username': user.username, 'role': user.role}, 'token': token.key}
+        return Response(response_data, status=200)
     else:
         return Response({"message": "Invalid credentials"}, status=401)
 

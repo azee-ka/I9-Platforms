@@ -40,6 +40,7 @@ const LoginPage = () => {
                 username,
                 password,
             });
+            console.log(response.data)
             login(response.data);
             handleLoginSuccess(response.data);
 

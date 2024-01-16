@@ -63,7 +63,7 @@ const RegisterPage = () => {
             const response = await axios.post(`${API_BASE_URL}access/register/`, data, config);
 
             // Handle the response from the backend as needed
-            // console.log(response.data);
+            console.log(response.data);
             login(response.data);
             navigate('/calculator');
 
