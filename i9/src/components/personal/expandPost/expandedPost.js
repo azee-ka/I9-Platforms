@@ -4,22 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './expandedPost.css'; // Import the CSS file
 import './expandPostOverlay.css';
-import '@fortawesome/fontawesome-free/css/all.css';
+// import '@fortawesome/fontawesome-free/css/all.css';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate from react-router-dom
-import apiUrl from '../../../utils/config';
+import API_BASE_URL from '../../../config';
 import { timeAgo } from './convertDateTIme';
 //import { Link } from 'react-router-dom';
-import { useUserContext } from '../../../context/AppUserContext';
-import UserListOverlay from '../profile/followListOverlay';
+import { useAuth } from '../../../reducers/auth/useAuth';
+import UserListOverlay from '../personalTimeline/followListOverlay';
 //import { findByText } from '@testing-library/react';
 import likedImg from '../../../assets/liked.png';
 import unlikedImg from '../../../assets/unliked.png';
 import dislikedImg from '../../../assets/disliked.png';
 import undislikedImg from '../../../assets/undisliked.png';
-import VideoPlayer from '../timeline/videoPlayer';
+import VideoPlayer from '../utils/videoPlayer';
 
 const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, originalUrl }) => {
-  const { user, fetchUserData } = useUserContext();
+  const { authState } = useAuth();
+  const user = authState.user
   const navigate = useNavigate();
 
   // const [originalUrl, setOriginalUrl] = useState(null);
@@ -105,7 +106,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
 
   useEffect(() => {
     //    setOriginalUrl(window.location.href);
-    fetchUserData();
+    // fetchUserData();
     setLoading(false); // Set loading to false once user data is fetched
 
   }, [setLoading]);
@@ -120,7 +121,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
         'Authorization': `Token ${token}`,
       });
 
-      fetch(`${apiUrl}posts/${postId}`, {
+      fetch(`${API_BASE_URL}posts/${postId}`, {
         method: 'GET',
         headers: headers,
       })
@@ -165,7 +166,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
 
     const token = localStorage.getItem('token');
     const method = (isDisliked === true) ? 'DELETE' : 'POST';
-    fetch(`${apiUrl}posts/${postId}/dislike/`, {
+    fetch(`${API_BASE_URL}posts/${postId}/dislike/`, {
       method: method,
       headers: {
         'Authorization': `Token ${token}`,
@@ -187,7 +188,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
 
     const token = localStorage.getItem('token');
     const method = (isLiked === true) ? 'DELETE' : 'POST';
-    fetch(`${apiUrl}posts/${postId}/like/`, {
+    fetch(`${API_BASE_URL}posts/${postId}/like/`, {
       method: method,
       headers: {
         'Authorization': `Token ${token}`,
@@ -204,7 +205,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
   const handleDeletePost = () => {
     const token = localStorage.getItem('token');
     const method = 'DELETE';
-    fetch(`${apiUrl}posts/${postId}/delete/`, {
+    fetch(`${API_BASE_URL}posts/${postId}/delete/`, {
       method: method,
       headers: {
         'Authorization': `Token ${token}`,
@@ -244,7 +245,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
     formData.append('text', commentText);
     formData.append('post_id', postId);
 
-    fetch(`${apiUrl}posts/${post.id}/comment/`, {
+    fetch(`${API_BASE_URL}posts/${post.id}/comment/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`, // Use 'Authorization' header for the token
@@ -280,7 +281,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
       );
     } else {
       return (
-        <img src={`${apiUrl}${mediaFile.file}`} alt={mediaFile.id} />
+        <img src={`${API_BASE_URL}${mediaFile.file}`} alt={mediaFile.id} />
       );
     }
   };
@@ -301,7 +302,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
                 <div className="expanded-post-user-info">
                   <div className='expanded-post-info-profile-picture'>
                     <a href={myUsernameIsNotSameUser(post.user.username) ? `http://localhost:3000/profile/${post.user.username}` : `http://localhost:3000/profile`}>
-                      <img src={`${apiUrl}${post.user.profile_picture}`} alt={post.user.username} />
+                      <img src={`${API_BASE_URL}${post.user.profile_picture}`} alt={post.user.username} />
                     </a>
                   </div>
                   <div className='expanded-post-info-username'>
@@ -326,7 +327,7 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
                               <div className='expanded-post-comment-user-info'>
                                 <a href={myUsernameIsNotSameUser(comment.user.username) ? `http://localhost:3000/profile/${post.user.username}` : `http://localhost:3000/profile`}>
                                   <div className='expanded-post-info-profile-picture'>
-                                    <img src={`${apiUrl}${comment.user.profile_picture}`} alt={comment.user.username} />
+                                    <img src={`${API_BASE_URL}${comment.user.profile_picture}`} alt={comment.user.username} />
                                   </div>
                                   <div className='expanded-post-user-info-post-comment-text'>
                                     {comment.user.username}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';  // Import Routes from react-router-dom
 import Layout from '../struct/layout/layout';
@@ -10,6 +10,29 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     });
 
     const navigate = useNavigate();
+
+
+  const [showPostOverlay, setShowPostOverlay] = useState(false);
+  const [currentPostId, setCurrentPostId] = useState(null);
+
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [posts, setPosts] = useState(null);
+
+  const [redirected, setRedirected] = useState(false);
+
+  const handleShowPostOverlay = (postIndex, posts, currentIndex) => {
+    console.log('show post ovelrclcikced')
+    setShowPostOverlay(true);
+    setCurrentPostId(postIndex.id);
+
+    setCurrentIndex(currentIndex);
+    setPosts(posts);
+  }
+  const handleExpandPostOverlayClose = (originalUrl) => {
+    setShowPostOverlay(false);
+    window.history.replaceState(null, originalUrl);
+  };
+
 
     useEffect(() => {
         // Redirect to login if not authenticated
@@ -32,8 +55,15 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     className={`${route.path.substring(1)}`}
                                     pageName={route.pageName}
                                     showSidebar={route.showSidebar}
+                                    currentPostId={currentPostId} 
+                                    posts={posts} 
+                                    currentIndex={currentIndex} 
+                                    handleExpandPostOverlayClose={handleExpandPostOverlayClose} 
+                                    showPostOverlay={showPostOverlay} 
+                                    handleShowPostOverlay={handleShowPostOverlay}
+                                    
                                 >
-                                    <Component />
+                                    <Component currentPostId={currentPostId} posts={posts} currentIndex={currentIndex} handleExpandPostOverlayClose={handleExpandPostOverlayClose} showPostOverlay={showPostOverlay} handleShowPostOverlay={handleShowPostOverlay} />
                                 </Layout>
                             }
                         />

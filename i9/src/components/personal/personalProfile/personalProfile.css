@@ -13,17 +13,96 @@
 
 .personal-profile-header {
     background-color: rgba(255, 255, 255, 0);
-    width: 70%;
-    height: 60px;
+    width: 99%;
+    height: 70px;
+    line-height: 0.4 !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
+.personal-profile-header h2 {
+    color: rgb(222, 222, 222);
+    font-size: 24px;
+    background-color: rgba(255, 0, 0, 0) !important;
+    width: 200px;
+}
 .personal-profile-header h3 {
     color: rgb(159, 157, 157);
-    line-height: 0;
-    font-size: 16px
+    font-size: 16px;
+    background-color: rgba(255, 0, 0, 0) !important;
+}
+
+.personal-profile-mode-switch-tab {
+    background-color: rgba(0, 128, 0, 0);
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.personal-profile-mode-switch-tab-inner {
+    background-color: rgb(128, 34, 0, 0);
+    width: 250px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px;
+}
+.personal-profile-academic-tab {
+    width: 50%;
+    height: 100%;
+    background-color: rgba(0, 0, 255, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.personal-profile-interaction-tab {
+    flex-grow: 1;
+    height: 100%;
+    background-color: rgb(0, 255, 247, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.personal-profile-mode-switch-tab-inner button {
+    border: 0px solid white;
+    background-color: rgba(0, 147, 142, 0.681);
+    padding: 5px;
+    height: 40px;
+    width: 100px;
+    color: white;
+    font-size: 16px;
+}
+
+.personal-profile-academic-tab button {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.personal-profile-academic-tab button:hover {
+    background-color: black;
+    box-shadow: -2px 0px 2px 2px rgba(1, 130, 117, 0.689);
+}
+
+.personal-profile-interaction-tab button {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.personal-profile-interaction-tab button:hover {
+    background-color: black;
+    box-shadow: 2px 0px 2px 2px rgba(1, 130, 117, 0.689);
+}
+
+.personal-profile-interaction-tab.active button,
+.personal-profile-academic-tab.active button {
+    background-color: rgba(0, 147, 142, 0.341);
+}
+.personal-profile-interaction-tab.active button:hover,
+.personal-profile-academic-tab.active button:hover {
+    background-color: black;
 }
 
 .personal-profile-description {
@@ -56,12 +135,10 @@
 .personal-profile-content {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
-    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
-    /* text-align: center; */
 }
 
 .personal-profile-content-left {

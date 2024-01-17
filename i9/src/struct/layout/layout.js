@@ -4,8 +4,9 @@ import './layout.css';
 import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebars';
 import CreatePost from '../../components/personal/createPost/createPost';
+import PostFrame from '../../components/personal/personalProfile/postFrame/postFrame';
 
-function Layout({ children, pageName, showSidebar }) {
+function Layout({ children, pageName, showSidebar, currentPostId, posts, currentIndex, handleExpandPostOverlayClose, showPostOverlay }) {
     const [showCreatePostOverlay, setShowCreatePostOverlay] = useState(false);
     const [originalUrl, setOriginalUrl] = useState(null);
 
@@ -32,6 +33,9 @@ function Layout({ children, pageName, showSidebar }) {
             </div>
             {showCreatePostOverlay &&
                 <CreatePost originalUrl={originalUrl} setShowCreatePostOverlay={setShowCreatePostOverlay} />
+            }
+            {showPostOverlay &&
+                <PostFrame postIdForOverlay={currentPostId} posts={posts} currentIndex={currentIndex} onClose={handleExpandPostOverlayClose} originalUrl={originalUrl} />
             }
         </div>
     );

@@ -10,8 +10,9 @@ import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import OverlayContent from './overlayContent';
+import PersonalProfileInteraction from './personalProfileInteraction';
 
-const PersonalProfile = () => {
+const PersonalProfile = ({ handleShowPostOverlay }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -114,6 +115,8 @@ const PersonalProfile = () => {
 
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
+  const [isAcademicMode, setIsAcademicMode] = useState(!true);
+
   const openOverlay = () => {
     setIsOverlayVisible(true);
   };
@@ -159,86 +162,104 @@ const PersonalProfile = () => {
       <div className='personal-profile-container-inner'>
         <div className='personal-profile-header'>
           <h2>My Profile</h2>
+
+          <div className='personal-profile-mode-switch-tab'>
+            <div className='personal-profile-mode-switch-tab-inner'>
+              <div className={`personal-profile-academic-tab ${isAcademicMode ? 'active' : ''}`}>
+                <button onClick={() => setIsAcademicMode(true)} >Academic</button>
+              </div>
+              <div className={`personal-profile-interaction-tab ${!isAcademicMode ? 'active' : ''}`}>
+                <button onClick={() => setIsAcademicMode(false)} >Interaction</button>
+              </div>
+            </div>
+          </div>
+
           <div className='personal-profile-description'>
             <h3>{authState.user.role}</h3>
             <div>Active since {formatDateTime(profileData.date_joined, true)}</div>
           </div>
         </div>
-        <div className='personal-profile-content'>
-          <div className='personal-profile-content-left'>
-            <div className='personal-profile-user-basic-info'>
-              <div className='personal-profile-user-basic-info-inner'>
-                <div className='personal-profile-user-basic-info-left-side'>
-                  <div className='personal-profile-user-basic-info-left-side-inner'>
-                    <div className='personal-profile-user-profile-picture'>
-                      <img alt={`profile-menu-icon`} src={profileData ? profileData.profilePicture ? profileData.profilePicture : default_profile_picture : default_profile_picture} />
-                    </div>
-                    <div className='personal-profile-user-info-text'>
-                      <div className='personal-profile-name-text'>{profileData.first_name} {profileData.last_name}</div>
-                      <div className='personal-profile-username-text'>@{profileData.username}</div>
+        {isAcademicMode ? (
+          <div className='personal-profile-content'>
+            <div className='personal-profile-content-left'>
+              <div className='personal-profile-user-basic-info'>
+                <div className='personal-profile-user-basic-info-inner'>
+                  <div className='personal-profile-user-basic-info-left-side'>
+                    <div className='personal-profile-user-basic-info-left-side-inner'>
+                      <div className='personal-profile-user-profile-picture'>
+                        <img alt={`profile-menu-icon`} src={profileData ? profileData.profilePicture ? profileData.profilePicture : default_profile_picture : default_profile_picture} />
+                      </div>
+                      <div className='personal-profile-user-info-text'>
+                        <div className='personal-profile-name-text'>{profileData.first_name} {profileData.last_name}</div>
+                        <div className='personal-profile-username-text'>@{profileData.username}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className='personal-profile-user-basic-info-right-side'>
+                  <div className='personal-profile-user-basic-info-right-side'>
 
+                  </div>
                 </div>
               </div>
-            </div>
-            {personalProfileInfo.length > 0 ? (
-            personalProfileInfo.map((item, index) => (
-                <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
-                  <div className='personal-profile-user-module-info-title-container'>
-                    <h2>{item.module_title}</h2>
-                  </div>
-                  <div className='personal-profile-user-module-info'>
-                    <div className='personal-profile-user-module-info-inner'>
-                      {item.module_items.map((property, propertyIndex) => (
+              {personalProfileInfo.length > 0 ? (
+                personalProfileInfo.map((item, index) => (
+                  <div className='personal-profile-module-content' key={`${index}-${item.module_title}`}>
+                    <div className='personal-profile-user-module-info-title-container'>
+                      <h2>{item.module_title}</h2>
+                    </div>
+                    <div className='personal-profile-user-module-info'>
+                      <div className='personal-profile-user-module-info-inner'>
+                        {item.module_items.map((property, propertyIndex) => (
 
-                        <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association}`}>
-                          <div className='personal-profile-user-educator-per-institution-inner'>
-                            <div className='personal-profile-module-institution-title-container'>
-                              <h3>{property.association}</h3>
-                            </div>
-                            <div className='personal-profile-module-institution-date-data-container'>
-                              <p>{formatDateTime(property.start_date)} - {formatDateTime(property.end_date)}</p>
-                            </div>
-                            <div className='personal-profile-module-institution-description-container'>
-                              <div className='personal-eduacation-institution-description-text-container'>
-                                <p>{property.description}</p>
+                          <div className='personal-profile-user-module-per-institution' key={`${propertyIndex}-${property.association}`}>
+                            <div className='personal-profile-user-educator-per-institution-inner'>
+                              <div className='personal-profile-module-institution-title-container'>
+                                <h3>{property.association}</h3>
+                              </div>
+                              <div className='personal-profile-module-institution-date-data-container'>
+                                <p>{formatDateTime(property.start_date)} - {formatDateTime(property.end_date)}</p>
+                              </div>
+                              <div className='personal-profile-module-institution-description-container'>
+                                <div className='personal-eduacation-institution-description-text-container'>
+                                  <p>{property.description}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))) : (
+                ))) : (
                 <div>
                 </div>
               )}
-            </div>    
-          <div className='personal-profile-content-right'>
-            <div className='personal-profile-content-right-sub'>
-              <div className='personal-profile-right-edit-bar-toggle-chevron'>
-                <div className='personal-profile-right-edit-bar-toggle-chevron-inner' onClick={() => setEditBarCollapsed(!editBarCollapsed)}>
-                  <FontAwesomeIcon icon={faChevronRight} className={`chevron-icon ${editBarCollapsed ? 'collapsed' : ''}`} />
+            </div>
+
+            <div className='personal-profile-content-right'>
+              <div className='personal-profile-content-right-sub'>
+                <div className='personal-profile-right-edit-bar-toggle-chevron'>
+                  <div className='personal-profile-right-edit-bar-toggle-chevron-inner' onClick={() => setEditBarCollapsed(!editBarCollapsed)}>
+                    <FontAwesomeIcon icon={faChevronRight} className={`chevron-icon ${editBarCollapsed ? 'collapsed' : ''}`} />
+                  </div>
                 </div>
-              </div>
-              <div className={`personal-profile-content-right-inner ${editBarCollapsed ? 'collapsed' : ''}`}>
-                <div className='personal-profile-content-right-inner-inner'>
-                  {editTabs.map((tab, index) => (
-                    <div className='personal-profile-edit-per-tab' key={`${index}-${tab.edit_tab_title}`} onClick={() => handleEditBarClick(tab.value, tab.edit_tab_title, tab.name)} >
-                      <div className='personal-profile-edit-per-tab-inner'>
-                        {tab.edit_tab_title}
+                <div className={`personal-profile-content-right-inner ${editBarCollapsed ? 'collapsed' : ''}`}>
+                  <div className='personal-profile-content-right-inner-inner'>
+                    {editTabs.map((tab, index) => (
+                      <div className='personal-profile-edit-per-tab' key={`${index}-${tab.edit_tab_title}`} onClick={() => handleEditBarClick(tab.value, tab.edit_tab_title, tab.name)} >
+                        <div className='personal-profile-edit-per-tab-inner'>
+                          {tab.edit_tab_title}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          < PersonalProfileInteraction profileData={profileData} handleShowPostOverlay={handleShowPostOverlay} />
+        )
+        }
       </div>
       {isOverlayVisible && (
         <div className="overlay-container" onClick={closeOverlay}>

@@ -20,7 +20,20 @@ from rest_framework import status
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_my_profile(request):
-    user = request.user  # Get the authenticated user
+    base_user = request.user
+    
+        # Attempt to cast the base user to more specific user types
+    if hasattr(base_user, 'learner'):
+        user = base_user.learner
+    elif hasattr(base_user, 'educator'):
+        user = base_user.educator
+    elif hasattr(base_user, 'personal'):
+        user = base_user.personal
+    else:
+        # Handle unexpected user types if any
+        return Response({"message": "Invalid user type"}, status=400)
+
+    
     serializer = PersonalSerializer(user)
     return Response(serializer.data)
 
