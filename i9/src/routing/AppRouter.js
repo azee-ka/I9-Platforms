@@ -21,6 +21,7 @@ const PersonalDashboard = React.lazy(() => import('../components/personal/person
 const PersonalProfile = React.lazy(() => import('../components/personal/personalProfile/personalProfile'));
 const PersonalSettings = React.lazy(() => import('../components/personal/personalSettings/personalSettings'));
 const PersonalMessages = React.lazy(() => import('../components/personal/personalMessages/personalMessages'));
+const CreatePost = React.lazy(() => import('../components/personal/createPost/createPost'));
 
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
@@ -40,6 +41,8 @@ const roleBasedRoutes = [
     { name: 'Personal Profile', path: '/personal/profile#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
+    { name: 'Personal Create Post', path: '/personal/create-post', role: 'Personal', component: CreatePost, key: 'PersonalCreatePost', showSidebar: true },
+
 
     // Educator Pages
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },

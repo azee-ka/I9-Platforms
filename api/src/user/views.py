@@ -41,7 +41,7 @@ def register_view(request):
 
         token, created = Token.objects.get_or_create(user=user)
 
-        response_data = {'user': serializer.data, 'token': token.key}
+        response_data = {'user': {'id': user.id, 'username': user.username, 'role': user.role}, 'token': token.key}
         return Response(response_data, status=201)
     else:
         print(f"Registration Failed. Errors: {serializer.errors}")

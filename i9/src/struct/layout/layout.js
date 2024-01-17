@@ -1,10 +1,17 @@
 // Layout.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './layout.css';
 import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebars';
+import CreatePost from '../../components/personal/createPost/createPost';
 
 function Layout({ children, pageName, showSidebar }) {
+    const [showCreatePostOverlay, setShowCreatePostOverlay] = useState(false);
+    const [originalUrl, setOriginalUrl] = useState(null);
+
+    useEffect(() => {
+        setOriginalUrl(window.location.href);
+    }, []);
 
     return (
         <div className={`parent-layout`}>
@@ -23,6 +30,9 @@ function Layout({ children, pageName, showSidebar }) {
                     </div>
                 </div>
             </div>
+            {showCreatePostOverlay &&
+                <CreatePost originalUrl={originalUrl} setShowCreatePostOverlay={setShowCreatePostOverlay} />
+            }
         </div>
     );
 }

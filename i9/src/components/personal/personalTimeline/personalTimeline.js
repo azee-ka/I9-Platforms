@@ -4,6 +4,7 @@ import axios from 'axios';
 import './personalTimeline.css';
 import { useAuth } from '../../../reducers/auth/useAuth';
 import API_BASE_URL from '../../../config';
+import TimelinePost from './timelinePost';
 
 const PersonalTimeline = () => {
   const { authState } = useAuth();
@@ -11,14 +12,14 @@ const PersonalTimeline = () => {
 
 
   useEffect(() => {
-
     // Fetch explore page posts from your Django backend using Axios with the token in the headers
-    axios.get(`${API_BASE_URL}personal/timeline/posts`, {
+    axios.get(`${API_BASE_URL}personal/timeline/posts/`, {
       headers: {
         Authorization: `Token ${authState.token}` // Include the token in headers for authentication
       }
     })
       .then(response => {
+        console.log(response.data);
         setPosts(response.data);
       })
       .catch(error => {
@@ -34,13 +35,13 @@ const PersonalTimeline = () => {
         </div>
         <div className='personal-timeline-content'>
           <div className="personal-timeline-content-inner">
-            {posts.map((post) =>
-              post.media !== null ? (
-                // Wrap each post with a Link to the ExpandedPost view
-                <div>
-                  </div>
-              ) : null
-            )}
+            <div className="timeline-left-side-container">
+              {posts.map((post) =>
+                post.media !== null ? (
+                  <TimelinePost postData={post} />
+                ) : null
+              )}
+            </div>
             <div className="timeline-right-side-container"></div>
 
           </div>

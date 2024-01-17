@@ -7,4 +7,5 @@ urlpatterns = [
     path('access/register/', register_view, name='register'),
     path('profile/get-user-info/', get_user_info, name='get-user-info'),
     
+    path('personal/', include('src.user.personal.urls'))
 ]
