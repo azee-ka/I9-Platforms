@@ -35,11 +35,15 @@ const roleBasedRoutes = [
     { name: 'Learner Preferences', path: '/learner/preferences', role: 'Learner', component: LearnerSettings, key: 'LearnerPreferences', showSidebar: true },
     { name: 'Learner Messages', path: '/learner/messages', role: 'Learner', component: LearnerMessages, key: 'LearnerMessages', showSidebar: true },
 
+
     // Personal Pages
     { name: 'Personal Dashboard', path: '/', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
     { name: 'Personal Dashboard', path: '/personal/dashboard', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
-    { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
-    { name: 'Personal Profile', path: '/personal/profile#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+
+    { name: 'Personal Profile', path: '/personal/profile/academic', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Profile', path: '/personal/profile/interaction', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Profile', path: '/personal/profile/?interaction#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
     { name: 'Personal Create Post', path: '/personal/create-post', role: 'Personal', component: CreatePost, key: 'PersonalCreatePost', showSidebar: true },
@@ -49,6 +53,7 @@ const roleBasedRoutes = [
     // Educator Pages
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
     
+
     // Any Role Pages
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },
     { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression', showSidebar: true },

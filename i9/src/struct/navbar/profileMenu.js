@@ -40,13 +40,17 @@ const ProfileMenu = ({ user, logout }) => {
     }, [authState.isAuthenticated, setProfileData]);
 
     const profileMenuLinks = [
-        { label: 'Profile', url: '/personal/profile', role: 'Personal' },
+        { label: 'Profile', url: '/personal/profile/academic', role: 'Personal' },
+        // { label: 'Profile', url: '/personal/profile/interaction', role: 'Personal' },
+        
         { label: 'Settings', url: '/personal/preferences', role: 'Personal' },
         { label: 'Messages', url: '/personal/messages', role: 'Personal' },
+
 
         { label: 'Profile', url: '/learner/profile', role: 'Learner' },
         { label: 'Preferences', url: '/learner/preferences', role: 'Learner' },
         { label: 'Messages', url: '/learner/messages', icon: '📬', role: 'Learner' },
+
 
         { label: 'Profile', url: '/educator/profile', role: 'educator' },
         { label: 'Settings', url: '/educator/preferences', role: 'educator' },

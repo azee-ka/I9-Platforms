@@ -8,7 +8,7 @@ import default_profile_picture from '../../../assets/default_profile_picture.png
 import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import PerPostGrid from './perPostGrid';
+import PerPostGrid from './perPostGrid/perPostGrid';
 
 const PersonalProfileInteraction = ({ profileData, handleShowPostOverlay }) => {
     const { authState } = useAuth();

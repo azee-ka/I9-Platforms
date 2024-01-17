@@ -35,11 +35,11 @@ const PostContent = ({ post, setPost, user, originalUrl, showLikesOverlay, setSh
 
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
     const [renderMedia, setRenderMedia] = useState(true);
-    
+
     console.log(post);
 
     useEffect(() => {
-        if(clickedPreviousOrNext) {
+        if (clickedPreviousOrNext) {
             setCurrentMediaIndex(0);
         }
     }, [post]);
@@ -77,7 +77,7 @@ const PostContent = ({ post, setPost, user, originalUrl, showLikesOverlay, setSh
                     if (originalUrl) {
                         window.location.href = originalUrl;
                     } else {
-                        navigate('/profile');
+                        navigate('/personal/profile');
                         window.location.reload();
                     }
                 } else {
@@ -168,20 +168,20 @@ const PostContent = ({ post, setPost, user, originalUrl, showLikesOverlay, setSh
 
 
     const renderMediaContent = (mediaFile, onEnded) => {
-        if(mediaFile){
-        if (mediaFile.media_type === 'mp4' || mediaFile.media_type === 'MOV') {
-            return (
-                <VideoPlayer
-                    mediaFile={mediaFile}
-                    onEnded={onEnded}
-                    playable={true}
-                />
-            );
-        } else {
-            return (
-                <img src={`${API_BASE_URL}${mediaFile.file}`} alt={mediaFile.id} />
-            );
-        }
+        if (mediaFile) {
+            if (mediaFile.media_type === 'mp4' || mediaFile.media_type === 'MOV') {
+                return (
+                    <VideoPlayer
+                        mediaFile={mediaFile}
+                        onEnded={onEnded}
+                        playable={true}
+                    />
+                );
+            } else {
+                return (
+                    <img src={`${API_BASE_URL}${mediaFile.file}`} alt={mediaFile.id} />
+                );
+            }
         }
     };
 
@@ -282,22 +282,22 @@ const PostContent = ({ post, setPost, user, originalUrl, showLikesOverlay, setSh
                             {/* Media container */}
                             <div className={`expanded-media`}>
                                 {post.media_files[currentMediaIndex] &&
-                                <div className='expanded-post-previous-next-media-buttons'>
-                                    <div className={`expanded-post-previous-media-button${(post.media_files[currentMediaIndex].media_type === 'mp4') ? '-video' : ''}`}>
-                                        {currentMediaIndex !== 0 &&
-                                            <button onClick={handlePreviousMedia}>
-                                                <FontAwesomeIcon icon={faChevronLeft} />
-                                            </button>
-                                        }
+                                    <div className='expanded-post-previous-next-media-buttons'>
+                                        <div className={`expanded-post-previous-media-button${(post.media_files[currentMediaIndex].media_type === 'mp4') ? '-video' : ''}`}>
+                                            {currentMediaIndex !== 0 &&
+                                                <button onClick={handlePreviousMedia}>
+                                                    <FontAwesomeIcon icon={faChevronLeft} />
+                                                </button>
+                                            }
+                                        </div>
+                                        <div className={`expanded-post-next-media-button${(post.media_files[currentMediaIndex].media_type === 'mp4') ? '-video' : ''}`}>
+                                            {currentMediaIndex !== (post.media_files.length - 1) &&
+                                                <button onClick={handleNextMedia}>
+                                                    <FontAwesomeIcon icon={faChevronRight} />
+                                                </button>
+                                            }
+                                        </div>
                                     </div>
-                                    <div className={`expanded-post-next-media-button${(post.media_files[currentMediaIndex].media_type === 'mp4') ? '-video' : ''}`}>
-                                        {currentMediaIndex !== (post.media_files.length - 1) &&
-                                            <button onClick={handleNextMedia}>
-                                                <FontAwesomeIcon icon={faChevronRight} />
-                                            </button>
-                                        }
-                                    </div>
-                                </div>
                                 }
 
                                 <div className='expanded-post-each-media'>
