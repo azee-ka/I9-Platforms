@@ -2,11 +2,20 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .models import BaseUser, Learner, Educator, Personal
-from .serializers import BaseUserSerializer, LearnerSerializer, EducatorSerializer, PersonalSerializer
+from .models import BaseUser
+from .learner.models import Learner
+from .educator.models import Educator
+from .personal.models import Personal
+
+from .learner.serializers import LearnerSerializer
+from .educator.serializers import EducatorSerializer
+from .personal.serializers import PersonalSerializer
+
+from .serializers import BaseUserSerializer
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
+from rest_framework import status
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -91,4 +100,3 @@ def get_user_info(request):
 
     serializer = BaseUserSerializer(base_user)
     return Response(serializer.data, status=200)
-

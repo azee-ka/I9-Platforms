@@ -21,6 +21,7 @@ latex2sympy2==1.9.1
 mpmath==1.3.0
 mysqlclient==2.2.1
 numpy==1.26.3
+pillow==10.2.0
 prompt-toolkit==3.0.43
 pycparser==2.21
 PyMySQL==1.1.0
