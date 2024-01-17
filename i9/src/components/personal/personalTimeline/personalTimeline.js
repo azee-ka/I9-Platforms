@@ -4,7 +4,6 @@ import axios from 'axios';
 import './personalTimeline.css';
 import { useAuth } from '../../../reducers/auth/useAuth';
 import API_BASE_URL from '../../../config';
-import Post from './post';
 
 const PersonalTimeline = () => {
   const { authState } = useAuth();
@@ -38,8 +37,8 @@ const PersonalTimeline = () => {
             {posts.map((post) =>
               post.media !== null ? (
                 // Wrap each post with a Link to the ExpandedPost view
-                <Post postInfo={post} />
-
+                <div>
+                  </div>
               ) : null
             )}
             <div className="timeline-right-side-container"></div>

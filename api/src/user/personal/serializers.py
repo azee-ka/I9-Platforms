@@ -25,33 +25,33 @@ class PersonalSerializer(BaseUserSerializer):
         model = Personal
         fields = BaseUserSerializer.Meta.fields + ['module', 'my_posts', 'followers_count', 'following_count', 'followers_list', 'following_list']
         
-        def get_my_posts(self, obj):
+    def get_my_posts(self, obj):
             # Serialize the user's posts as an array of post objects
-            posts = obj.my_posts.all()
-            return PostSerializer(posts, many=True).data
+        posts = obj.my_posts.all()
+        return PostSerializer(posts, many=True).data
 
-        def get_followers_count(self, obj):
+    def get_followers_count(self, obj):
             return obj.followers.count()
 
-        def get_following_count(self, obj):
-            return obj.following.count()
+    def get_following_count(self, obj):
+        return obj.following.count()
         
-        def get_followers_list(self, obj):
-            followers = obj.followers.all()
-            return FollowerSerializer(followers, many=True).data
+    def get_followers_list(self, obj):
+        followers = obj.followers.all()
+        return FollowerSerializer(followers, many=True).data
 
-        def get_following_list(self, obj):
-            following = obj.following.all()
-            return FollowerSerializer(following, many=True).data
+    def get_following_list(self, obj):
+        following = obj.following.all()
+        return FollowerSerializer(following, many=True).data
         
-        def to_representation(self, instance):
-                data = super().to_representation(instance)
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
                 
-                # Check if the current user is following the profile
-                request = self.context.get('request')
-                if request and request.user.is_authenticated:
-                    data['is_followed_by_current_user'] = instance.followers.filter(id=request.user.id).exists()
-                else:
-                    data['is_followed_by_current_user'] = False
+        # Check if the current user is following the profile
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            data['is_followed_by_current_user'] = instance.followers.filter(id=request.user.id).exists()
+        else:
+            data['is_followed_by_current_user'] = False
 
-                return data
+        return data
