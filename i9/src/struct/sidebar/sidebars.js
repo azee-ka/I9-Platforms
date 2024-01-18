@@ -20,7 +20,7 @@ const Sidebar = () => {
         { path: '/personal/create-post', label: 'C', id: 'navbar-phrase', role: 'learner' },
         { path: '/personal/explore', label: 'C', id: 'navbar-phrase', role: 'Learner' },
     ];
-    
+
     const privatePagesLargeSidebar = [
         { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'learner' },
         { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'learner' },
@@ -67,8 +67,8 @@ const Sidebar = () => {
                     {showLargeSidebar &&
                         <div className='sidebar-large-container-content'>
                             <ul>
-                                {privatePagesLargeSidebar.map((item) => (
-                                    <a key={`${item.label}-${item.role}`} href={item.path}>
+                                {privatePagesLargeSidebar.map((item, index) => (
+                                    <a key={`${item.label}-${index}`} href={item.path}>
                                         <li>
                                             <div className='sidebar-large-per-item'>
                                                 {item.label}

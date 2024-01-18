@@ -3,16 +3,9 @@ import React, { useState, useEffect } from 'react';
 import './layout.css';
 import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebars';
-import CreatePost from '../../components/personal/createPost/createPost';
-import PostFrame from '../../components/personal/personalProfile/postFrame/postFrame';
+import ExpandPost from '../../components/personal/postUI/expandPost/expandPost';
 
-function Layout({ children, pageName, showSidebar, currentPostId, posts, currentIndex, handleExpandPostOverlayClose, showPostOverlay }) {
-    const [showCreatePostOverlay, setShowCreatePostOverlay] = useState(false);
-    const [originalUrl, setOriginalUrl] = useState(null);
-
-    useEffect(() => {
-        setOriginalUrl(window.location.href);
-    }, []);
+function Layout({ children, pageName, showSidebar, expandPostIdReciever, handleExpandPostClose }) {
 
     return (
         <div className={`parent-layout`}>
@@ -31,11 +24,8 @@ function Layout({ children, pageName, showSidebar, currentPostId, posts, current
                     </div>
                 </div>
             </div>
-            {showCreatePostOverlay &&
-                <CreatePost originalUrl={originalUrl} setShowCreatePostOverlay={setShowCreatePostOverlay} />
-            }
-            {showPostOverlay &&
-                <PostFrame postIdForOverlay={currentPostId} posts={posts} currentIndex={currentIndex} onClose={handleExpandPostOverlayClose} originalUrl={originalUrl} />
+            {expandPostIdReciever !== undefined && expandPostIdReciever !== null &&
+                <ExpandPost overlayPostId={expandPostIdReciever} handleExpandPostClose={handleExpandPostClose} />
             }
         </div>
     );

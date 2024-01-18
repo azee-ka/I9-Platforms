@@ -1,0 +1,39 @@
+.post-for-grid {
+    max-width: 315px;
+    min-width: 100px;
+    /* height: 315px; */
+    background-color: rgb(26, 26, 26, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+}
+
+.post-for-grid-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(0, 128, 0, 0);
+    object-fit: cover;
+    overflow: hidden;
+    transition: 0.3 ease-out;
+    border-radius: 5px;
+}
+.post-for-grid-inner:hover {
+    opacity: 0.4;
+  }
+
+
+
+.post-for-grid-inner img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover;
+}
+
+.post-for-grid-inner video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* z-index: 300; */
+  }
