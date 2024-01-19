@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.css';
 import PerPostGrid from '../../postUI/postGrid/postGrid';
+import ProfilePictureEditor from '../../utils/profilePictureEditor/profilePictureEditor';
 
 const PersonalProfileInteraction = ({ handleExpandPostOpen }) => {
     const { authState } = useAuth();
@@ -81,6 +82,15 @@ const PersonalProfileInteraction = ({ handleExpandPostOpen }) => {
                     </div>
                 </div>
             </div>
+            {/* {showProfilePictureEditor &&
+                <ProfilePictureEditor
+                    selectedProfilePicture={selectedProfilePicture}
+                    setSelectedProfilePicture={setSelectedProfilePicture}
+                    onClose={handleCloseOverlay}
+                    onSave={handleProfilePictureUpdate}
+                    currentProfilePicture={currentProfilePicture}  // Pass the current profile picture URL
+                />
+            } */}
         </div>
     );
 };
