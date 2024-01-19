@@ -1,5 +1,149 @@
 .expanded-post-overlay-container {
-    width: 50%;
-    height: 80%;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.0);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.expanded-post-overlay-user-info-comments-container {
+    width: 350px;
+    height: 650px;
+    background-color: rgb(41, 242, 226, 0);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 6px;
+}
+.expanded-post-overlay-user-info {
+    height: 60px;
+    width: 100%;
+    background-color: pink;
+    border-radius: 8px;
+}
+.expanded-post-overlay-comments {
+    flex-grow: 1;
+    width: 100%;
+    background-color: green;
+    border-radius: 8px;
+}
+
+
+.expanded-post-overlay-post-info-img-container {
+    /* min-width: 600px;
+    min-height: 600px;
+    max-width: 900px;
+    max-height: 720px; */
+/* 
+    min-height: 400px;
+    min-width: 400px;
+    max-height: 400px;
+    max-width: 930px; */
+    /* object-fit: contain; */
+    background-color: rgb(154, 26, 26, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    gap: 10px;
+}
+
+.expanded-post-overlay-post-info-container {
+    width: 100%;
+    height: 30px;
+    background-color: blue;
+}
+.expanded-post-overlay-img-container {
+    /* width: 100%; */
+    /* height: 700px; */
+    /* flex-grow: 1; */
+
+    aspect-ratio: inherit;
+    background-color: rgba(255, 255, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.expanded-post-overlay-img-previous-next-buttons-container {
+    position: absolute;
+    background-color: rgba(127, 255, 212, 0);
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.expanded-post-overlay-img-previous-next-buttons-container-inner {
+    width: 99%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    color: white;
+    font-size: 16px;
+    background-color: rgba(128, 0, 128, 0);
+}
+.expanded-post-overlay-img-previous-next-buttons-container-inner div {
+    color: white;
+    font-size: 14px;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+
+}
+
+.expanded-post-overlay-img-previous-next-buttons-container-inner div div {
+    border-radius: 50%;
+    background-color: rgba(99, 99, 99, 0.832);
+    aspect-ratio: 1 / 1;
+
+}
+
+.expanded-post-overlay-img-previous-next-buttons-container-inner div div:hover {
+    box-shadow: 0px 0px 3px 3px rgba(0, 176, 162, 0.714);
+    background-color: rgba(0, 176, 158, 0.336);
+}
+
+
+.expanded-post-overlay-post-img {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+
+}
+.expanded-post-overlay-post-img img {
+    object-fit: cover;
+    min-height: 400px;
+    min-width: 400px;
+    max-height: 730px;
+    max-width: 920px;
+    border-radius: 8px;
+}
+.expanded-post-overlay-post-img video {
+    object-fit: cover;
+
+    min-height: 400px;
+    min-width: 400px;
+    max-height: 730px;
+    max-width: 900px;
+}
+
+.expanded-post-overlay-interaction-container {
+    width: 100%;
+    height: 100%;
+    width: 50px;
+    height: 550px;
+    background-color: green;
 }

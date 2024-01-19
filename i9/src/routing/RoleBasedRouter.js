@@ -20,7 +20,6 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     };
     const handleExpandPostClose = () => {
         // e.stopPropagation();
-        console.log('expandPostOnCloseUrl');
         setExpandPostIdReciever(null);
         navigate(expandPostOnCloseUrl);
     };

@@ -11,11 +11,13 @@
     z-index: 999; 
     color: white;
 }
-.expanded-post-overlay {
+/* .expanded-post-overlay {
     width: 60%;
     height: 70%;
     background-color: rgba(179, 35, 35, 0.4);
-}
+} */
+
+
 
 
 .expanded-post-container.non-overlay {
@@ -27,4 +29,3 @@
     align-items: center;
     color: white;
 }
-

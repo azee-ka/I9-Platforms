@@ -8,6 +8,7 @@ import default_profile_picture from '.././../../../assets/default_profile_pictur
 import { formatDateTime } from '../../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-free/css/all.css';
 import PerPostGrid from '../../postUI/postGrid/postGrid';
 
 const PersonalProfileInteraction = ({ handleExpandPostOpen }) => {
