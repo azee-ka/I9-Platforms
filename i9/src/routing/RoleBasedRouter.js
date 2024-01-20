@@ -11,25 +11,19 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
         return state.auth.user.role;
     });
 
-    const [expandPreviousPostIdReciever, setExpandPreviousPostIdReciever] = useState();
     const [expandPostIdReciever, setExpandPostIdReciever] = useState();
-    const [expandNextPostIdReciever, setExpandNextPostIdReciever] = useState();
 
     const [expandPostOnCloseUrl, setExpandPostOnCloseUrl] = useState();
 
-    const handleExpandPostOpen = (overlayPreviousPostId, postIdToExpand, overlayNextPostId, originalPreviousUrl) => {
-        setExpandPreviousPostIdReciever(overlayPreviousPostId);
+    const handleExpandPostOpen = (postIdToExpand, originalPreviousUrl) => {
         setExpandPostIdReciever(postIdToExpand);
-        setExpandNextPostIdReciever(overlayNextPostId);
 
         setExpandPostOnCloseUrl(originalPreviousUrl);
     }; 
 
     const handleExpandPostClose = () => {
         // e.stopPropagation();
-        setExpandPreviousPostIdReciever(null);
         setExpandPostIdReciever(null);
-        setExpandNextPostIdReciever(null);
 
         navigate(expandPostOnCloseUrl);
     };
@@ -50,8 +44,6 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     showSidebar={route.showSidebar}
                                     expandPostIdReciever={expandPostIdReciever}
                                     handleExpandPostClose={handleExpandPostClose}
-                                    overlayNextPostId={expandNextPostIdReciever}
-                                    overlayPreviousPostId={expandPreviousPostIdReciever}
                                 >
                                     <Component handleExpandPostOpen={handleExpandPostOpen} />
                                 </Layout>

@@ -18,7 +18,7 @@ import UserListOverlay from '../../../utils/userListOverlay/userListOverlay';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 
-const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClick, nextPostClick }) => {
+const ExpandedPostOverlay = ({ postData }) => {
 
     const navigate = useNavigate();
     const { authState } = useAuth();
@@ -34,8 +34,8 @@ const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClic
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
-    const [previousPostId, setPreviousPostId] = useState();
-    const [nextPostId, setNextPostId] = useState();
+    // const [previousPostId, setPreviousPostId] = useState();
+    // const [nextPostId, setNextPostId] = useState();
 
     // useEffect(() => {
     //     setPreviousPostId(prePostID ? prePostID : null);
@@ -44,10 +44,11 @@ const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClic
 
 
 
-
+    
 
     useEffect(() => {
         setPost(postData);
+        console.log(postData)
     }, [postData]);
 
     const handleCloseOverlay = () => {
@@ -161,7 +162,7 @@ const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClic
 
 
     const renderMediaContent = (mediaFile, onEnded) => {
-        console.log(mediaFile)
+        // console.log(mediaFile)
         if (mediaFile.media_type === 'mp4' || mediaFile.media_type === 'MOV') {
             return (
                 <VideoPlayer
@@ -293,7 +294,6 @@ const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClic
                 </div>
                 <div onClick={handlePostDislike}>
                     <img src={postDisliked ? disliked : undisliked} />
-
                 </div>
                 <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
                     <i className='fa fa-trash' id="delete-icon" />
@@ -308,15 +308,15 @@ const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClic
             <div className='expand-overlay-previous-next-post-button-container'>
                 <div className='expand-overlay-previous-next-post-button-container-inner '>
                     <div className='expanded-post-overlay-previous-post-button-container'>
-                        {previousPostId &&
-                            <div className='expanded-post-overlay-previous-post-button-container-inner' onClick={perviousPostClick}>
+                        {
+                            <div className='expanded-post-overlay-previous-post-button-container-inner' >
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </div>
                         }
                     </div>
                     <div className='expanded-post-overlay-next-post-button-container'>
-                        {nextPostId &&
-                            <div className='expanded-post-overlay-next-post-button-container-inner' onClick={nextPostClick}>
+                        { 
+                            <div className='expanded-post-overlay-next-post-button-container-inner' >
                                 <FontAwesomeIcon icon={faChevronRight} />
                             </div>
                         }

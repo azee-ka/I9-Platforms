@@ -12,7 +12,7 @@ const PerPostGrid = ({ postData, previousPostId, nextPostId, handleExpandPostOpe
 
   const handlePostClick = () => {
     console.log("click", postData);
-    handleExpandPostOpen(previousPostId, postData.id, nextPostId, window.location.pathname);
+    handleExpandPostOpen(postData.id, window.location.pathname);
     window.history.replaceState(null, null, `/post/${postData.id}`);
   };
 

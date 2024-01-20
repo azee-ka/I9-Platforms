@@ -402,12 +402,11 @@
     justify-content: space-between;
     align-content: center;
     color: white;
-    font-size: 16px;
     background-color: rgba(128, 0, 128, 0);
 }
 .expanded-post-overlay-img-previous-next-buttons-container-inner div {
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: rgba(255, 0, 0, 0);
@@ -420,14 +419,14 @@
 
 .expanded-post-overlay-img-previous-next-buttons-container-inner div div {
     border-radius: 50%;
-    background-color: rgb(201, 201, 201);
+    background-color: rgb(101, 101, 101);
     aspect-ratio: 1 / 1;
 
 }
 
 .expanded-post-overlay-img-previous-next-buttons-container-inner div div:hover {
-    box-shadow: 0px 0px 3px 3px rgba(0, 176, 162, 0.714);
-    background-color: rgba(0, 176, 158, 0.336);
+    box-shadow: 0px 0px 3px 0px rgba(0, 176, 162, 0.714);
+    background-color: rgb(0, 205, 198);
 }
 
 
@@ -510,6 +509,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: -1;
 }
 
 .expand-overlay-previous-next-post-button-container-inner {

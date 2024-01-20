@@ -7,38 +7,16 @@ import './expandPost.css';
 import ExpandedPostOverlay from './expandPostOverlay/expandPostOverlay';
 import ExpandedPostNonOverlay from './expandPostNonOverlay/expandPostNonOverlay';
 
-const ExpandPost = ({ overlayPostId, overlayNextPostId, overlayPreviousPostId, handleExpandPostClose }) => {
+const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
     const { authState } = useAuth();
 
     const [expandPostData, setExpandPostData] = useState();
 
     const { postId } = useParams();
-    const [expandPostIdForNonOverlay, setExpandPostIdForNonOverlay] = useState(null);
 
 
-    const [previousPostId, setPreviousPostId] = useState();
-    const [nextPostId, setNextPostId] = useState();
+    const [expandPostIdFinal, setExpandPostIdFinal] = useState(overlayPostId ? overlayPostId : postId);
 
-    useEffect(() => {
-        setPreviousPostId(overlayPreviousPostId ? overlayPreviousPostId : null);
-        setNextPostId(overlayNextPostId ? overlayNextPostId : null);
-    }, []);
-
-
-
-
-    const perviousPostClick = () => {
-        console.log("left", previousPostId);
-        if (previousPostId) {
-            window.history.replaceState(null, null, `/post/${previousPostId}`);
-        }
-    };
-    const nextPostClick = () => {
-        console.log("right", nextPostId);
-        if (nextPostId) {
-            window.history.replaceState(null, null, `/post/${nextPostId}`);
-        }
-    };
 
 
 
@@ -50,7 +28,7 @@ const ExpandPost = ({ overlayPostId, overlayNextPostId, overlayPreviousPostId, h
                     Authorization: `Token ${authState.token}`
                 }
             };
-            const response = await axios.get(`${API_BASE_URL}posts/${overlayPostId ? overlayPostId : postId}/`, config);
+            const response = await axios.get(`${API_BASE_URL}posts/${expandPostIdFinal}/`, config);
             console.log(response.data)
             setExpandPostData(response.data);
 
@@ -62,18 +40,18 @@ const ExpandPost = ({ overlayPostId, overlayNextPostId, overlayPreviousPostId, h
 
     useEffect(() => {
         fetchPostData();
-        setExpandPostIdForNonOverlay(postId);
+        setExpandPostIdFinal(overlayPostId ? overlayPostId : postId);
     }, []);
 
 
     return (
-        <div className={`expanded-post-container ${expandPostIdForNonOverlay ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
-            {expandPostIdForNonOverlay === undefined &&
+        <div className={`expanded-post-container ${!overlayPostId ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
+            {overlayPostId !== undefined &&
                 <div className='expanded-post-overlay' onClick={(e) => e.stopPropagation()}>
-                    <ExpandedPostOverlay postData={expandPostData} nextPostID={overlayNextPostId} prePostID={overlayPreviousPostId} perviousPostClick={perviousPostClick} nextPostClick={nextPostClick} />
+                    <ExpandedPostOverlay postData={expandPostData} />
                 </div>
             }
-            {expandPostIdForNonOverlay !== undefined &&
+            {overlayPostId === undefined &&
                 <ExpandedPostNonOverlay postData={expandPostData}/>
             }
         </div>

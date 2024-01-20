@@ -5,7 +5,7 @@ import Navbar from '../navbar/navbar';
 import Sidebar from '../sidebar/sidebars';
 import ExpandPost from '../../components/personal/postUI/expandPost/expandPost';
 
-function Layout({ children, pageName, showSidebar, expandPostIdReciever, overlayNextPostId, overlayPreviousPostId, handleExpandPostClose }) {
+function Layout({ children, pageName, showSidebar, expandPostIdReciever, handleExpandPostClose }) {
 
     return (
         <div className={`parent-layout`}>
@@ -25,7 +25,7 @@ function Layout({ children, pageName, showSidebar, expandPostIdReciever, overlay
                 </div>
             </div>
             {expandPostIdReciever !== undefined && expandPostIdReciever !== null &&
-                <ExpandPost overlayPostId={expandPostIdReciever} overlayNextPostId={overlayNextPostId} overlayPreviousPostId={overlayPreviousPostId} handleExpandPostClose={handleExpandPostClose} />
+                <ExpandPost overlayPostId={expandPostIdReciever} handleExpandPostClose={handleExpandPostClose} />
             }
         </div>
     );
