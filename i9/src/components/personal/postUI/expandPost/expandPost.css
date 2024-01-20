@@ -11,19 +11,13 @@
     z-index: 999; 
     color: white;
 }
-/* .expanded-post-overlay {
-    width: 60%;
-    height: 70%;
-    background-color: rgba(179, 35, 35, 0.4);
-} */
-
 
 
 
 .expanded-post-container.non-overlay {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255);
+    background: rgba(255, 255, 255, 0);
     display: flex;
     justify-content: center;
     align-items: center;

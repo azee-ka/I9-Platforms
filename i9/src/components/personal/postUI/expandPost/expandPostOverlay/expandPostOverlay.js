@@ -230,7 +230,7 @@ const ExpandedPostOverlay = ({ postData }) => {
                         </div>
                     </div>
                     <div className='expanded-post-comment-post-container'>
-                        <div className={`expanded-post-comment-post-button`}>
+                        <div className={`expanded-post-comment-post-button ${commentTextField !== '' ? 'active' : ''}`}>
                             {commentTextField !== '' &&
                                 <button onClick={handlePostCommentButton} >Post</button>
                             }
@@ -252,9 +252,9 @@ const ExpandedPostOverlay = ({ postData }) => {
                             <p>Posted {timeAgo(post.created_at)}</p>
                         </div>
                         <div className='expanded-post-overlay-post-info-likes-unlikes-comments-count'>
-                            <p >{post.comments.length} comments</p>
-                            <p onClick={() => setShowLikesOverlay(!showLikesOverlay)}>{post.likes.length} likes</p>
-                            <p onClick={() => setShowDislikesOverlay(!showDislikesOverlay)}>{post.dislikes.length} dislikes</p>
+                            <p >{post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}</p>
+                            <p onClick={() => setShowLikesOverlay(!showLikesOverlay)}>{post.likes.length} {post.likes.length === 1 ? 'like' : 'likes'}</p>
+                            <p onClick={() => setShowDislikesOverlay(!showDislikesOverlay)}>{post.dislikes.length} {post.dislikes.length === 1 ? 'dislike' : 'dislikes'}</p>
                         </div>
                     </div>
                 </div>
