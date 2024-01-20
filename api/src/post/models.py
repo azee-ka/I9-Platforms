@@ -5,6 +5,13 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
+import cv2
+import numpy as np
+import tempfile
+import os
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -16,11 +23,15 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.user.username}"
 
+
+
 class MediaFile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(upload_to='post_media/')
     media_type = models.CharField(max_length=10, default="default")
     order = models.IntegerField(default=0)
+    
+    
     
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -34,6 +45,8 @@ class Post(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
     dislikes_count = models.PositiveIntegerField(default=0)  # Field for the number of dislikes
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_posts', blank=True)
+
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
 
 
     def __str__(self):

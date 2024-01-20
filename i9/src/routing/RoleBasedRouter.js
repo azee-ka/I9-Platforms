@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Layout from '../struct/layout/layout';
 import '../App.css';
 
@@ -11,16 +11,26 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
         return state.auth.user.role;
     });
 
+    const [expandPreviousPostIdReciever, setExpandPreviousPostIdReciever] = useState();
     const [expandPostIdReciever, setExpandPostIdReciever] = useState();
+    const [expandNextPostIdReciever, setExpandNextPostIdReciever] = useState();
+
     const [expandPostOnCloseUrl, setExpandPostOnCloseUrl] = useState();
 
-    const handleExpandPostOpen = (postIdToExpand, originalPreviousUrl) => {
+    const handleExpandPostOpen = (overlayPreviousPostId, postIdToExpand, overlayNextPostId, originalPreviousUrl) => {
+        setExpandPreviousPostIdReciever(overlayPreviousPostId);
         setExpandPostIdReciever(postIdToExpand);
+        setExpandNextPostIdReciever(overlayNextPostId);
+
         setExpandPostOnCloseUrl(originalPreviousUrl);
-    };
+    }; 
+
     const handleExpandPostClose = () => {
         // e.stopPropagation();
+        setExpandPreviousPostIdReciever(null);
         setExpandPostIdReciever(null);
+        setExpandNextPostIdReciever(null);
+
         navigate(expandPostOnCloseUrl);
     };
 
@@ -40,21 +50,32 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     showSidebar={route.showSidebar}
                                     expandPostIdReciever={expandPostIdReciever}
                                     handleExpandPostClose={handleExpandPostClose}
+                                    overlayNextPostId={expandNextPostIdReciever}
+                                    overlayPreviousPostId={expandPreviousPostIdReciever}
                                 >
-                                    <Component handleExpandPostOpen={handleExpandPostOpen}/>
+                                    <Component handleExpandPostOpen={handleExpandPostOpen} />
                                 </Layout>
                             }
                         />
                     </Routes>
                 );
+            } else {
+                return null;
+                // return( <Routes>
+                //     <Route
+                //         path="/*"
+                //         element={<Navigate to={'/personal/dashboard'} />}
+                //     />
+                // </Routes>);
             }
-            return null;
+
         });
     };
 
     return (
         <div className='sub-app'>
             {isAuthenticated && renderRoutes()}
+
         </div>
     );
 };

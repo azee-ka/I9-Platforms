@@ -3,7 +3,7 @@ from django.db import models
 from .models import Personal
 from ...module.serializers import ModuleSerializer
 from ..serializers import BaseUserSerializer
-from ...post.serializers import PostSerializer
+from ...post.serializers import PostSerializer, MinimalPostSerializer
 
 class FollowerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,7 +28,7 @@ class PersonalSerializer(BaseUserSerializer):
     def get_my_posts(self, obj):
             # Serialize the user's posts as an array of post objects
         posts = obj.my_posts.all()
-        return PostSerializer(posts, many=True).data
+        return MinimalPostSerializer(posts, many=True).data
 
     def get_followers_count(self, obj):
             return obj.followers.count()

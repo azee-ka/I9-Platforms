@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from .models import Post, Comment, MediaFile
 from .serializers import PostSerializer, CommentSerializer, MediaFileSerializer
+from django.db import transaction
 
 class PostListCreateView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
@@ -29,6 +30,9 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Post, MediaFile
 from .serializers import PostSerializer, PostSerializer, CommentSerializer
 import uuid
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -75,10 +79,6 @@ def create_post(request):
             return Response({'message': 'User is not authenticated.'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
 
 
 

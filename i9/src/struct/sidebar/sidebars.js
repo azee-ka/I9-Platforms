@@ -18,14 +18,14 @@ const Sidebar = () => {
         { path: '/learner/dashboard', label: 'D', id: 'navbar-phrase', role: 'learner' },
         { path: '/calculator', label: 'C', id: 'navbar-phrase', role: 'learner' },
         { path: '/personal/create-post', label: 'C', id: 'navbar-phrase', role: 'learner' },
-        { path: '/personal/explore', label: 'C', id: 'navbar-phrase', role: 'Learner' },
+        { path: '/personal/explore', label: 'E', id: 'navbar-phrase', role: 'Learner' },
     ];
 
     const privatePagesLargeSidebar = [
         { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'learner' },
         { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'learner' },
         { path: '/personal/create-post', label: 'C', id: 'navbar-phrase', role: 'Learner' },
-        { path: '/personal/explore', label: 'C', id: 'navbar-phrase', role: 'Learner' },
+        { path: '/personal/explore', label: 'Explore', id: 'navbar-phrase', role: 'Learner' },
 
     ];
 

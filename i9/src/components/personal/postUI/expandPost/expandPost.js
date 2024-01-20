@@ -7,13 +7,40 @@ import './expandPost.css';
 import ExpandedPostOverlay from './expandPostOverlay/expandPostOverlay';
 import ExpandedPostNonOverlay from './expandPostNonOverlay/expandPostNonOverlay';
 
-const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
+const ExpandPost = ({ overlayPostId, overlayNextPostId, overlayPreviousPostId, handleExpandPostClose }) => {
     const { authState } = useAuth();
 
     const [expandPostData, setExpandPostData] = useState();
 
     const { postId } = useParams();
     const [expandPostIdForNonOverlay, setExpandPostIdForNonOverlay] = useState(null);
+
+
+    const [previousPostId, setPreviousPostId] = useState();
+    const [nextPostId, setNextPostId] = useState();
+
+    useEffect(() => {
+        setPreviousPostId(overlayPreviousPostId ? overlayPreviousPostId : null);
+        setNextPostId(overlayNextPostId ? overlayNextPostId : null);
+    }, []);
+
+
+
+
+    const perviousPostClick = () => {
+        console.log("left", previousPostId);
+        if (previousPostId) {
+            window.history.replaceState(null, null, `/post/${previousPostId}`);
+        }
+    };
+    const nextPostClick = () => {
+        console.log("right", nextPostId);
+        if (nextPostId) {
+            window.history.replaceState(null, null, `/post/${nextPostId}`);
+        }
+    };
+
+
 
     const fetchPostData = async () => {
         try {
@@ -43,7 +70,7 @@ const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
         <div className={`expanded-post-container ${expandPostIdForNonOverlay ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
             {expandPostIdForNonOverlay === undefined &&
                 <div className='expanded-post-overlay' onClick={(e) => e.stopPropagation()}>
-                    <ExpandedPostOverlay postData={expandPostData}/>
+                    <ExpandedPostOverlay postData={expandPostData} nextPostID={overlayNextPostId} prePostID={overlayPreviousPostId} perviousPostClick={perviousPostClick} nextPostClick={nextPostClick} />
                 </div>
             }
             {expandPostIdForNonOverlay !== undefined &&

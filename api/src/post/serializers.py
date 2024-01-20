@@ -82,3 +82,33 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_dislikes_count(self, obj):
         return obj.dislikes.count()
+
+
+
+
+import cv2
+import numpy as np
+import tempfile
+import os
+
+class MinimalPostSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = [
+            'thumbnail',
+            'id',
+        ]
+
+    def get_thumbnail(self, obj):
+        # Assuming 'media_files' is a related manager on the Post model
+        thumbnail_media_file = obj.media_files.first()
+
+        if thumbnail_media_file:
+            return {
+                'file': thumbnail_media_file.file.url,
+                'media_type': thumbnail_media_file.media_type,
+            }
+
+        return None

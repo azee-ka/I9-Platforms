@@ -336,6 +336,7 @@
     align-items: center;
     gap: 10px;
 }
+
 .expanded-post-overlay-post-creation-time {
     min-width: 150px;
     max-width: 260px;
@@ -369,6 +370,11 @@
     border: 1px solid rgba(128, 128, 128, 0.417);
     padding-left: 6px;
     padding-right: 6px;
+}
+
+.expanded-post-overlay-post-info-likes-unlikes-comments-count p:hover:nth-child(3),
+.expanded-post-overlay-post-info-likes-unlikes-comments-count p:hover:nth-child(2) {
+    cursor: pointer;
 }
 
 .expanded-post-overlay-img-container {
@@ -443,7 +449,7 @@
 }
 .expanded-post-overlay-post-img video {
     object-fit: cover;
-
+    border-radius: 8px;
     min-height: 400px;
     min-width: 400px;
     max-height: 730px;
@@ -464,14 +470,82 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
 }
 
 
+.expanded-post-overlay-interaction-container div {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgb(0, 107, 123, 0);
+    transition: background-color 0.3s ease;
+}
+
+.expanded-post-overlay-interaction-container div:hover {
+    cursor: pointer;
+    background-color: rgb(0, 107, 123);
+}
 .expanded-post-overlay-interaction-container img {
     width: 30px;
     aspect-ratio: 1 / 1;
 }
-.expanded-post-overlay-interaction-container img:hover {
+
+.expanded-post-overlay-delete-post i {
+    font-size: 20px;
+}
+
+
+
+
+
+.expand-overlay-previous-next-post-button-container {
+    position: absolute;
+    width: 100%;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expand-overlay-previous-next-post-button-container-inner {
+    position: relative;
+    width: 98%;
+    height: 100%;
+    background-color: rgba(18, 191, 18, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.expand-overlay-previous-next-post-button-container-inner div {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 255, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expand-overlay-previous-next-post-button-container-inner div div {
+    height: 85%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(105, 105, 105, 0.444);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid rgb(131, 131, 131, 0);
+    font-size: 20px;
+}
+
+.expand-overlay-previous-next-post-button-container-inner div div:hover {
+    background-color: rgba(0, 255, 255, 0.444);
+    border: 1px solid rgb(131, 131, 131, 0);
     cursor: pointer;
 }

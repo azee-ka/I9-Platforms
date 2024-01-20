@@ -7,7 +7,7 @@ import API_BASE_URL from '../../../../../config';
 import default_profile_picture from '../../../../../assets/default_profile_picture.png';
 import axios from 'axios';
 import { useAuth } from '../../../../../reducers/auth/useAuth';
-import { timeAgo } from './convertDateTime';
+import { timeAgo } from '../convertDateTime';
 import ExpandedPostLoading from '../expandedPostLoading/expandedPostLoading';
 import unliked from '../../../../../assets/unliked.png';
 import undisliked from '../../../../../assets/undisliked.png';
@@ -15,8 +15,12 @@ import liked from '../../../../../assets/liked.png';
 import disliked from '../../../../../assets/disliked.png';
 import VideoPlayer from '../../../utils/videoPlayer';
 import UserListOverlay from '../../../utils/userListOverlay/userListOverlay';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router';
 
-const ExpandedPostOverlay = ({ postData }) => {
+const ExpandedPostOverlay = ({ postData, prePostID, nextPostID, perviousPostClick, nextPostClick }) => {
+
+    const navigate = useNavigate();
     const { authState } = useAuth();
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
@@ -30,6 +34,17 @@ const ExpandedPostOverlay = ({ postData }) => {
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
+    const [previousPostId, setPreviousPostId] = useState();
+    const [nextPostId, setNextPostId] = useState();
+
+    // useEffect(() => {
+    //     setPreviousPostId(prePostID ? prePostID : null);
+    //     setNextPostId(nextPostID ? nextPostID : null);
+    // }, []);
+
+
+
+
 
     useEffect(() => {
         setPost(postData);
@@ -39,6 +54,7 @@ const ExpandedPostOverlay = ({ postData }) => {
         setShowLikesOverlay(false);
         setShowDislikesOverlay(false);
     }
+
 
     const handleMediaPreviousClick = () => {
         if (currentMediaIndex !== 0) {
@@ -125,23 +141,41 @@ const ExpandedPostOverlay = ({ postData }) => {
     };
 
 
+    const handleDeletePost = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+            await axios.delete(`${API_BASE_URL}posts/${post.id}/delete/`, config);
+            navigate(null);
+            window.location.reload();
 
-  const renderMediaContent = (mediaFile, onEnded) => {
-    console.log(mediaFile)
-    if (mediaFile.media_type === 'mp4' ||  mediaFile.media_type === 'MOV') {
-      return (
-        <VideoPlayer
-          mediaFile={mediaFile}
-          onEnded={onEnded}
-          playable={true}
-        />
-      );
-    } else {
-      return (
-        <img src={`${API_BASE_URL}${mediaFile.file}`} alt={mediaFile.id} />
-      );
-    }
-  };
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    };
+
+
+
+    const renderMediaContent = (mediaFile, onEnded) => {
+        console.log(mediaFile)
+        if (mediaFile.media_type === 'mp4' || mediaFile.media_type === 'MOV') {
+            return (
+                <VideoPlayer
+                    mediaFile={mediaFile}
+                    onEnded={onEnded}
+                    playable={true}
+                />
+            );
+        } else {
+            return (
+                <img src={`${API_BASE_URL}${mediaFile.file}`} alt={mediaFile.id} />
+            );
+        }
+    };
 
 
     return post ? (
@@ -254,16 +288,41 @@ const ExpandedPostOverlay = ({ postData }) => {
                 </div>
             </div>
             <div className='expanded-post-overlay-interaction-container'>
-                <img src={postLiked ? liked : unliked} onClick={handlePostLike} />
-                <img src={postDisliked ? disliked : undisliked} onClick={handlePostDislike} />
+                <div onClick={handlePostLike}>
+                    <img src={postLiked ? liked : unliked} />
+                </div>
+                <div onClick={handlePostDislike}>
+                    <img src={postDisliked ? disliked : undisliked} />
+
+                </div>
+                <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
+                    <i className='fa fa-trash' id="delete-icon" />
+                </div>
             </div>
             {showLikesOverlay && (
-        <UserListOverlay userList={post.likes} onClose={handleCloseOverlay} title={'Likes'} username={authState.user.username} />
-      )}
-      {showDislikesOverlay && (
-        <UserListOverlay userList={post.dislikes} onClose={handleCloseOverlay} title={'Dislikes'} username={authState.user.username} />
-      )}
-
+                <UserListOverlay userList={post.likes} onClose={handleCloseOverlay} title={'Likes'} username={authState.user.username} />
+            )}
+            {showDislikesOverlay && (
+                <UserListOverlay userList={post.dislikes} onClose={handleCloseOverlay} title={'Dislikes'} username={authState.user.username} />
+            )}
+            <div className='expand-overlay-previous-next-post-button-container'>
+                <div className='expand-overlay-previous-next-post-button-container-inner '>
+                    <div className='expanded-post-overlay-previous-post-button-container'>
+                        {previousPostId &&
+                            <div className='expanded-post-overlay-previous-post-button-container-inner' onClick={perviousPostClick}>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                            </div>
+                        }
+                    </div>
+                    <div className='expanded-post-overlay-next-post-button-container'>
+                        {nextPostId &&
+                            <div className='expanded-post-overlay-next-post-button-container-inner' onClick={nextPostClick}>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     ) : (
         <ExpandedPostLoading />

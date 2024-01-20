@@ -67,11 +67,23 @@ const PersonalProfileInteraction = ({ handleExpandPostOpen }) => {
                         <div className='personal-profile-interaction-posts-grid-inner'>
                             <div className='personal-profile-interaction-posts-grid-inner-inner'>
                                 {postsData &&
-                                    postsData.map((post, index) => (
-                                        <div className='grid-per-post' key={`${post.id}-${index}`}>
-                                            <PerPostGrid classname={'profile'} postData={post} handleExpandPostOpen={handleExpandPostOpen} />
-                                        </div>
-                                    ))}
+                                    postsData.map((post, index) => {
+                                        const previousPost = index > 0 ? postsData[index - 1] : null;
+                                        const nextPost = index < postsData.length - 1 ? postsData[index + 1] : null;
+
+                                        return (
+                                            <div className='grid-per-post' key={`${post.id}-${index}`}>
+                                                <PerPostGrid
+                                                    postData={post}
+                                                    previousPostId={previousPost ? previousPost.id : null}
+                                                    nextPostId={nextPost ? nextPost.id : null}
+                                                    handleExpandPostOpen={handleExpandPostOpen}
+                                                />
+                                            </div>
+                                        );
+                                    })
+                                }
+
                             </div>
                         </div>
                     </div>

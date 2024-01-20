@@ -8,6 +8,7 @@ import RegisterPage from '../access/register/register';
 import Access from '../access/access';
 import Layout from '../struct/layout/layout';
 import { useAuth } from '../reducers/auth/useAuth';
+import ExpandedPostLoading from '../components/personal/postUI/expandPost/expandedPostLoading/expandedPostLoading';
 
 
 const Calculator = React.lazy(() => import('../components/tools/calculator/calculator'));
@@ -23,9 +24,9 @@ const PersonalSettings = React.lazy(() => import('../components/personal/persona
 const PersonalMessages = React.lazy(() => import('../components/personal/personalMessages/personalMessages'));
 const CreatePost = React.lazy(() => import('../components/personal/createPost/createPost'));
 const ExpandedPost = React.lazy(() => import('../components/personal/postUI/expandPost/expandPost'));
+const PersonalExplore = React.lazy(() => import('../components/personal/personalExplore/personalExplore'));
 
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
-
 
 const roleBasedRoutes = [
     // Learner Pages
@@ -34,6 +35,7 @@ const roleBasedRoutes = [
     { name: 'Learner Profile', path: '/learner/profile', role: 'Learner', component: LearnerProfile, key: 'LearnerProfile', showSidebar: true },
     { name: 'Learner Preferences', path: '/learner/preferences', role: 'Learner', component: LearnerSettings, key: 'LearnerPreferences', showSidebar: true },
     { name: 'Learner Messages', path: '/learner/messages', role: 'Learner', component: LearnerMessages, key: 'LearnerMessages', showSidebar: true },
+
 
 
     // Personal Pages
@@ -48,11 +50,14 @@ const roleBasedRoutes = [
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
     { name: 'Personal Create Post', path: '/personal/create-post', role: 'Personal', component: CreatePost, key: 'PersonalCreatePost', showSidebar: true },
     { name: 'Personal Post', path: '/post/:postId', role: 'Personal', component: ExpandedPost, key: 'PersonalPost', showSidebar: true },
+    { name: 'Personal Explore', path: '/personal/explore', role: 'Personal', component: PersonalExplore, key: 'PersonalExplore', showSidebar: true },
+
 
 
     // Educator Pages
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
     
+
 
     // Any Role Pages
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },

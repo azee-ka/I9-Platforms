@@ -7,12 +7,12 @@ import './postGrid.css';
 import API_BASE_URL from '../../../../config';
 import VideoPlayer from '../../utils/videoPlayer';
 
-const PerPostGrid = ({ classname, postData, handleExpandPostOpen }) => {
+const PerPostGrid = ({ postData, previousPostId, nextPostId, handleExpandPostOpen }) => {
   const navigate = useNavigate();
 
   const handlePostClick = () => {
-    console.log("click");
-    handleExpandPostOpen(postData.id, window.location.pathname);
+    console.log("click", postData);
+    handleExpandPostOpen(previousPostId, postData.id, nextPostId, window.location.pathname);
     window.history.replaceState(null, null, `/post/${postData.id}`);
   };
 
@@ -21,17 +21,15 @@ const PerPostGrid = ({ classname, postData, handleExpandPostOpen }) => {
   return (
     <div className='post-for-grid'>
       <div className='post-for-grid-inner' onClick={handlePostClick}>
-        {postData.media_files.length > 0 &&
-          (postData.media_files[0].media_type === 'mp4' || postData.media_files[0].media_type === 'MOV' ? (
+          {postData.thumbnail.media_type === 'mp4' || postData.thumbnail.media_type === 'MOV' ? (
             <VideoPlayer
-              mediaFile={postData.media_files[0]}
+              mediaFile={postData.thumbnail}
               onEnded={null}
               playable={false}
             />
           ) : (
-            <img src={`${API_BASE_URL}${postData.media_files[0].file}`} alt={postData.id} />
-          ))
-        }
+            <img src={`${API_BASE_URL}${postData.thumbnail.file}`} alt={postData.id} />
+          )}
       </div>
     </div>
   );

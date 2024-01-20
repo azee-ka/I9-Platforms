@@ -10,5 +10,6 @@ urlpatterns = [
     path('search/', search_users, name='search-users'),
     path('update-profile-picture/', update_user_profile, name='update-user-profile'),
     
-    path('timeline/', include('src.user.personal.timeline.urls'))
+    path('timeline/', include('src.user.personal.timeline.urls')),
+    path('explore/', include('src.user.personal.explore.urls')),
 ]
