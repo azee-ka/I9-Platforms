@@ -39,8 +39,8 @@ const UserListOverlay = ({ userList, onClose, title }) => {
                 </div>
                 {userList.length !== 0 && (
                     <div className="follow-list">
-                        {userList.map((thisUser) => (
-                            <a href={myUsernameIsNotSameUser(thisUser.username) ? `http://localhost:3000/profile/${thisUser.username}` : `http://localhost:3000/profile`} key={thisUser.id}>
+                        {userList.map((thisUser, index) => (
+                            <a href={myUsernameIsNotSameUser(thisUser.username) ? `http://localhost:3000/profile/${thisUser.username}` : `http://localhost:3000/profile`} key={`${thisUser.id}-${index}`}>
                                 <div className="follow-list-item">
                                     <div className='profile-picture-img-container-user-list-overlay'>
                                     <img src={`${thisUser.profile_picture !== null ? API_BASE_URL + thisUser.profile_picture : default_profile_picture}`} alt={thisUser.username} />

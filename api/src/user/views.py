@@ -100,3 +100,57 @@ def get_user_info(request):
 
     serializer = BaseUserSerializer(base_user)
     return Response(serializer.data, status=200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def link_profile(request, linked_profile_id):
+    # Ensure the user is authenticated and authorized to link profiles
+    # Your authentication and authorization logic here...
+
+    # Get the user instance
+    user = request.user
+
+    # Get the profile to be linked
+    linked_profile = get_object_or_404(BaseUser, id=linked_profile_id)
+
+    # Link the profiles
+    user.link_profile(linked_profile)
+
+    return Response({"message": "Profiles linked successfully"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def unlink_profile(request, linked_profile_id):
+    # Ensure the user is authenticated and authorized to unlink profiles
+    # Your authentication and authorization logic here...
+
+    # Get the user instance
+    user = request.user
+
+    # Get the profile to be unlinked
+    linked_profile = get_object_or_404(BaseUser, id=linked_profile_id)
+
+    # Unlink the profiles
+    user.unlink_profile(linked_profile)
+
+    return Response({"message": "Profiles unlinked successfully"})

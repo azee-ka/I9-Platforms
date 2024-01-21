@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './navbar.css';
 import AppLogo from '../../assets/logo.png';
 import { useAuth } from '../../reducers/auth/useAuth';
-import ProfileMenu from './profileMenu';
+import ProfileMenu from './profileMenu/profileMenu';
 import API_BASE_URL from '../../config';
 import default_profile_picture from '../../assets/default_profile_picture.png'
 

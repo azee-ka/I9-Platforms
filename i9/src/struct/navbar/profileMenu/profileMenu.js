@@ -4,15 +4,17 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useAuth } from '../../reducers/auth/useAuth';
+import { useAuth } from '../../../reducers/auth/useAuth';
 import './profileMenu.css';
-import API_BASE_URL from '../../config';
-import default_profile_picture from '../../assets/default_profile_picture.png'
-
+import API_BASE_URL from '../../../config';
+import default_profile_picture from '../../../assets/default_profile_picture.png'
+import ProfileAddAuthOverlay from '../profileLinkAuthOverlay/profileLinkAuthOverlay';
 
 const ProfileMenu = ({ user, logout }) => {
     const { authState } = useAuth();
     const userRole = useSelector((state) => state.auth.user.role);
+
+    const [showAddProfileOverlay, setShowAddProfileOverlay] = useState(false);
 
     const [profileData, setProfileData] = useState({});
 
@@ -120,6 +122,9 @@ const ProfileMenu = ({ user, logout }) => {
             <div className='profile-menu-account-profiles-list'>
                 <div className='profile-menu-account-profiles-list-title'>
                     <p>Profiles</p>
+                    <div className='profile-menu-account-profiles-add-profile-button'>
+                        <button onClick={() => setShowAddProfileOverlay(true)}>+ Add Profile</button>
+                    </div>
                 </div>
                 <div className='profile-menu-account-profiles-list-content'>
                     <div className='profile-menu-account-profiles-list-content-inner'>
@@ -146,6 +151,9 @@ const ProfileMenu = ({ user, logout }) => {
                     </div>
                 </div>
             </div>
+            {showAddProfileOverlay &&
+                <ProfileAddAuthOverlay setShowAddProfileOverlay={setShowAddProfileOverlay} />
+            }
         </div>
     );
 };

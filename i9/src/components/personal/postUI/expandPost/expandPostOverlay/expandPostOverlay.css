@@ -107,6 +107,7 @@
 .expanded-post-overlay-container .expanded-post-overlay-comments-innner {
     border-radius: 10px;
     width: 93%;
+    height: 100%;
     background-color: rgba(255, 0, 0, 0);
     display: flex;
     flex-direction: column;
@@ -481,7 +482,7 @@
     object-fit: cover;
     min-height: 400px;
     min-width: 400px;
-    max-height: 660px;
+    max-height: 740px;
     max-width: 830px;
     border-radius: 8px;
 }
@@ -491,7 +492,7 @@
     border-radius: 8px;
     min-height: 400px;
     min-width: 400px;
-    max-height: 660px;
+    max-height: 740px;
     max-width: 830px;
 }
 

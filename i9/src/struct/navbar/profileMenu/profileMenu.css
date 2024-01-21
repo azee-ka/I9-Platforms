@@ -179,9 +179,10 @@
 .profile-menu-account-profiles-list-title {
     background-color: rgba(0, 128, 0, 0);
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    height: 23px;
+    justify-content: space-between;
+    height: 30px;
     padding: 5px;
     margin-bottom: 7px;
 }
@@ -312,4 +313,31 @@
     font-size: 10px;
     color: rgb(151, 151, 151);
     font-style: italic;
+}
+
+
+
+
+.profile-menu-account-profiles-add-profile-button {
+    height: 100%;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0);
+}
+.profile-menu-account-profiles-add-profile-button button {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: white;
+    padding: 10px !important;
+}
+.profile-menu-account-profiles-add-profile-button button:hover {
+    border: 1px solid gray;
 }
