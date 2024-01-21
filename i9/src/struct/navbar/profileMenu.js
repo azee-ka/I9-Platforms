@@ -16,6 +16,33 @@ const ProfileMenu = ({ user, logout }) => {
 
     const [profileData, setProfileData] = useState({});
 
+    // mock profile list
+    const [userProfilesList, setUserProfilesList] = useState([
+        {
+            username: 'user1',
+            email: 'user1@email.com',
+            profile_role: 'Professional',
+            profile_picture: '',
+        },
+        {
+            username: 'user2',
+            email: 'user2@email.com',
+            profile_role: 'Personal',
+            profile_picture: '',
+        },
+        {
+            username: 'user3',
+            email: 'user3@email.com',
+            profile_role: 'Industry',
+            profile_picture: '',
+        },
+        {
+            username: 'user4',
+            email: 'user4@email.com',
+            profile_role: 'Industry',
+            profile_picture: '',
+        },
+    ]);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -42,7 +69,7 @@ const ProfileMenu = ({ user, logout }) => {
     const profileMenuLinks = [
         { label: 'Profile', url: '/personal/profile/academic', role: 'Personal' },
         // { label: 'Profile', url: '/personal/profile/interaction', role: 'Personal' },
-        
+
         { label: 'Settings', url: '/personal/preferences', role: 'Personal' },
         { label: 'Messages', url: '/personal/messages', role: 'Personal' },
 
@@ -72,7 +99,7 @@ const ProfileMenu = ({ user, logout }) => {
             <div className="profile-menu-links">
                 <ul>
                     {profileMenuLinks.map((link) => (
-                        (userRole === link.role) &&(<a href={link.url} key={`${link.label}-${link.role}`}>
+                        (userRole === link.role) && (<a href={link.url} key={`${link.label}-${link.role}`}>
                             <li id='exclude-link'>
                                 <div className='profile-menu-per-link'>
                                     <div className='profile-menu-link-label'>
@@ -88,6 +115,36 @@ const ProfileMenu = ({ user, logout }) => {
             </div>
             <div className='profile-menu-sign-out-button-container'>
                 <button onClick={logout}>Sign Out</button>
+            </div>
+
+            <div className='profile-menu-account-profiles-list'>
+                <div className='profile-menu-account-profiles-list-title'>
+                    <p>Profiles</p>
+                </div>
+                <div className='profile-menu-account-profiles-list-content'>
+                    <div className='profile-menu-account-profiles-list-content-inner'>
+                        {userProfilesList.map((profile, index) => (
+                            <div className='profile-menu-per-account-profile' key={`${index}-${profile.profile_role}`}>
+                                <div className='profile-menu-per-account-profile-inner'>
+                                    <div className='profile-menu-per-account-profile-picture-container'>
+                                        <img src={`${profile.profile_role}`} />
+                                    </div>
+                                    <div className='profile-menu-per-account-profile-info-container'>
+                                        <div className='profile-menu-per-account-profile-info-container-inner'>
+                                            <div className='profile-menu-per-account-profile-username-email-container'>
+                                                <p>{profile.username}</p>
+                                                <p>{profile.email}</p>
+                                            </div>
+                                            <div className='profile-menu-per-account-profile-role-container'>
+                                                <p>{profile.profile_role}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
