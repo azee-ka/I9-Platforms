@@ -10,8 +10,8 @@ from .serializers import ModuleSerializer
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_module(request):
-    if request.user.role.lower() != 'personal':
-        return Response({"message": "Only personal users can create modules"}, status=403)
+    if request.user.role.lower() != 'professional':
+        return Response({"message": "Only professional users can create modules"}, status=403)
 
     module_title = request.data.get('module_title')
     
@@ -19,7 +19,7 @@ def create_module(request):
         return Response({"message": "Module title is required"}, status=400)
 
     # Check if a module with the specified title already exists for the user
-    existing_module = Module.objects.filter(user=request.user.personal, module_title=module_title).first()
+    existing_module = Module.objects.filter(user=request.user.professional, module_title=module_title).first()
     try :
         if existing_module:
             # If the module exists, add new module_items to it
@@ -31,7 +31,7 @@ def create_module(request):
             return Response(serializer.data, status=201)
         else:
             # If the module doesn't exist, create a new module with module_items
-            module = Module.objects.create(module_title=module_title, user=request.user.personal)
+            module = Module.objects.create(module_title=module_title, user=request.user.professional)
 
             module_items_data = request.data.get('module_items', [])
             for item_data in module_items_data:
@@ -49,9 +49,9 @@ def create_module(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_modules(request):
-    if request.user.role.lower() != 'personal':
-        return Response({"message": "Only personal users can retrieve modules"}, status=403)
+    if request.user.role.lower() != 'professional':
+        return Response({"message": "Only professional users can retrieve modules"}, status=403)
 
-    modules = Module.objects.filter(user=request.user.personal)
+    modules = Module.objects.filter(user=request.user.professional)
     serializer = ModuleSerializer(modules, many=True)
     return Response(serializer.data, status=200)

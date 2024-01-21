@@ -8,8 +8,7 @@ import { useAuth } from '../reducers/auth/useAuth';
 const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     const navigate = useNavigate();
 
-    const { authState } = useAuth();
-    console.log(authState)
+    // const { authState } = useAuth();
     const userRole = useSelector((state) => {
         return state.auth.user.role;
     });
@@ -22,7 +21,7 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
         setExpandPostIdReciever(postIdToExpand);
 
         setExpandPostOnCloseUrl(originalPreviousUrl);
-    }; 
+    };
 
     const handleExpandPostClose = () => {
         // e.stopPropagation();

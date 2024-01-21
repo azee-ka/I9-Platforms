@@ -26,6 +26,10 @@ const CreatePost = React.lazy(() => import('../components/personal/createPost/cr
 const ExpandedPost = React.lazy(() => import('../components/personal/postUI/expandPost/expandPost'));
 const PersonalExplore = React.lazy(() => import('../components/personal/personalExplore/personalExplore'));
 
+
+const ProfessionalProfile = React.lazy(() => import('../components/professional/professionalProfile/professionalProfile'));
+
+
 const EducatorDashboard = React.lazy(() => import('../components/educator/educatorDashbord/educatorDashboard'));
 
 const roleBasedRoutes = [
@@ -42,10 +46,8 @@ const roleBasedRoutes = [
     { name: 'Personal Dashboard', path: '/', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
     { name: 'Personal Dashboard', path: '/personal/dashboard', role: 'Personal', component: PersonalDashboard, key: 'PersonalDashboard', showSidebar: true },
 
-    { name: 'Personal Profile', path: '/personal/profile/academic', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
-    { name: 'Personal Profile', path: '/personal/profile/interaction', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
-    { name: 'Personal Profile', path: '/personal/profile/?interaction#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
-
+    { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Profile', path: '/personal/profile/#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
     { name: 'Personal Create Post', path: '/personal/create-post', role: 'Personal', component: CreatePost, key: 'PersonalCreatePost', showSidebar: true },
@@ -53,10 +55,17 @@ const roleBasedRoutes = [
     { name: 'Personal Explore', path: '/personal/explore', role: 'Personal', component: PersonalExplore, key: 'PersonalExplore', showSidebar: true },
 
 
+    // Professional Pages
+    { name: 'Professional Profile', path: '/', role: 'Professional', component: ProfessionalProfile, key: 'ProfessionalProfile', showSidebar: true },
+    { name: 'Professional Profile', path: '/professional/profile', role: 'Professional', component: ProfessionalProfile, key: 'ProfessionalProfile', showSidebar: true },
+    { name: 'Professional Preferences', path: '/professional/preferences', role: 'Professional', component: PersonalSettings, key: 'ProfessionalPreferences', showSidebar: true },
+    { name: 'Professional Messages', path: '/professional/messages', role: 'Professional', component: PersonalMessages, key: 'ProfessionalMessages', showSidebar: true },
+
+
 
     // Educator Pages
     { name: 'Educator Dashboard', path: '/educator/dashboard', role: 'Educator', component: EducatorDashboard, key: 'EducatorDashboard', showSidebar: true },
-    
+
 
 
     // Any Role Pages
@@ -77,7 +86,7 @@ const AppRouter = () => {
     const { authState, isLoading } = useAuth();
 
     const isAuthenticated = authState.isAuthenticated;
-    
+
     // useEffect(() => {
     //     console.log(authState);
     // }, [authState.isAuthenticated]);
@@ -91,10 +100,10 @@ const AppRouter = () => {
         <Router>
             <React.Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    {!isAuthenticated && publicRoutes.map((route) => (
-                        <Route key={route.key} path={route.path} element={
+                    {!isAuthenticated && publicRoutes.map((route, index) => (
+                        <Route key={`${index}-${route.path}`} path={route.path} element={
                             <Layout
-                                key={route.key}
+                                key={`${index}-${route.path}`}
                                 className={`${route.path.substring(1)}`}
                                 pageName={route.pageName}
                                 showSidebar={route.showSidebar}
@@ -105,16 +114,16 @@ const AppRouter = () => {
                     ))}
 
                     {isAuthenticated &&
-                    <Route
-                        path="/*"
-                        element={<RoleBasedRouter routes={roleBasedRoutes} isAuthenticated={isAuthenticated} />}
-                    />
+                        <Route
+                            path="/*"
+                            element={<RoleBasedRouter routes={roleBasedRoutes} isAuthenticated={isAuthenticated} />}
+                        />
                     }
                     {
-                    <Route
-                      path="/*"
-                      element={<Navigate to={'/access/login'} />}
-                  />  
+                        <Route
+                            path="/*"
+                            element={<Navigate to={'/access/login'} />}
+                        />
                     }
                 </Routes>
             </React.Suspense>

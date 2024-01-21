@@ -1,0 +1,446 @@
+.professional-profile-container {
+    background-color: rgba(255, 255, 255, 0);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: end;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: left;
+}
+
+.professional-profile-header {
+    background-color: rgba(255, 255, 255, 0);
+    width: 99%;
+    height: 70px;
+    line-height: 0.4 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.professional-profile-header h2 {
+    color: rgb(222, 222, 222);
+    font-size: 24px;
+    background-color: rgba(255, 0, 0, 0) !important;
+    width: 200px;
+}
+.professional-profile-header h3 {
+    color: rgb(159, 157, 157);
+    font-size: 16px;
+    background-color: rgba(255, 0, 0, 0) !important;
+}
+
+.professional-profile-mode-switch-tab {
+    background-color: rgba(0, 128, 0, 0);
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.professional-profile-mode-switch-tab-inner {
+    background-color: rgb(128, 34, 0, 0);
+    width: 250px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px;
+}
+.professional-profile-academic-tab {
+    width: 50%;
+    height: 100%;
+    background-color: rgba(0, 0, 255, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.professional-profile-interaction-tab {
+    flex-grow: 1;
+    height: 100%;
+    background-color: rgb(0, 255, 247, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.professional-profile-mode-switch-tab-inner button {
+    border: 0px solid white;
+    background-color: rgba(0, 147, 142, 0.681);
+    padding: 5px;
+    height: 40px;
+    width: 100px;
+    color: white;
+    font-size: 16px;
+}
+
+.professional-profile-academic-tab button {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.professional-profile-academic-tab button:hover {
+    background-color: black;
+    box-shadow: -2px 0px 2px 2px rgba(1, 130, 117, 0.689);
+}
+
+.professional-profile-interaction-tab button {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.professional-profile-interaction-tab button:hover {
+    background-color: black;
+    box-shadow: 2px 0px 2px 2px rgba(1, 130, 117, 0.689);
+}
+
+.professional-profile-interaction-tab.active button,
+.professional-profile-academic-tab.active button {
+    background-color: rgba(0, 147, 142, 0.341);
+}
+.professional-profile-interaction-tab.active button:hover,
+.professional-profile-academic-tab.active button:hover {
+    background-color: black;
+}
+
+.professional-profile-description {
+    background-color: rgba(255, 0, 0, 0);
+    height: 100%;
+    width: 40%;
+    gap: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.professional-profile-description div {
+    font-size: 10px;
+    color: gray;
+}
+
+.professional-profile-container-inner {
+    background-color: rgb(43, 184, 99, 0);
+    width: 98%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+}
+
+.professional-profile-content {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.professional-profile-content-left {
+    background-color: rgb(0, 136, 255, 0);
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 20px;
+}
+
+
+.professional-profile-content-right {
+    background-color: rgba(0, 128, 0, 0);
+    flex-grow: 1;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+.professional-profile-content-right-sub {
+    background-color: rgba(255, 255, 0, 0);
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.professional-profile-right-edit-bar-toggle-chevron {
+    height: 100%;
+    width: 30px;
+    background-color: rgb(176, 22, 22, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.professional-profile-right-edit-bar-toggle-chevron .chevron-icon {
+    font-size: 20px;
+    color: #8c8c8c;
+    transition: transform 0.8s ease, color 0.3s ease;;
+}
+.professional-profile-right-edit-bar-toggle-chevron .chevron-icon:hover {
+    color: #ffffff;
+}
+.professional-profile-right-edit-bar-toggle-chevron .chevron-icon.collapsed {
+    transform: rotate(180deg);
+}
+
+.professional-profile-content-right-inner {
+    background-color: rgba(255, 0, 0, 0);
+    width: 80%;
+    height: 100%;
+    border-left: 0px solid rgba(128, 128, 128, 0.434);
+    transition: width 1s ease, visibility 0s ease-in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: visible;
+    box-shadow: -2px -1px 5px 1px rgb(115, 115, 115, 0.5);
+}
+
+.professional-profile-content-right-inner.collapsed {
+    background-color: rgba(0, 255, 30, 0);
+    width: 0%;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+
+
+.professional-profile-content-right-inner-inner {
+    background-color: rgba(0, 0, 255, 0);
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.professional-profile-edit-per-tab {
+    background-color: rgba(0, 128, 0, 0);
+    width: 90%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+.professional-profile-edit-per-tab:hover {
+    background-color: rgba(0, 172, 164, 0.371);
+    cursor: pointer;
+}
+.professional-profile-edit-per-tab-inner {
+    background-color: rgba(255, 255, 0, 0);
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+.professional-profile-module-content {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.professional-profile-user-basic-info {
+    background-color: rgb(0, 27, 30);
+    /* min-height: 8%; */
+    height: 200px;
+    /* height: auto; */
+    width: 100%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.professional-profile-user-basic-info-inner {
+    background-color: rgba(255, 255, 255, 0);
+    width: 97%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+.professional-profile-user-basic-info-left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(166, 18, 18, 0);
+    width: 50%;
+    height: 100%;
+}
+
+.professional-profile-user-basic-info-left-side-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(54, 4, 4, 0);
+    width: 95%;
+    height: 80%;
+}
+
+.professional-profile-user-profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgb(178, 12, 12, 0);
+}
+
+.professional-profile-user-profile-picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.professional-profile-user-info-text {
+    text-align: left;
+    background-color: rgb(0, 247, 255, 0);
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    gap: 3px;
+}
+
+.professional-profile-name-text {
+    font-size: 16px;
+}
+
+.professional-profile-username-text {
+    color: rgb(168, 168, 168);
+    font-size: 14px;
+}
+
+.professional-profile-user-basic-info-right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 247, 255, 0.3);
+    flex-grow: 1;
+    height: 100%;
+}
+
+
+.professional-profile-user-module-info {
+    background-color: rgb(0, 27, 30);
+    height: auto;
+    max-width: 100%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.professional-profile-user-module-info-title-container {
+    width: 97%;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: left;
+    font-size: 15px;
+    color: rgb(231, 231, 231);
+}
+
+
+.professional-profile-user-module-info-inner {
+    background-color: rgba(255, 255, 255, 0);
+    width: 97%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 0;
+    margin-top: 1%;
+}
+
+.professional-profile-user-module-per-institution {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    height: auto;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    gap: 5px;
+    text-align: left;
+    border-bottom: 0px solid gray;
+}
+
+
+.professional-profile-user-module-per-institution-inner {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    gap: 5px;
+    text-align: left;
+}
+
+.professional-profile-module-institution-title-container h3 {
+    color: rgb(236, 236, 236);
+    background-color: red;
+    line-height: 0;
+    font-size: 16px;
+}
+
+.professional-profile-module-institution-date-data-container p {
+    color: rgb(159, 157, 157);
+    font-size: 13px;
+}
+
+.professional-profile-module-institution-date-data-container {
+    flex-grow: 1;
+}
+
+.professional-eduacation-institution-description-text-container {
+    color: rgb(209, 209, 209);
+    font-size: 14px;
+}

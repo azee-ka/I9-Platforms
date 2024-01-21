@@ -8,6 +8,10 @@ import { useAuth } from '../../reducers/auth/useAuth';
 import ProfileMenu from './profileMenu/profileMenu';
 import API_BASE_URL from '../../config';
 import default_profile_picture from '../../assets/default_profile_picture.png'
+import NotificationsMenu from './notificationsMenu/notificationsMenu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const Navbar = () => {
     const { authState, logout } = useAuth();
@@ -16,12 +20,45 @@ const Navbar = () => {
 
     const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
+    const [notificationsMenuVisible, setNotificationsMenuVisible] = useState(false);
+    const [notificationsList, setNotificationsList] = useState([]);
+    const [countNotifications, setCountNotifications] = useState(0);
+
     const location = useLocation();
     const history = useNavigate();
     const profileMenuRef = useRef(null);
+    const notificationsMenuRef = useRef(null);
+
+
+    const fetchNotifications = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.get(`${API_BASE_URL}get-notifications/`, config);
+            setNotificationsList(response.data);
+            setCountNotifications(response.data.length);
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    };
+    useEffect(() => {
+        fetchNotifications();
+    }, []);
+
 
     const handleProfileMenuToggle = () => {
         setProfileMenuVisible(!profileMenuVisible);
+        setNotificationsMenuVisible(false);
+    };
+    const handleNotificationsMenuToggle = () => {
+        setNotificationsMenuVisible(!notificationsMenuVisible);
+        setProfileMenuVisible(false);
     };
 
 
@@ -29,6 +66,9 @@ const Navbar = () => {
         const handleOutsideClick = (event) => {
             if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
                 setProfileMenuVisible(false);
+            }
+            if (notificationsMenuRef.current && !notificationsMenuRef.current.contains(event.target)) {
+                setNotificationsMenuVisible(false);
             }
         };
 
@@ -53,6 +93,7 @@ const Navbar = () => {
         { path: '/educator/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Educator' },
 
         { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'any' },
+
     ];
 
     const handleMenuClick = (path, action) => {
@@ -90,6 +131,25 @@ const Navbar = () => {
                                                 </Link>
                                             </li>)
                                     ))}
+
+                                    {/* Notifications Menu */}
+                                    {authState.isAuthenticated && (
+                                        <li
+                                            className={`notifications-menu ${notificationsMenuVisible ? 'active' : ''}`}
+                                            ref={notificationsMenuRef}
+                                        >
+                                            <button onClick={handleNotificationsMenuToggle} className="notification-button">
+                                                <FontAwesomeIcon icon={faBell} /> {/* Replace text with the bell icon */}
+                                                {notificationsList.length > 0 && (
+                                                    <span className="notification-count">
+                                                        {notificationsList.length > 9 ? '9+' : notificationsList.length}
+                                                    </span>
+                                                )}
+                                            </button>
+                                            {notificationsMenuVisible && <NotificationsMenu notificationsList={notificationsList} setCountNotifications={setCountNotifications} />}
+                                        </li>
+                                    )}
+
                                     {/* Profile Menu */}
                                     {authState.isAuthenticated && (
                                         <li

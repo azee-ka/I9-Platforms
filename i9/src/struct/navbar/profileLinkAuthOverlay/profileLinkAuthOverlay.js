@@ -104,7 +104,7 @@ const ProfileAddAuthOverlay = ({ setShowAddProfileOverlay }) => {
                         </div>
                     </div>
                 )
-            }
+                }
             </div>
         </div>
     );

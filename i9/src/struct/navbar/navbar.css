@@ -190,11 +190,12 @@
   transform-origin: right;
 }
 
+
 .profile-menu {
   background-color: rgba(255, 0, 0, 0);
   width: 100%;
   height: 100%;
-  margin-right: 8%;
+  margin-right: 20px;
   border-radius: 50%;
   display: flex !important;
   flex-direction: column;
@@ -229,4 +230,60 @@
   height: 100%;
   border-radius: 50%;
   border: 1px solid rgb(119, 119, 119);
+}
+
+
+
+
+
+
+.notifications-menu {
+  background-color: rgba(255, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  margin-right: 15px;
+  border-radius: 50%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+
+.notifications-menu button {
+  background-color: rgb(0, 255, 76, 0);
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 255, 76, 0);
+  font-size: 18px;
+  color: white;
+}
+
+.notifications-menu.active button,
+.notifications-menu button:hover {
+  background-color: rgba(64, 64, 64, 0.693);
+  cursor: pointer;
+}
+
+
+.notification-button {
+  position: relative;
+}
+
+.notification-count {
+  position: absolute;
+  top: -3px;
+  right: -0px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
 }

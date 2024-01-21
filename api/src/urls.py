@@ -6,5 +6,6 @@ urlpatterns = [
     path('calculator/', include('src.calc.expression.urls')), 
     path('', include('src.module.urls')),
     path('', include('src.post.urls')),
-     
+    path('', include('src.notification.urls')),
+
 ]

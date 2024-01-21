@@ -24,6 +24,9 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const accountTypes = ["Personal", 'Professional', "Learner", "Educator"];
+    const [accountType, setAccountType] = useState('');
+
     const [showPassword, setShowPassword] = useState(false);
 
     const [registerError, setRegisterError] = useState(null);
@@ -57,7 +60,7 @@ const RegisterPage = () => {
                 email: email,
                 first_name: capitalizedFirstName,
                 last_name: capitalizedLastName,
-                role: 'Personal',
+                role: accountType,
             };
             // Send registration data to the backend
             const response = await axios.post(`${API_BASE_URL}access/register/`, data, config);
@@ -72,7 +75,7 @@ const RegisterPage = () => {
             // console.error('Registration failed:', error);
             setRegisterError(error.response.data.username);
             setShowAlert(true);
-        } 
+        }
     };
 
     return (
@@ -114,6 +117,21 @@ const RegisterPage = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='register-card-select-account-type-field'>
+                            <select
+                                id="accountType"
+                                name="accountType"
+                                value={accountType}
+                                onChange={(e) => setAccountType(e.target.value)}
+                            >
+                                <option value="" disabled>Select Account Type</option>
+                                {accountTypes.map((type) => (
+                                    <option key={type} value={type}>
+                                        {type}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                         <div className='redirect-to-login'>
                             <a href="/access/login">Already have an account? Login</a>
                         </div>
@@ -122,10 +140,10 @@ const RegisterPage = () => {
                 </div>
             </div>
             <div className='register-error-display'>
-                    {registerError !== null &&
-                       <AlertModule message={registerError} showAlert={showAlert} setShowAlert={setShowAlert} />
-                    }
-                </div>
+                {registerError !== null &&
+                    <AlertModule message={registerError} showAlert={showAlert} setShowAlert={setShowAlert} />
+                }
+            </div>
         </div>
     );
 };

@@ -6,10 +6,12 @@ from .models import BaseUser
 from .learner.models import Learner
 from .educator.models import Educator
 from .personal.models import Personal
+from ..notification.models import Notification
 
 from .learner.serializers import LearnerSerializer
 from .educator.serializers import EducatorSerializer
 from .personal.serializers import PersonalSerializer
+from .professional.serializers import ProfessionalSerializer
 
 from .serializers import BaseUserSerializer
 from django.contrib.auth import authenticate, login
@@ -29,6 +31,8 @@ def register_view(request):
         serializer = EducatorSerializer(data=request.data)
     elif role.lower() == 'personal':
         serializer = PersonalSerializer(data=request.data)
+    elif role.lower() == 'professional':
+        serializer = ProfessionalSerializer(data=request.data)
     else:
         return Response({"message": "Invalid role"}, status=400)
         
@@ -120,6 +124,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
+from ..notification.utils import send_notification
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def link_profile(request):
@@ -136,10 +142,44 @@ def link_profile(request):
     if not linked_profile:
         return Response({"message": "Invalid credentials for linking profiles"}, status=401)
 
-    # Link the profiles
-    user.link_profile(linked_profile)
+    # Send link request notification to the linked profile
+    # send_notification(sender=user, recipient=linked_profile, message=f"{user.username} wants to link profiles. Do you accept?")
+    send_notification(
+        sender=user,
+        recipient=linked_profile,
+        message=f"{user.username} wants to link profiles.",
+        notification_type='profile_link_request'
+    )
+    return Response({"message": f"Link invitiation sent successfully to @{linked_profile.user}. Accounts will be linked once @{linked_profile.user} accepts the inivitation."})
 
-    return Response({"message": "Profiles linked successfully"})
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def accept_link_request(request, notification_id):
+    user = request.user
+    notification = get_object_or_404(Notification, id=notification_id, recipient=user, is_accepted=False)
+
+    # Accept the link request
+    notification.is_accepted = True
+    notification.save()
+
+    # Link the profiles
+    user.link_profile(notification.sender)
+    
+    notification.delete()
+    return Response({"message": "Link request accepted successfully"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def reject_link_request(request, notification_id):
+    user = request.user
+    notification = get_object_or_404(Notification, id=notification_id, recipient=user, is_accepted=False)
+
+    # Reject the link request
+    notification.delete()
+
+    return Response({"message": "Link request rejected"})
 
 
 from .serializers import LinkedProfileSerializer

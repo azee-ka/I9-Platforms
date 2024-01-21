@@ -11,7 +11,6 @@ class FollowerSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'profile_picture']
 
 class PersonalSerializer(BaseUserSerializer):
-    module = ModuleSerializer(read_only=True)
 
     my_posts = serializers.SerializerMethodField()
 
@@ -23,7 +22,7 @@ class PersonalSerializer(BaseUserSerializer):
 
     class Meta(BaseUserSerializer.Meta):
         model = Personal
-        fields = BaseUserSerializer.Meta.fields + ['module', 'my_posts', 'followers_count', 'following_count', 'followers_list', 'following_list']
+        fields = BaseUserSerializer.Meta.fields + ['my_posts', 'followers_count', 'following_count', 'followers_list', 'following_list']
         
     def get_my_posts(self, obj):
             # Serialize the user's posts as an array of post objects

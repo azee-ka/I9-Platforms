@@ -62,6 +62,8 @@ def create_post(request):
                 user = base_user.educator
             elif hasattr(base_user, 'personal'):
                 user = base_user.personal
+            elif hasattr(base_user, 'professional'):
+                user = base_user.professional
             else:
                 # Handle unexpected user types if any
                 return Response({"message": "Invalid user type"}, status=400)

@@ -55,7 +55,7 @@ const ProfileMenu = ({ user }) => {
             } catch (error) {
                 console.error('Error fetching profile data:', error);
             }
-        }
+        };
 
 
 
@@ -90,12 +90,13 @@ const ProfileMenu = ({ user }) => {
 
 
     const profileMenuLinks = [
-        { label: 'Profile', url: '/personal/profile/academic', role: 'Personal' },
-        // { label: 'Profile', url: '/personal/profile/interaction', role: 'Personal' },
-
+        { label: 'Profile', url: '/personal/profile', role: 'Personal' },
         { label: 'Settings', url: '/personal/preferences', role: 'Personal' },
         { label: 'Messages', url: '/personal/messages', role: 'Personal' },
 
+        { label: 'Profile', url: '/professional/profile', role: 'Professional' },
+        { label: 'Settings', url: '/professional/preferences', role: 'Professional' },
+        { label: 'Messages', url: '/professional/messages', role: 'Professional' },
 
         { label: 'Profile', url: '/learner/profile', role: 'Learner' },
         { label: 'Preferences', url: '/learner/preferences', role: 'Learner' },
@@ -116,6 +117,9 @@ const ProfileMenu = ({ user }) => {
                     <div className='learner-profile-menu-user-info-text'>
                         <div className='learner-profile-menu-name-text'>{profileData.first_name} {profileData.last_name}</div>
                         <div className='learner-profile-menu-username-text'>@{user.username}</div>
+                    </div>
+                    <div className='profile-menu-role-text'>
+                        <p>{profileData.role}</p>
                     </div>
                 </div>
             </div>
@@ -147,33 +151,33 @@ const ProfileMenu = ({ user }) => {
                     </div>
                 </div>
                 {userProfilesList.length !== 0 &&
-                <div className='profile-menu-account-profiles-list-content'>
-                    <div className='profile-menu-account-profiles-list-content-inner'>
-                        {userProfilesList.map((profile, index) => (
-                            <div className='profile-menu-per-account-profile' key={`${index}-${profile.profile_role}`} onClick={() => switchProfileFromMenu(profile.username)}>
-                                <div className='profile-menu-per-account-profile-inner'>
-                                    <div className='profile-menu-per-account-profile-picture-container'>
-                                        <div className='profile-menu-per-account-profile-picture-container-inner'>
-                                            <img src={`${profile.profile_picture !== null ? profile.profile_picture : default_profile_picture}`} />
-                                        </div>
-                                    </div>
-                                    <div className='profile-menu-per-account-profile-info-container'>
-                                        <div className='profile-menu-per-account-profile-info-container-inner'>
-                                            <div className='profile-menu-per-account-profile-username-email-container'>
-                                                <p>{profile.username}</p>
-                                                <p>{profile.email}</p>
+                    <div className='profile-menu-account-profiles-list-content'>
+                        <div className='profile-menu-account-profiles-list-content-inner'>
+                            {userProfilesList.map((profile, index) => (
+                                <div className='profile-menu-per-account-profile' key={`${index}-${profile.role}`} onClick={() => switchProfileFromMenu(profile.username)}>
+                                    <div className='profile-menu-per-account-profile-inner'>
+                                        <div className='profile-menu-per-account-profile-picture-container'>
+                                            <div className='profile-menu-per-account-profile-picture-container-inner'>
+                                                <img src={`${profile.profile_picture !== null ? profile.profile_picture : default_profile_picture}`} />
                                             </div>
-                                            <div className='profile-menu-per-account-profile-role-container'>
-                                                <p>{profile.profile_role}</p>
+                                        </div>
+                                        <div className='profile-menu-per-account-profile-info-container'>
+                                            <div className='profile-menu-per-account-profile-info-container-inner'>
+                                                <div className='profile-menu-per-account-profile-username-email-container'>
+                                                    <p>{profile.username}</p>
+                                                    <p>{profile.email}</p>
+                                                </div>
+                                                <div className='profile-menu-per-account-profile-role-container'>
+                                                    <p>{profile.role}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            }
+                }
             </div>
             {showAddProfileOverlay &&
                 <ProfileAddAuthOverlay setShowAddProfileOverlay={setShowAddProfileOverlay} />
