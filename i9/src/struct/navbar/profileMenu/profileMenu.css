@@ -258,9 +258,18 @@
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
 }
+.profile-menu-per-account-profile-picture-container-inner {
+    border-radius: 50%;
+    background-color: rgba(128, 128, 128, 0.289);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    aspect-ratio: 1 / 1;
+}
 .profile-menu-per-account-profile-picture-container img {
     background-color: rgb(0, 255, 221, 0);
-    width: 46px;
+    width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     align-self: center;

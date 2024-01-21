@@ -10,8 +10,9 @@ import API_BASE_URL from '../../../config';
 import default_profile_picture from '../../../assets/default_profile_picture.png'
 import ProfileAddAuthOverlay from '../profileLinkAuthOverlay/profileLinkAuthOverlay';
 
-const ProfileMenu = ({ user, logout }) => {
-    const { authState } = useAuth();
+const ProfileMenu = ({ user }) => {
+    const navigate = useNavigate();
+    const { authState, logout, login, switchProfile } = useAuth();
     const userRole = useSelector((state) => state.auth.user.role);
 
     const [showAddProfileOverlay, setShowAddProfileOverlay] = useState(false);
@@ -19,32 +20,7 @@ const ProfileMenu = ({ user, logout }) => {
     const [profileData, setProfileData] = useState({});
 
     // mock profile list
-    const [userProfilesList, setUserProfilesList] = useState([
-        {
-            username: 'user1',
-            email: 'user1@email.com',
-            profile_role: 'Professional',
-            profile_picture: '',
-        },
-        {
-            username: 'user2',
-            email: 'user2@email.com',
-            profile_role: 'Personal',
-            profile_picture: '',
-        },
-        {
-            username: 'user3',
-            email: 'user3@email.com',
-            profile_role: 'Industry',
-            profile_picture: '',
-        },
-        {
-            username: 'user4',
-            email: 'user4@email.com',
-            profile_role: 'Industry',
-            profile_picture: '',
-        },
-    ]);
+    const [userProfilesList, setUserProfilesList] = useState([]);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -63,10 +39,55 @@ const ProfileMenu = ({ user, logout }) => {
             }
         };
 
+
+        const fetchLinkedProfiles = async () => {
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+            try {
+                const response = await axios.get(`${API_BASE_URL}get-linked-profiles/`, config);
+                console.log(response.data);
+                setUserProfilesList(response.data);
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        }
+
+
+
         if (authState.isAuthenticated) {
             fetchProfileData();
+            fetchLinkedProfiles();
         }
-    }, [authState.isAuthenticated, setProfileData]);
+
+    }, [authState.isAuthenticated, setProfileData, setUserProfilesList]);
+
+    const switchProfileFromMenu = async (linkedProfileUsername) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`,
+            },
+        };
+
+        const data = {
+            linked_profile_username: linkedProfileUsername,
+        };
+
+        try {
+            const response = await axios.post(`${API_BASE_URL}switch-profile/`, data, config);
+            // Assuming the server returns the updated user information after switching profiles
+            // Update the user context or session on the client side
+            switchProfile(response.data);
+        } catch (error) {
+            console.error('Error switching profile:', error);
+        }
+    };
+
 
     const profileMenuLinks = [
         { label: 'Profile', url: '/personal/profile/academic', role: 'Personal' },
@@ -118,7 +139,6 @@ const ProfileMenu = ({ user, logout }) => {
             <div className='profile-menu-sign-out-button-container'>
                 <button onClick={logout}>Sign Out</button>
             </div>
-
             <div className='profile-menu-account-profiles-list'>
                 <div className='profile-menu-account-profiles-list-title'>
                     <p>Profiles</p>
@@ -126,13 +146,16 @@ const ProfileMenu = ({ user, logout }) => {
                         <button onClick={() => setShowAddProfileOverlay(true)}>+ Add Profile</button>
                     </div>
                 </div>
+                {userProfilesList.length !== 0 &&
                 <div className='profile-menu-account-profiles-list-content'>
                     <div className='profile-menu-account-profiles-list-content-inner'>
                         {userProfilesList.map((profile, index) => (
-                            <div className='profile-menu-per-account-profile' key={`${index}-${profile.profile_role}`}>
+                            <div className='profile-menu-per-account-profile' key={`${index}-${profile.profile_role}`} onClick={() => switchProfileFromMenu(profile.username)}>
                                 <div className='profile-menu-per-account-profile-inner'>
                                     <div className='profile-menu-per-account-profile-picture-container'>
-                                        <img src={`${profile.profile_role}`} />
+                                        <div className='profile-menu-per-account-profile-picture-container-inner'>
+                                            <img src={`${profile.profile_picture !== null ? profile.profile_picture : default_profile_picture}`} />
+                                        </div>
                                     </div>
                                     <div className='profile-menu-per-account-profile-info-container'>
                                         <div className='profile-menu-per-account-profile-info-container-inner'>
@@ -150,6 +173,7 @@ const ProfileMenu = ({ user, logout }) => {
                         ))}
                     </div>
                 </div>
+            }
             </div>
             {showAddProfileOverlay &&
                 <ProfileAddAuthOverlay setShowAddProfileOverlay={setShowAddProfileOverlay} />

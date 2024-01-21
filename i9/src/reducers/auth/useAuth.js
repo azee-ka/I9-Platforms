@@ -33,17 +33,23 @@ const useAuth = () => {
 
   const login = (responseData) => {
     dispatch({
-      type: authActionTypes.LOGIN,
-      payload: {
-        user: responseData.user,
-        isAuthenticated: (responseData.message === 'Login successful.' || responseData.message === 'User registered successfully.'),
-        token: responseData.token,
-      },
+        type: authActionTypes.LOGIN,
+        payload: {
+            user: responseData.user,
+            isAuthenticated: (responseData.message === 'Login successful.' || responseData.message === 'User registered successfully.'),
+            token: responseData.token,  // Use the provided token or the one from the response
+        },
     });
-
     // Save authentication state to localStorage
     localStorage.setItem('authState', JSON.stringify({ user: responseData.user, token: responseData.token }));
-  };
+};
+
+const switchProfile = (responseData) => {
+  logout();
+  login(responseData);
+  window.location.href = '/';
+};
+
 
   const logout = () => {
     dispatch({ type: authActionTypes.LOGOUT });
@@ -56,7 +62,7 @@ const useAuth = () => {
     window.location.href = '/access/login';
   };
 
-  return { authState, isLoading, login, logout };
+  return { authState, isLoading, login, logout, switchProfile };
 };
 
 export { useAuth };

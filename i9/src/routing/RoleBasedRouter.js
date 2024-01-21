@@ -3,10 +3,13 @@ import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Layout from '../struct/layout/layout';
 import '../App.css';
+import { useAuth } from '../reducers/auth/useAuth';
 
 const RoleBasedRouter = ({ routes, isAuthenticated }) => {
     const navigate = useNavigate();
 
+    const { authState } = useAuth();
+    console.log(authState)
     const userRole = useSelector((state) => {
         return state.auth.user.role;
     });

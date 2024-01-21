@@ -10,3 +10,9 @@ class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseUser
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'date_joined', 'is_active', 'role']
+
+
+class LinkedProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BaseUser
+        fields = ['id', 'username', 'email', 'role', 'profile_picture']

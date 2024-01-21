@@ -8,12 +8,15 @@ class BaseUser(AbstractUser):
     role = models.TextField(default='any')
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     linked_profiles = models.ManyToManyField('self', symmetrical=False, related_name='%(app_label)s_%(class)s_linked_profiles')
+    active_profile = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='%(app_label)s_%(class)s_active_profile')
 
     def link_profile(self, profile):
         """
         Method to link a profile to the user.
         """
         self.linked_profiles.add(profile)
+        # Ensure reciprocal linking
+        profile.linked_profiles.add(self)
 
     def unlink_profile(self, profile):
         """
@@ -26,3 +29,14 @@ class BaseUser(AbstractUser):
         Method to get all linked profiles for the user.
         """
         return self.linked_profiles.all()
+
+    def switch_active_profile(self, new_active_profile):
+        """
+        Method to switch the active profile for the user.
+        """
+        # Perform any additional logic needed for the switch
+        # For example, you might want to reset certain session data or perform cleanup
+
+        # Set the new active profile
+        self.active_profile = new_active_profile
+        self.save()

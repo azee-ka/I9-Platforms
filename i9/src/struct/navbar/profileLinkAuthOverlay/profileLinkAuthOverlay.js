@@ -2,18 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './profileLinkAuthOverlay.css';
 import full_logo from '../../../assets/full-logo.png';
+import API_BASE_URL from '../../../config';
+import axios from 'axios';
+import { useAuth } from '../../../reducers/auth/useAuth';
 
 const ProfileAddAuthOverlay = ({ setShowAddProfileOverlay }) => {
-    const [usernameFieldData, setUsernameFieldData] = useState();
-    const [passwordFieldData, setPasswordFieldData] = useState();
+    const { authState } = useAuth();
+
+    const [usernameFieldData, setUsernameFieldData] = useState('');
+    const [passwordFieldData, setPasswordFieldData] = useState('');
 
 
-    const [firstNameFieldData, setFirstNameFieldData] = useState();
-    const [lastNameFieldData, setlastNameFieldData] = useState();
-    const [emailFieldData, setEmailFieldData] = useState();
-
+    const [firstNameFieldData, setFirstNameFieldData] = useState('');
+    const [lastNameFieldData, setlastNameFieldData] = useState('');
+    const [emailFieldData, setEmailFieldData] = useState('');
 
     const [showRegisterContainer, setRegisterContainer] = useState(false);
+
+    const handleAddProfileSubmit = async () => {
+        const data = {
+            profile_to_be_linked_credentials: {
+                username: usernameFieldData,
+                password: passwordFieldData,
+            }
+        }
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.post(`${API_BASE_URL}link-profile/`, data, config);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    }
+
 
     return (
         <div className="profile-add-auth-container" onClick={() => setShowAddProfileOverlay(false)}>
@@ -23,7 +50,7 @@ const ProfileAddAuthOverlay = ({ setShowAddProfileOverlay }) => {
                         <div className='profile-add-auth-container-card-site-logo'>
                             <img src={`${full_logo}`} />
                         </div>
-                        <h2>Sign In</h2>
+                        <h2>Add Profile Using An Existing Account</h2>
                         <div className='profile-add-auth-fields-container'>
                             <div className='profile-add-auth-username-field-container'>
                                 <input
@@ -44,7 +71,7 @@ const ProfileAddAuthOverlay = ({ setShowAddProfileOverlay }) => {
                             <p onClick={() => setRegisterContainer(true)}>Need to sign up for the acccount? Register here</p>
                         </div>
                         <div className='profile-add-auth-submit-button'>
-                            <button>Add Profile</button>
+                            <button onClick={handleAddProfileSubmit}>Add Profile</button>
                         </div>
                     </div>
                 ) : (
