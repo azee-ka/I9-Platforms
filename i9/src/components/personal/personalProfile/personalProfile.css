@@ -254,17 +254,6 @@
 }
 
 
-.personal-profile-module-content {
-    background-color: rgba(255, 0, 0, 0);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: flex-start;
-    text-align: center;
-    padding-bottom: 15px;
-}
-
 .personal-profile-user-basic-info {
     background-color: rgb(0, 27, 30);
     /* min-height: 8%; */
@@ -357,90 +346,187 @@
 }
 
 
-.personal-profile-user-module-info {
-    background-color: rgb(0, 27, 30);
-    height: auto;
-    max-width: 100%;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-}
 
-.personal-profile-user-module-info-title-container {
-    width: 97%;
-    height: 60px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.personal-profile-interaction-tab-content {
     background-color: rgba(255, 255, 255, 0);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    text-align: left;
-    font-size: 15px;
-    color: rgb(231, 231, 231);
-}
-
-
-.personal-profile-user-module-info-inner {
-    background-color: rgba(255, 255, 255, 0);
-    width: 97%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-    padding: 0;
-    margin-top: 1%;
-}
-
-.personal-profile-user-module-per-institution {
-    background-color: rgba(255, 0, 0, 0);
     width: 100%;
-    height: auto;
-    color: white;
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
-    align-items: left;
-    gap: 5px;
-    text-align: left;
-    border-bottom: 0px solid gray;
+    align-content: center;
 }
 
-
-.personal-profile-user-module-per-institution-inner {
-    background-color: rgba(255, 0, 0, 0);
+.personal-profile-interaction-tab-content-inner {
+    background-color: rgb(166, 20, 20, 0);
     width: 100%;
     height: 100%;
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: left;
-    gap: 5px;
-    text-align: left;
+    align-content: center;
 }
 
-.personal-profile-module-institution-title-container h3 {
-    color: rgb(236, 236, 236);
-    background-color: red;
-    line-height: 0;
+.personal-profile-interaction-tab-user-info-container {
+    background-color: rgb(20, 166, 98, 0);
+    width: 100%;
+    margin-top: 1%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.personal-profile-interaction-tab-user-info-container-inner {
+    background-color: rgb(0, 27, 30);
+    width: 99%;
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    border-radius: 12px;
+}
+
+.personal-profile-interaction-tab-user-info-container-inner-inner {
+    width: 96%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    background-color: rgb(151, 98, 98, 0);
+}
+
+.personal-profile-interaction-tab-user-info-container-inner-right {
+    background-color: rgb(91, 5, 5, 0);
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: flex-start !important;
+    gap: 10px;
+}
+
+
+.personal-profile-interaction-user-profile-picture-container {
+    width: 100px;
+    height: 100%;
+    background-color: rgba(42, 178, 12, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.personal-profile-interaction-user-profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(42, 178, 12, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.personal-profile-interaction-user-profile-picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(23, 164, 157, 0);
+}
+
+.personal-profile-interaction-user-info-text {
+    text-align: left;
+    background-color: rgb(0, 247, 255, 0);
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    gap: 3px;
+}
+
+.personal-profile-interaction-name-text {
     font-size: 16px;
 }
 
-.personal-profile-module-institution-date-data-container p {
-    color: rgb(159, 157, 157);
-    font-size: 13px;
-}
-
-.personal-profile-module-institution-date-data-container {
-    flex-grow: 1;
-}
-
-.personal-eduacation-institution-description-text-container {
-    color: rgb(209, 209, 209);
+.personal-profile-interaction-username-text {
+    color: rgb(168, 168, 168);
     font-size: 14px;
+}
+
+
+
+
+
+
+
+.personal-profile-interaction-content-container {
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+}
+
+.personal-profile-interaction-posts-grid {
+    background-color: rgba(255, 255, 255, 0);
+    width: 75%;
+    flex-grow: 1;
+    margin-bottom: 1%;
+}
+
+.personal-profile-interaction-posts-grid-inner {
+    background-color: rgba(0, 242, 255, 0);
+    width: 99%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.personal-profile-interaction-posts-grid-inner-inner {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 98%;
+    height: 94%;
+    background-color: rgba(255, 255, 255, 0);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+
+
+
+.personal-profile-interaction-right-sidebar {
+    width: 25%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.personal-profile-interaction-right-sidebar-inner {
+    margin-top: 2.5%;
+    width: 92%;
+    height: 500px;
+    background-color: rgba(30, 161, 184, 0.214); 
+    border-radius: 8px;  
 }

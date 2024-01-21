@@ -9,9 +9,6 @@ import default_profile_picture from '../../../assets/default_profile_picture.png
 import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import OverlayContent from '../../professional/professionalProfile/overlayContent';
-import PersonalProfileInteraction from './interaction/personalProfileInteraction';
-import ProfessionalProfile from '../../professional/professionalProfile/professionalProfile';
 import PerPostGrid from '../postUI/postGrid/postGrid';
 
 const PersonalProfile = ({ handleExpandPostOpen }) => {
