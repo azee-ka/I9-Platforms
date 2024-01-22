@@ -29,7 +29,7 @@ yarn-error.log*
 api/api/config.py
 api/api/settings.py
 
-api/post_media
+api/media
 
 api/db.sqlite3
 api/.zshrc
