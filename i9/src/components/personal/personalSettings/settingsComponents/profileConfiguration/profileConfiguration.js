@@ -7,11 +7,11 @@ import { useAuth } from '../../../../../reducers/auth/useAuth';
 const ProfileConfiguration = () => {
     const { authState } = useAuth();
     // State to manage the visibility toggle
-    const [isProfilePrivate, setProfileVisibility] = useState(false);
+    const [isProfilePrivate, setIsProfilePrivate] = useState(false);
 
     // Function to handle the toggle
     const handleToggle = () => {
-        setProfileVisibility(!isProfilePrivate);
+        setIsProfilePrivate(!isProfilePrivate);
         handleChangeProfileVisiblity();
     };
 
@@ -48,7 +48,7 @@ const ProfileConfiguration = () => {
 
             const response = await axios.get(`${API_BASE_URL}get-profile-visibility/`, config);
             console.log(response.data);
-            setProfileVisibility(response.data.visibility);
+            setIsProfilePrivate(response.data.visibility === 'private' ? true : false);
           } catch (error) {
             console.error('Error fetching profile data:', error);
           }

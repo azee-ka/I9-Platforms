@@ -3,8 +3,8 @@ import axios from 'axios';
 import './otherUserProfile.css';
 import API_BASE_URL from '../../../config';
 
-import PrivateProfile from './privateProfile/privateProfile';
-import PublicProfile from './publicProfile/publicProfile';
+import PartialViewProfile from './partialViewProfile/privateProfile';
+import FullViewProfile from './fullViewProfile/fullViewProfile';
 import PersonalProfile from '../personalProfile/personalProfile';
 
 import { useNavigate, useParams } from 'react-router';
@@ -15,7 +15,9 @@ const OtherUserProfile = () => {
     const { authState } = useAuth();
     const navigate = useNavigate();
 
-    const [profileViewStatus, setProfileViewStatus] = useState('public');
+    const [isFullViewProfile, setIsFullViewProfile] = useState('loading');
+    
+    const [profileData, setProfileData] = useState({});
 
     const fetchProfileData = async () => {
         try {
@@ -27,7 +29,9 @@ const OtherUserProfile = () => {
             };
       
             const response = await axios.get(`${API_BASE_URL}personal/profile/${username}/`, config);
-            console.log(response.data)
+            // console.log(response.data);
+            setProfileData(response.data.profile_data);
+            setIsFullViewProfile(response.data.is_full_view);
           } catch (error) {
             console.error('Error fetching profile data:', error);
           }
@@ -35,27 +39,27 @@ const OtherUserProfile = () => {
 
     useEffect(() => {
         if(username === authState.user.username) {
-            setProfileViewStatus('my-profile');
+            setIsFullViewProfile('my-profile');
             navigate('/personal/profile', {replace: true});
 
         } else if(username !== authState.user.username) {
-            setProfileViewStatus('other-private-profile');
-            fetchProfileData();
-        } else {
-            setProfileViewStatus('other-public-profile');
             fetchProfileData();
         }
     }, []);
 
 
 
-    return (profileViewStatus === 'my-profile') ? (
+    return (isFullViewProfile === 'loading') ? (
+        <div>
+            Loading
+        </div>
+    ) : (isFullViewProfile === 'my-profile') ? (
         <PersonalProfile />
     ) : (
-        (profileViewStatus === 'other-private-profile') ? (
-            <PrivateProfile />
+        (isFullViewProfile) ? (
+            <FullViewProfile profileData={profileData} />
         ) : (
-            <PublicProfile />
+            <PartialViewProfile profileData={profileData} />
         )
     )
 }

@@ -55,25 +55,25 @@ def get_user_profile(request, username):
         # Handle unexpected user types if any
         return Response({"message": "Invalid user type"}, status=400)
 
-
+    is_full_view = None
     if user.is_private_profile and not request.user.is_authenticated:
         # User has a private profile and the viewer is not authenticated
-        print('public ran')
+        is_full_view = False
         serializer = PublicPersonalProfileSerializer(user)
     elif user == request.user:
         # Viewer is the same user, use the MyProfileSerializer
-        print('my ran')
         serializer = MyPersonalProfileSerializer(user)
     elif user.is_private_profile and not user.followers.filter(id=request.user.id).exists():
         # User has a private profile and the viewer is not a follower
-        print('private ran')
+        is_full_view = False
         serializer = PublicPersonalProfileSerializer(user)
     else:
         # User has either a public profile or the viewer is a follower
+        is_full_view = True
         serializer = PrivatePersonalProfileSerializer(user)
 
-    return Response(serializer.data)
-
+    response_data = {'profile_data': serializer.data, 'is_full_view': is_full_view}
+    return Response(response_data)
 
 
 
@@ -84,8 +84,31 @@ def get_user_profile(request, username):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def follow_user(request, user_id):
-    user_to_follow = get_object_or_404(Personal, id=user_id)
-    current_user = request.user
+    base_user_to_follow = get_object_or_404(BaseUser, id=user_id)
+
+    # Attempt to cast the base user to more specific user types
+    if hasattr(base_user_to_follow, 'learner'):
+        user_to_follow = base_user_to_follow.learner
+    elif hasattr(base_user_to_follow, 'educator'):
+        user_to_follow = base_user_to_follow.educator
+    elif hasattr(base_user_to_follow, 'personal'):
+        user_to_follow = base_user_to_follow.personal
+    else:
+        # Handle unexpected user types if any
+        return Response({"message": "Invalid user type"}, status=400)
+    
+    base_current_user = request.user
+    
+    # Attempt to cast the base user to more specific user types
+    if hasattr(base_current_user, 'learner'):
+        current_user = base_user_to_follow.learner
+    elif hasattr(base_current_user, 'educator'):
+        current_user = base_user_to_follow.educator
+    elif hasattr(base_current_user, 'personal'):
+        current_user = base_current_user.personal
+    else:
+        # Handle unexpected user types if any
+        return Response({"message": "Invalid user type"}, status=400)
 
     if current_user != user_to_follow:
         current_user.following.add(user_to_follow)
@@ -118,7 +141,6 @@ from django.core.exceptions import ObjectDoesNotExist
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def search_users(request):
-    print("hello")
     search_query = request.GET.get('query', '')
 
     try:

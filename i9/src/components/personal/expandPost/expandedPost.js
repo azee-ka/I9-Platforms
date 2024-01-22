@@ -265,10 +265,6 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
     navigate();
   };
 
-  // Function to handle closing the overlay and returning to the previous page
-  // const handleClose = () => {
-  //   navigate(-1); // Navigate back to the previous page
-  // };
 
   const renderMediaContent = (mediaFile, onEnded) => {
     if (mediaFile.media_type === 'mp4') {
