@@ -13,11 +13,16 @@ from .educator.serializers import EducatorSerializer
 from .personal.serializers import PersonalSerializer
 from .professional.serializers import ProfessionalSerializer
 
-from .serializers import BaseUserSerializer
+from .serializers import BaseUserSerializer, UserProfilePictureUpdateSerializer
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+import uuid
+from django.core.files.base import ContentFile
+import base64
+import os
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -218,7 +223,7 @@ def perform_login(request, user):
     login(request, user)
     token, created = Token.objects.get_or_create(user=user)
 
-    response_data = {'user': {'id': user.id, 'username': user.username, 'role': user.role}, 'token': token.key}
+    response_data = {'user': {'id': user.id, 'username': user.username, 'role': user.role, 'profile_picture': user.profile_picture}, 'token': token.key}
     return Response(response_data, status=200)
 
 @api_view(['POST'])
@@ -237,3 +242,45 @@ def switch_profile(request):
 
     # Call the perform_login function to authenticate and login the user with the linked profile
     return perform_login(request, linked_profile)
+
+
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_user_profile_picture(request):
+    user = request.user
+
+    profile_picture_data = request.data.get('profile_picture', None)
+
+    if profile_picture_data:
+        # Generate a unique filename using uuid
+        unique_filename = f"{uuid.uuid4()}.jpg"
+
+        # Decode the base64 string and create a ContentFile
+        decoded_image = base64.b64decode(profile_picture_data.split(',')[1])
+        content_file = ContentFile(decoded_image, name=unique_filename)
+
+        # Save the profile picture
+        user.profile_picture.save(unique_filename, content_file, save=True)
+        user.save()
+
+    # Use the new serializer for the response
+    serializer = UserProfilePictureUpdateSerializer({'profile_picture': user.profile_picture.url})
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def remove_user_profile_picture(request):
+    user = request.user
+
+    # Check if the user wants to remove the profile picture
+    if user.profile_picture:
+        # Remove the profile picture
+        user.profile_picture.delete(save=True)
+        user.save()
+
+        return Response({'detail': 'Profile picture removed successfully.'})
+    else:
+        return Response({'detail': 'No profile picture to remove.'}, status=400)

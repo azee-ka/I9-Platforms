@@ -96,34 +96,3 @@ def search_users(request):
     except Exception as e:
         # Other unexpected errors
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-@api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-def update_user_profile(request):
-    user = request.user
-
-    profile_picture_data = request.data.get('profile_picture', None)
-
-    if profile_picture_data:
-        # Generate a unique filename using uuid
-        unique_filename = f"{uuid.uuid4()}.jpg"
-        
-        # Assuming 'src' contains the base64-encoded image
-        src = profile_picture_data
-        print(src)
-        if src:
-            # Decode the base64 string and create a ContentFile
-            #try:
-            decoded_image = base64.b64decode(src.split(',')[1])
-            #except:
-                #decoded_image = base64.b64decode(src.split(','))
-            content_file = ContentFile(decoded_image, name=unique_filename)
-
-            # Save the profile picture
-            user.profile_picture.save(unique_filename, content_file, save=True)
-            user.save()
-
-    serializer = PersonalSerializer(user, context={'request': request})
-    return Response(serializer.data)

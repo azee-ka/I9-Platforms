@@ -17,6 +17,7 @@ const Navbar = () => {
     const { authState, logout } = useAuth();
     const userRole = useSelector((state) => state.auth.user.role);
 
+    const [profileData, setProfileData] = useState();
 
     const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
@@ -29,6 +30,21 @@ const Navbar = () => {
     const profileMenuRef = useRef(null);
     const notificationsMenuRef = useRef(null);
 
+    const fetchProfileData = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
+            // console.log(response.data);
+            setProfileData(response.data);
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    };
 
     const fetchNotifications = async () => {
         const config = {
@@ -48,6 +64,7 @@ const Navbar = () => {
         }
     };
     useEffect(() => {
+        fetchProfileData();
         fetchNotifications();
     }, []);
 
@@ -157,10 +174,10 @@ const Navbar = () => {
                                             ref={profileMenuRef}
                                         >
                                             <button onClick={handleProfileMenuToggle}>
-                                                {authState.user.profilePicture ?
+                                                {profileData ?
                                                     (<img
                                                         alt={`profile-icon`}
-                                                        src={`${API_BASE_URL}${authState.user.profilePicture}`}
+                                                        src={`${profileData.profile_picture === null ? default_profile_picture : API_BASE_URL + profileData.profile_picture}`}
                                                         className='profile-icon'
                                                     />) : (
                                                         <img

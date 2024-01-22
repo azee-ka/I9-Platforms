@@ -1,12 +1,15 @@
 # urls.py
 from django.urls import path, include
-from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request
+from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request, update_user_profile_picture, remove_user_profile_picture
 
 urlpatterns = [
     path('access/login/', login_view, name='login'),
     path('access/register/', register_view, name='register'),
     path('profile/get-user-info/', get_user_info, name='get-user-info'),
     
+    path('update-profile-picture/', update_user_profile_picture, name='update-user-profile'),
+    path('remove-profile-picture/', remove_user_profile_picture, name='remove-user-profile'),
+
     path('personal/', include('src.user.personal.urls')),
     
     

@@ -112,7 +112,7 @@ const ProfileMenu = ({ user }) => {
             <div className='profile-menu-user-info-container'>
                 <div className='profile-menu-profile-picture-container'>
                     <div className='learner-profile-menu-user-profile-picture'>
-                        <img alt={`profile-menu-icon`} src={profileData ? profileData.profilePicture ? profileData.profilePicture : default_profile_picture : default_profile_picture} />
+                        <img alt={`profile-menu-icon`} src={profileData ? profileData.profilePicture ? API_BASE_URL + profileData.profilePicture : default_profile_picture : default_profile_picture} />
                     </div>
                     <div className='learner-profile-menu-user-info-text'>
                         <div className='learner-profile-menu-name-text'>{profileData.first_name} {profileData.last_name}</div>
@@ -158,7 +158,7 @@ const ProfileMenu = ({ user }) => {
                                     <div className='profile-menu-per-account-profile-inner'>
                                         <div className='profile-menu-per-account-profile-picture-container'>
                                             <div className='profile-menu-per-account-profile-picture-container-inner'>
-                                                <img src={`${profile.profile_picture !== null ? profile.profile_picture : default_profile_picture}`} />
+                                                <img src={`${profile.profile_picture !== null ? API_BASE_URL + profile.profile_picture : default_profile_picture}`} />
                                             </div>
                                         </div>
                                         <div className='profile-menu-per-account-profile-info-container'>

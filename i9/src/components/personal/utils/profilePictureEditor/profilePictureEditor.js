@@ -3,13 +3,19 @@ import Cropper from 'react-easy-crop';
 import './profilePictureEditor.css';
 import { v4 as uuidv4 } from 'uuid';
 import API_BASE_URL from '../../../../config';
+import default_profile_picture from '../../../../assets/default_profile_picture.png';
+import axios from 'axios';
+import { useAuth } from '../../../../reducers/auth/useAuth';
 
-const ProfilePictureEditor = ({ selectedProfilePicture, setSelectedProfilePicture, onClose, onSave, currentProfilePicture }) => {
+const ProfilePictureEditor = ({ selectedProfilePicture, setSelectedProfilePicture, onClose, onSave, currentProfilePicture, setCurrentProfilePicture }) => {
+  const { authState } = useAuth();
   const [crop, onCropChange] = useState({ x: 0, y: 0 });
   const [zoom, onZoomChange] = useState(1);
   const [imageSrc, setImageSrc] = useState(null);
 
   const [croppedArea, setCroppedArea] = useState({ x: 0, y: 0 });
+
+  console.log(currentProfilePicture.includes("default_profile"));
 
   useEffect(() => {
     if (imageSrc === null && !currentProfilePicture.includes("default_profile")) {
@@ -92,6 +98,7 @@ const ProfilePictureEditor = ({ selectedProfilePicture, setSelectedProfilePictur
 
 
   const handleSave = async () => {
+    console.log(imageSrc);
     try {
       const croppedImage = await getCroppedImg(imageSrc.src, croppedArea);
       await generateProfilePictureName(croppedImage);
@@ -100,7 +107,23 @@ const ProfilePictureEditor = ({ selectedProfilePicture, setSelectedProfilePictur
     }
   };
 
+  const handleRemovePhoto = async () => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${authState.token}`
+        }
+      };
 
+      const response = await axios.delete(`${API_BASE_URL}remove-profile-picture/`, config);
+      console.log(response.data);
+      setCurrentProfilePicture(default_profile_picture);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  }
 
 
   const getCroppedImg = async (image, croppedArea) => {
@@ -190,10 +213,13 @@ const ProfilePictureEditor = ({ selectedProfilePicture, setSelectedProfilePictur
           </div>
           <div className="editor-buttons">
             <button onClick={handleProfilePictureClick}>Choose Image</button>
-            {!currentProfilePicture.includes("default_profile") &&
+            {imageSrc !== null &&
               <button onClick={handleSave}>Done</button>
             }
             <button onClick={onClose}>Cancel</button>
+            {imageSrc !== null &&
+              <button onClick={handleRemovePhoto}>Remove Photo</button>
+            }
           </div>
         </div>
       </div>
