@@ -54,3 +54,63 @@ class PersonalSerializer(BaseUserSerializer):
             data['is_followed_by_current_user'] = False
 
         return data
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+class BasePersonalProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Personal
+        fields = ['id', 'username', 'profile_picture', 'followers_count', 'following_count']
+
+class MyPersonalProfileSerializer(BasePersonalProfileSerializer):
+    my_posts = serializers.SerializerMethodField()
+    followers_list = serializers.SerializerMethodField()
+    following_list = serializers.SerializerMethodField()
+
+    class Meta(BasePersonalProfileSerializer.Meta):
+        fields = BasePersonalProfileSerializer.Meta.fields + ['my_posts', 'followers_list', 'following_list']
+
+    def get_my_posts(self, obj):
+        # Serialize the user's posts as an array of post objects
+        posts = obj.my_posts.all()
+        return PostSerializer(posts, many=True).data
+
+    def get_followers_list(self, obj):
+        followers = obj.followers.all()
+        return FollowerSerializer(followers, many=True).data
+
+    def get_following_list(self, obj):
+        following = obj.following.all()
+        return FollowerSerializer(following, many=True).data
+
+class PublicPersonalProfileSerializer(BasePersonalProfileSerializer):
+    pass
+
+class PrivatePersonalProfileSerializer(BasePersonalProfileSerializer):
+    my_posts = serializers.SerializerMethodField()
+    followers_list = serializers.SerializerMethodField()
+    following_list = serializers.SerializerMethodField()
+
+    class Meta(BasePersonalProfileSerializer.Meta):
+        fields = BasePersonalProfileSerializer.Meta.fields + ['my_posts', 'followers_list', 'following_list']
+
+    def get_my_posts(self, obj):
+        # Serialize the user's posts as an array of post objects
+        posts = obj.my_posts.all()
+        return PostSerializer(posts, many=True).data
+
+    def get_followers_list(self, obj):
+        followers = obj.followers.all()
+        return FollowerSerializer(followers, many=True).data
+
+    def get_following_list(self, obj):
+        following = obj.following.all()
+        return FollowerSerializer(following, many=True).data

@@ -20,6 +20,8 @@ const LearnerMessages = React.lazy(() => import('../components/learner/learnerMe
 
 const PersonalDashboard = React.lazy(() => import('../components/personal/personalTimeline/personalTimeline'));
 const PersonalProfile = React.lazy(() => import('../components/personal/personalProfile/personalProfile'));
+const PersonalOtherProfile = React.lazy(() => import('../components/personal/otherUserProfile/otherUserProfile'));
+
 const PersonalSettings = React.lazy(() => import('../components/personal/personalSettings/personalSettings'));
 const PersonalMessages = React.lazy(() => import('../components/personal/personalMessages/personalMessages'));
 const CreatePost = React.lazy(() => import('../components/personal/createPost/createPost'));
@@ -48,6 +50,9 @@ const roleBasedRoutes = [
 
     { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
     { name: 'Personal Profile', path: '/personal/profile/#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
+    
+    { name: 'Personal Other Profile', path: '/personal/profile/:username', role: 'Personal', component: PersonalOtherProfile, key: 'PersonalProfile', showSidebar: true },
+
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
     { name: 'Personal Messages', path: '/personal/messages', role: 'Personal', component: PersonalMessages, key: 'PersonalMessages', showSidebar: true },
     { name: 'Personal Create Post', path: '/personal/create-post', role: 'Personal', component: CreatePost, key: 'PersonalCreatePost', showSidebar: true },
