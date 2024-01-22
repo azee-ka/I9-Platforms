@@ -1,6 +1,6 @@
 # urls.py
 from django.urls import path, include
-from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request, update_user_profile_picture, remove_user_profile_picture
+from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request, update_user_profile_picture, remove_user_profile_picture, toggle_profile_visibility
 
 urlpatterns = [
     path('access/login/', login_view, name='login'),
@@ -9,6 +9,8 @@ urlpatterns = [
     
     path('update-profile-picture/', update_user_profile_picture, name='update-user-profile'),
     path('remove-profile-picture/', remove_user_profile_picture, name='remove-user-profile'),
+
+    path('toggle-profile-visibility/', toggle_profile_visibility, name='toggle_profile_visibility'),
 
     path('personal/', include('src.user.personal.urls')),
     

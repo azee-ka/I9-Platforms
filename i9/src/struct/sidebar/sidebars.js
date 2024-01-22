@@ -2,10 +2,16 @@ import React, { useState, useRef } from 'react';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './sidebars.css';
+import { useActionData, useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../reducers/auth/useAuth';
 
-const Sidebar = () => {
+const Sidebar = ({ handleCreatePostOverlayOpen }) => {
     const [showLargeSidebar, setShowLargeSidebar] = useState(false);
     const largeContainerRef = useRef(null);
+
+    const navigate = useNavigate();
+    const { authState } = useAuth();
 
     const handleTransitionEnd = () => {
         if (showLargeSidebar) {
@@ -15,19 +21,62 @@ const Sidebar = () => {
 
 
     const privatePagesSmallSidebar = [
-        { path: '/learner/dashboard', label: 'D', id: 'navbar-phrase', role: 'learner' },
-        { path: '/calculator', label: 'C', id: 'navbar-phrase', role: 'learner' },
-        { path: '/personal/create-post', label: 'C', id: 'navbar-phrase', role: 'learner' },
-        { path: '/personal/explore', label: 'E', id: 'navbar-phrase', role: 'Learner' },
+        // Learner Links
+        { path: '/learner/dashboard', label: 'D', id: 'navbar-phrase', role: 'Learner' },
+        { path: '', label: 'C', id: 'navbar-phrase', role: 'Learner', action: handleCreatePostOverlayOpen },
+
+
+
+        // Professional Links
+        { path: '/professional/dashboard', label: 'D', id: 'navbar-phrase', role: 'Professional' },
+        { path: '', label: '+', id: 'navbar-phrase', role: 'Professional', action: handleCreatePostOverlayOpen },
+        { path: '/professional/explore', label: 'E', id: 'navbar-phrase', role: 'Professional' },
+
+
+
+
+        // Personal Links
+        { path: '/personal/dashboard', label: 'D', id: 'navbar-phrase', role: 'Personal' },
+        { path: '', label: 'C', id: 'navbar-phrase', role: 'Personal', action: handleCreatePostOverlayOpen },
+        { path: '/personal/explore', label: 'E', id: 'navbar-phrase', role: 'Personal' },
+
+
+        { path: '/calculator', label: 'C', id: 'navbar-phrase', role: 'any' },
     ];
 
     const privatePagesLargeSidebar = [
-        { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'learner' },
-        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'learner' },
-        { path: '/personal/create-post', label: 'C', id: 'navbar-phrase', role: 'Learner' },
-        { path: '/personal/explore', label: 'Explore', id: 'navbar-phrase', role: 'Learner' },
+         // Learner Links
+         { path: '/learner/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Learner' },
+         { path: '', label: 'Create Post', id: 'navbar-phrase', role: 'Learner', action: handleCreatePostOverlayOpen },
+ 
+ 
+ 
+         // Professional Links
+         { path: '/professional/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Professional' },
+         { path: '', label: '+', id: 'navbar-phrase', role: 'Professional', action: handleCreatePostOverlayOpen },
+         { path: '/professional/explore', label: 'EExplore', id: 'navbar-phrase', role: 'Professional' },
+ 
+ 
+ 
+ 
+         // Personal Links
+         { path: '/personal/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Personal' },
+         { path: '', label: 'Create Post', id: 'navbar-phrase', role: 'Personal', action: handleCreatePostOverlayOpen },
+         { path: '/personal/explore', label: 'Explore', id: 'navbar-phrase', role: 'Personal' },
+ 
+ 
+         { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'any' },
 
     ];
+
+    const handleSidebarClick = (path, action) => {
+        if (action) {
+            console.log('fdagfaf')
+            action();
+        } else {
+            navigate(path);
+        }
+    };
 
 
     return (
@@ -48,17 +97,22 @@ const Sidebar = () => {
                     <div className='sidebar-small-container-content'>
                         <ul>
                             {privatePagesSmallSidebar.map((item, index) => (
-                                <a key={`${item.label}-${index}`} href={item.path}>
-                                    <li>
-                                        <div className='sidebar-small-per-item'>
-                                            {item.label}
-                                        </div>
-                                    </li>
-                                </a>
+                                (item.role === authState.user.role || item.role === 'any') ? (
+                                    <button to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
+                                        <li>
+                                            <div className='sidebar-small-per-item'>
+                                                {item.label}
+                                            </div>
+                                        </li>
+                                    </button>
+                                ) : (
+                                    null
+                                )
                             ))}
                         </ul>
                     </div>
                 </div>
+
                 <div
                     ref={largeContainerRef}
                     className={`sidebar-large-container ${showLargeSidebar ? 'expand' : ''}`}
@@ -68,13 +122,17 @@ const Sidebar = () => {
                         <div className='sidebar-large-container-content'>
                             <ul>
                                 {privatePagesLargeSidebar.map((item, index) => (
-                                    <a key={`${item.label}-${index}`} href={item.path}>
-                                        <li>
-                                            <div className='sidebar-large-per-item'>
-                                                {item.label}
-                                            </div>
-                                        </li>
-                                    </a>
+                                    (item.role === authState.user.role || item.role === 'any') ? (
+                                        <button to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
+                                            <li>
+                                                <div className='sidebar-large-per-item'>
+                                                    {item.label}
+                                                </div>
+                                            </li>
+                                        </button>
+                                    ) : (
+                                        null
+                                    )
                                 ))}
                             </ul>
                         </div>

@@ -112,7 +112,16 @@ def get_user_info(request):
 
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggle_profile_visibility(request):
+    user = request.user
 
+    # Toggle visibility
+    user.visibility = 'public' if user.visibility == 'private' else 'private'
+    user.save()
+
+    return Response({"message": f"Profile visibility set to {user.visibility}"})
 
 
 

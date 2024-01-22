@@ -7,85 +7,20 @@ import API_BASE_URL from '../../../config';
 import default_profile_picture from '../../../assets/default_profile_picture.png';
 import { formatDateTime } from '../../../utils/formatDateTime';
 
+import ProfileConfiguration from './settingsComponents/profileConfiguration/profileConfiguration';
+
 const PersonalSettings = () => {
 
     const handleTabClick = (tabTitle) => {
         setActiveTab(tabTitle);
-        console.log(tabTitle);
     };
 
     const [settingsOptions, setSettingOptions] = useState([
         {
-            title: 'Appearance',
+            title: 'Profile Congifuration',
+            contentComponent: ProfileConfiguration,
         },
-        {
-            title: 'Appearance 1',
-        },
-        {
-            title: 'Appearance 2',
-        },
-
     ]);
-
-
-    const [settingsContent, setSettingsContent] = useState([
-        {
-            settings_title: 'Appearance',
-            configuration: [
-                {
-                    sub_title: 'Appearance Mode',
-                    properties: [
-                        {
-                            dark: '',
-                            light: '',
-                        },
-                    ],
-                    sub_title: 'Background Color',
-                    properties: [
-                        {
-                            choose_color: '',
-                        },
-                    ],
-                },
-                {
-                    sub_title: 'Brightness',
-                    properties: [
-                        {
-
-                        },
-                    ],
-                },
-            ]
-        },
-        {
-            settings_title: 'Appearance 1',
-            configuration: [
-                {
-                    sub_title: 'Appearance Mode',
-                    properties: [
-                        {
-                            dark: '',
-                            light: '',
-                        },
-                    ],
-                    sub_title: 'Background Color',
-                    properties: [
-                        {
-                            choose_color: '',
-                        },
-                    ],
-                },
-                {
-                    sub_title: 'Brightness',
-                    properties: [
-                        {
-
-                        },
-                    ],
-                },
-            ]
-        }
-    ])
 
     const [activeTab, setActiveTab] = useState(settingsOptions[0].title);
 
@@ -97,27 +32,12 @@ const PersonalSettings = () => {
                 </div>
                 <div className='personal-settings-content'>
                     <div className='personal-settings-content-inner'>
-                        {settingsContent.map((setting) => {
-                            if (setting.settings_title === activeTab) {
+                        {settingsOptions.map((settingOption, index) => {
+                            if (settingOption.title === activeTab) {
+                                const ContentComponent = settingOption.contentComponent;
                                 return (
-                                    <div key={setting.settings_title}>
-                                        {/* Render content based on the properties of the active tab */}
-                                        {setting.configuration.map((config, configIndex) => (
-                                            <div key={configIndex}>
-                                                <h3>{config.sub_title}</h3>
-                                                {/* Render properties of the configuration */}
-                                                {config.properties.map((property, propertyIndex) => (
-                                                    <div key={propertyIndex}>
-                                                        {/* Render each property */}
-                                                        {Object.keys(property).map((key) => (
-                                                            <div key={key}>
-                                                                {key}: {property[key]}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        ))}
+                                    <div className='profile-settings-per-tab-content' key={`${settingOption.title}-${index}`}>
+                                        <ContentComponent />
                                     </div>
                                 );
                             }

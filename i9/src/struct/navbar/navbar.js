@@ -27,7 +27,7 @@ const Navbar = () => {
     const [countNotifications, setCountNotifications] = useState(0);
 
     const location = useLocation();
-    const history = useNavigate();
+    const navigate = useNavigate();
     const profileMenuRef = useRef(null);
     const notificationsMenuRef = useRef(null);
 
@@ -59,7 +59,7 @@ const Navbar = () => {
             setNotificationsList(response.data);
             setCountNotifications(response.data.length);
             // console.log(response.data);
-            
+
         } catch (error) {
             console.error('Error fetching notifications:', error);
         }
@@ -120,7 +120,7 @@ const Navbar = () => {
         if (action) {
             action();
         } else {
-            history(path);
+            navigate(path);
         }
     };
 

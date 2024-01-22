@@ -51,7 +51,7 @@ const ProfileMenu = ({ user }) => {
             };
             try {
                 const response = await axios.get(`${API_BASE_URL}get-linked-profiles/`, config);
-                console.log(response.data);
+                // console.log(response.data);
                 setUserProfilesList(response.data);
             } catch (error) {
                 console.error('Error fetching profile data:', error);
