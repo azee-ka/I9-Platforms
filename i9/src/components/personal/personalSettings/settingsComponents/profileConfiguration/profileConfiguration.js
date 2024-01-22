@@ -7,7 +7,7 @@ import { useAuth } from '../../../../../reducers/auth/useAuth';
 const ProfileConfiguration = () => {
     const { authState } = useAuth();
     // State to manage the visibility toggle
-    const [isProfilePrivate, setProfileVisibility] = useState(true);
+    const [isProfilePrivate, setProfileVisibility] = useState(false);
 
     // Function to handle the toggle
     const handleToggle = () => {
@@ -35,6 +35,28 @@ const ProfileConfiguration = () => {
             console.error('Error fetching profile data:', error);
           }
     }
+
+
+    const fetchUserProfileVisiblity = async () => {
+        try {
+            const config = {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+              }
+            };
+
+            const response = await axios.get(`${API_BASE_URL}get-profile-visibility/`, config);
+            console.log(response.data);
+            setProfileVisibility(response.data.visibility);
+          } catch (error) {
+            console.error('Error fetching profile data:', error);
+          }
+    };
+
+    useEffect(() => {
+        fetchUserProfileVisiblity();
+    }, []);
 
     return (
         <div className='settings-profile-config-tab'>

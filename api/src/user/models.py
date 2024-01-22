@@ -5,10 +5,6 @@ from django.db import models
 def upload_to(instance, filename):
     return f'profile_pictures/{instance.username}/{filename}'
 
-VISIBILITY_CHOICES = [
-        ('public', 'Public'),
-        ('private', 'Private'),
-    ]
 
 class BaseUser(AbstractUser):
     username = models.CharField(unique=True, max_length=150)
@@ -17,7 +13,7 @@ class BaseUser(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     linked_profiles = models.ManyToManyField('self', symmetrical=False, related_name='%(app_label)s_%(class)s_linked_profiles')
     active_profile = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='%(app_label)s_%(class)s_active_profile')
-    visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES, default='private')
+    is_private_profile = models.BooleanField(default=True)
 
     def link_profile(self, profile):
         """

@@ -9,7 +9,7 @@ from ..module.serializers import ModuleSerializer
 class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'date_joined', 'is_active', 'role', 'profile_picture', 'visibility']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'date_joined', 'is_active', 'role', 'profile_picture', 'is_private_profile']
 
 
 class UserProfilePictureUpdateSerializer(serializers.Serializer):

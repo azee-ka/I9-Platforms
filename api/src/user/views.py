@@ -118,13 +118,35 @@ def toggle_profile_visibility(request):
     user = request.user
 
     # Toggle visibility
-    user.visibility = 'public' if user.visibility == 'private' else 'private'
+    user.is_private_profile = not user.is_private_profile
     user.save()
 
-    return Response({"message": f"Profile visibility set to {user.visibility}"})
+    visibility_status = 'private' if user.is_private_profile else 'public'
 
+    return Response({"message": f"Profile visibility set to {visibility_status}"})
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profile_visibility(request):
+    base_user = request.user
+    
+    # Attempt to cast the base user to more specific user types
+    if hasattr(base_user, 'learner'):
+        user = base_user.learner
+    elif hasattr(base_user, 'educator'):
+        user = base_user.educator
+    elif hasattr(base_user, 'personal'):
+        user = base_user.personal
+    else:
+        # Handle unexpected user types if any
+        return Response({"message": "Invalid user type"}, status=400)
 
+    serializer = PersonalSerializer(user, context={'request': request})
+    
+    # Extract the visibility status from the serializer data
+    visibility_status = 'private' if user.is_private_profile else 'public'
+
+    return Response({"visibility": visibility_status})
 
 
 
