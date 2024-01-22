@@ -10,7 +10,7 @@ class Notification(models.Model):
         ('profile_link_request', 'Profile Link Request'),
         ('friend_request', 'Friend Request'),
         ('message', 'Message'),
-        # Add more notification types as needed
+        
     ]
 
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_notifications')

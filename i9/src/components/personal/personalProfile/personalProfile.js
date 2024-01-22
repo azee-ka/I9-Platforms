@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import PerPostGrid from '../postUI/postGrid/postGrid';
 import ProfilePictureEditor from '../utils/profilePictureEditor/profilePictureEditor';
+import ProfilePicture from '../../../utils/getProfilePicture';
 
 const PersonalProfile = ({ handleExpandPostOpen }) => {
   const { authState } = useAuth();
@@ -56,8 +57,7 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
 
       const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
       setProfileData(response.data);
-
-      console.log(response.data)
+      // console.log(response.data)
       setCurrentProfilePicture(response.data.profile_picture === null ? default_profile_picture : response.data.profile_picture);
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -122,12 +122,7 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
                   <div className='personal-profile-interaction-tab-user-info-container-inner-right'>
                     <div className='personal-profile-interaction-user-profile-picture-container'>
                       <div className='personal-profile-interaction-user-profile-picture'>
-                        <img
-                          alt={`profile-menu-icon`}
-                          src={`${currentProfilePicture ? !currentProfilePicture.includes('default_profile') ? API_BASE_URL + currentProfilePicture : default_profile_picture : default_profile_picture}`}
-                          // src={interactionUserData ? interactionUserData.profilePicture ? interactionUserData.profilePicture : default_profile_picture : default_profile_picture}
-                          onClick={handleProfilePictureOverlayClickOpen}
-                        />
+                        <ProfilePicture src={currentProfilePicture} onClick={handleProfilePictureOverlayClickOpen} />
                       </div>
                     </div>
                     <div className='personal-profile-interaction-user-info-text'>

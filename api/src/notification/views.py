@@ -14,3 +14,15 @@ def get_notifications(request):
     notifications = Notification.objects.filter(recipient=user).order_by('-created_at')
     serializer = NotificationSerializer(notifications, many=True)
     return Response(serializer.data, status=200)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_notification(request, notification_id):
+    user = request.user
+    notification = get_object_or_404(Notification, id=notification_id, recipient=user)
+
+    # Delete the notification
+    notification.delete()
+
+    return Response({"message": "Notification deleted successfully"})

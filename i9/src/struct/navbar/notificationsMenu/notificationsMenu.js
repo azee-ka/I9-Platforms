@@ -5,7 +5,7 @@ import API_BASE_URL from '../../../config';
 import { useAuth } from '../../../reducers/auth/useAuth';
 import './notificationsMenu.css';
 import { timeAgo } from '../../../components/personal/postUI/expandPost/convertDateTime';
-const NotificationsMenu = ({ setCountNotifications, notificationsList }) => {
+const NotificationsMenu = ({ setCountNotifications, notificationsList, fetchNotifications }) => {
     const { authState } = useAuth();
 
     const handleAcceptLinkAccountRequest = async (notificationId) => {
@@ -21,8 +21,25 @@ const NotificationsMenu = ({ setCountNotifications, notificationsList }) => {
         } catch (error) {
             console.error('Error accepting link request:', error);
         }
+        fetchNotifications()
     };
-    
+
+    const handleDeleteNotification = async (notificationId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.delete(`${API_BASE_URL}delete-notification/${notificationId}/`, config);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error accepting link request:', error);
+        }
+        fetchNotifications()
+    };
+
     const handleDeclineLinkAccountRequest = async (notificationId) => {
         const config = {
             headers: {
@@ -36,21 +53,10 @@ const NotificationsMenu = ({ setCountNotifications, notificationsList }) => {
         } catch (error) {
             console.error('Error rejecting link request:', error);
         }
+        fetchNotifications()
     };
 
-    
 
-    // {notificationsList.map(notification => (
-    //     <div key={notification.id} className='notification-item'>
-    //         <p>{notification.message}</p>
-    //         {notification.notification_type === 'profile_link_request' && (
-    //             <div>
-    //                 <button onClick={() => handleAcceptLinkAccountRequest(notification.id)}>Accept</button>
-    //                 <button onClick={() => handleDeclineLinkAccountRequest(notification.id)}>Decline</button>
-    //             </div>
-    //         )}
-    //     </div>
-    // ))}
 
     return (
         <div className='notifications-menu-container'>
@@ -59,31 +65,36 @@ const NotificationsMenu = ({ setCountNotifications, notificationsList }) => {
                     notificationsList.map((notification, index) => (
                         <div key={notification.id} className='notification-item'>
                             <div className='notification-item-inner'>
-                            <div className='notification-item-message'>
-                                <div className='notification-message-container'>
-                                    <p>{notification.message}</p>
+                                <div className='notification-item-message'>
+                                    <div className='notification-message-container'>
+                                        <p>{notification.message}</p>
+                                    </div>
+                                    <div className='notification-time-ago-container'>
+                                        <p>{timeAgo(notification.created_at)}</p>
+                                    </div>
                                 </div>
-                                <div className='notification-time-ago-container'>
-                                    <p>{timeAgo(notification.created_at)}</p>
-                                </div>
+                                {notification.notification_type === 'profile_link_request' && (
+                                    <div className='profile-link-request-buttons-container'>
+                                        <button onClick={() => handleAcceptLinkAccountRequest(notification.id)}>Accept</button>
+                                        <button onClick={() => handleDeclineLinkAccountRequest(notification.id)}>Decline</button>
+                                    </div>
+                                )}
+                                {notification.notification_type === 'message' && (
+                                    <div className='profile-link-request-buttons-container'>
+                                        <button onClick={() => handleDeleteNotification(notification.id)}>Dismiss</button>
+                                    </div>
+                                )}
                             </div>
-                            {notification.notification_type === 'profile_link_request' && (
-                                <div className='profile-link-request-buttons-container'>
-                                    <button onClick={() => handleAcceptLinkAccountRequest(notification.id)}>Accept</button>
-                                    <button onClick={() => handleDeclineLinkAccountRequest(notification.id)}>Decline</button>
-                                </div>
-                            )}
-                                </div>
                         </div>
                     ))
                 ) : (
                     <div className='notifications-menu-notifications-list-no-notifications'>
                         <p>No Notifications!</p>
-                        </div>
+                    </div>
                 )
 
                 }
-                
+
             </div>
         </div>
     );

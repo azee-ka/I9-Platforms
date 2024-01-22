@@ -9,6 +9,7 @@ import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import OverlayContent from './overlayContent';
+import ProfilePicture from '../../../utils/getProfilePicture';
 
 const ProfessionalProfile = () => {
 
@@ -113,7 +114,7 @@ const ProfessionalProfile = () => {
                 }
             };
             const response_module = await axios.get(`${API_BASE_URL}professional/module/get-data/`, config);
-            console.log(response_module.data);
+            // console.log(response_module.data);
             setPersonalProfileModuleData(response_module.data);
 
         } catch (error) {
@@ -130,7 +131,7 @@ const ProfessionalProfile = () => {
                 }
             };
             const response = await axios.get(`${API_BASE_URL}profile/get-user-info`, config);
-            console.log(response.data);
+            // console.log(response.data);
             setProfileData(response.data);
 
         } catch (error) {
@@ -180,7 +181,7 @@ const ProfessionalProfile = () => {
                                 <div className='professional-profile-user-basic-info-left-side'>
                                     <div className='professional-profile-user-basic-info-left-side-inner'>
                                         <div className='professional-profile-user-profile-picture'>
-                                            <img alt={`profile-menu-icon`} src={profileData ? profileData.profilePicture ? profileData.profilePicture : default_profile_picture : default_profile_picture} />
+                                            <ProfilePicture src={profileData} />
                                         </div>
                                         <div className='professional-profile-user-info-text'>
                                             <div className='professional-profile-name-text'>{profileData.first_name} {profileData.last_name}</div>

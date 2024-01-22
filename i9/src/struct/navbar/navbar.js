@@ -12,6 +12,7 @@ import NotificationsMenu from './notificationsMenu/notificationsMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import ProfilePicture from '../../utils/getProfilePicture';
 
 const Navbar = () => {
     const { authState, logout } = useAuth();
@@ -57,15 +58,17 @@ const Navbar = () => {
             const response = await axios.get(`${API_BASE_URL}get-notifications/`, config);
             setNotificationsList(response.data);
             setCountNotifications(response.data.length);
-
-            console.log(response.data);
+            // console.log(response.data);
+            
         } catch (error) {
             console.error('Error fetching notifications:', error);
         }
     };
     useEffect(() => {
-        fetchProfileData();
-        fetchNotifications();
+        if (authState.isAuthenticated) {
+            fetchProfileData();
+            fetchNotifications();
+        }
     }, []);
 
 
@@ -163,7 +166,7 @@ const Navbar = () => {
                                                     </span>
                                                 )}
                                             </button>
-                                            {notificationsMenuVisible && <NotificationsMenu notificationsList={notificationsList} setCountNotifications={setCountNotifications} />}
+                                            {notificationsMenuVisible && <NotificationsMenu notificationsList={notificationsList} setCountNotifications={setCountNotifications} fetchNotifications={fetchNotifications} />}
                                         </li>
                                     )}
 
@@ -174,19 +177,7 @@ const Navbar = () => {
                                             ref={profileMenuRef}
                                         >
                                             <button onClick={handleProfileMenuToggle}>
-                                                {profileData ?
-                                                    (<img
-                                                        alt={`profile-icon`}
-                                                        src={`${profileData.profile_picture === null ? default_profile_picture : API_BASE_URL + profileData.profile_picture}`}
-                                                        className='profile-icon'
-                                                    />) : (
-                                                        <img
-                                                            alt={`profile-icon`}
-                                                            src={default_profile_picture}
-                                                            className='profile-icon'
-                                                        />
-                                                    )
-                                                }
+                                                <ProfilePicture src={profileData} />
                                             </button>
                                             {profileMenuVisible && <ProfileMenu user={authState.user} logout={logout} />}
                                         </li>

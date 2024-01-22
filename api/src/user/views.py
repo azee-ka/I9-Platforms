@@ -155,7 +155,7 @@ def link_profile(request):
         message=f"{user.username} wants to link profiles.",
         notification_type='profile_link_request'
     )
-    return Response({"message": f"Link invitiation sent successfully to @{linked_profile.user}. Accounts will be linked once @{linked_profile.user} accepts the inivitation."})
+    return Response({"message": f"Link invitiation sent successfully to @{linked_profile.username}. Accounts will be linked once @{linked_profile.username} accepts the inivitation."})
 
 
 @api_view(['POST'])
@@ -172,6 +172,14 @@ def accept_link_request(request, notification_id):
     user.link_profile(notification.sender)
     
     notification.delete()
+    
+    send_notification(
+        sender=user,
+        recipient=notification.sender,
+        message=f"{user.username} sucessfully accepted your invite! Profile are now linked.",
+        notification_type='message'
+    )
+    
     return Response({"message": "Link request accepted successfully"})
 
 
@@ -183,6 +191,13 @@ def reject_link_request(request, notification_id):
 
     # Reject the link request
     notification.delete()
+    
+    send_notification(
+        sender=user,
+        recipient=notification.sender,
+        message=f"{user.username} declined your invite! You do not have permission to link the profile",
+        notification_type='message'
+    )
 
     return Response({"message": "Link request rejected"})
 
