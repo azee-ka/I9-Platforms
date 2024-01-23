@@ -1,6 +1,7 @@
 import React from 'react';
 import default_profile_picture from '../assets/default_profile_picture.png';
 import API_BASE_URL from '../config';
+import './getProfilePicture.css';
 
 const ProfilePicture = ({ src, onClick }) => {
     let profilePictureSrc = default_profile_picture;
@@ -39,6 +40,7 @@ const ProfilePicture = ({ src, onClick }) => {
             alt={'profile-picture-icon'}
             onClick={handleClick}
             style={{ cursor: onClick ? 'pointer' : 'default' }} // Set cursor to pointer if onClick is provided
+            className='profile-picture'
         />
     );
 };

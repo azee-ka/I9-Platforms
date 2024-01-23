@@ -17,6 +17,7 @@ import VideoPlayer from '../../../utils/videoPlayer';
 import UserListOverlay from '../../../utils/userListOverlay/userListOverlay';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
+import ProfilePicture from '../../../../../utils/getProfilePicture';
 
 const ExpandedPostOverlay = ({ postData }) => {
 
@@ -186,7 +187,7 @@ const ExpandedPostOverlay = ({ postData }) => {
                     <div className='expanded-post-overlay-user-info'>
                         <div className='expanded-post-overlay-user-info-profile-picture-contatiner'>
                             <div className='expanded-post-overlay-user-info-profile-picture-contatiner-inner'>
-                                <img src={`${post ? post.user.profile_picture ? post.user.profile_picture : default_profile_picture : default_profile_picture}`} />
+                                <ProfilePicture src={post.user.profile_picture} />
                             </div>
                         </div>
                         <div className='expanded-post-overlay-user-info-text-contatiner'>
@@ -204,7 +205,7 @@ const ExpandedPostOverlay = ({ postData }) => {
                                             <div className='expanded-post-commenting-user-info'>
                                                 <div className='expanded-post-commenting-user-profile-picture'>
                                                     <div className='expanded-post-commenting-user-profile-picture-inner'>
-                                                        <img src={`${post.user.profile_picture ? post.user.profile_picture : default_profile_picture}`} />
+                                                        <ProfilePicture src={post.user.profile_picture} />
                                                     </div>
                                                 </div>
                                                 <div className='expanded-post-commenting-user-username'>
@@ -295,9 +296,11 @@ const ExpandedPostOverlay = ({ postData }) => {
                 <div onClick={handlePostDislike}>
                     <img src={postDisliked ? disliked : undisliked} />
                 </div>
-                <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
+                {post.user.username === authState.user.username &&
+                    <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
                     <i className='fa fa-trash' id="delete-icon" />
                 </div>
+                }
             </div>
             {showLikesOverlay && (
                 <UserListOverlay userList={post.likes} onClose={handleCloseOverlay} title={'Likes'} username={authState.user.username} />

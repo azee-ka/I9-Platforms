@@ -7,7 +7,7 @@ import './postGrid.css';
 import API_BASE_URL from '../../../../config';
 import VideoPlayer from '../../utils/videoPlayer';
 
-const PerPostGrid = ({ postData, previousPostId, nextPostId, handleExpandPostOpen }) => {
+const PerPostGrid = ({ postData, handleExpandPostOpen }) => {
   const navigate = useNavigate();
 
   const handlePostClick = () => {

@@ -10,7 +10,7 @@ import PersonalProfile from '../personalProfile/personalProfile';
 import { useNavigate, useParams } from 'react-router';
 import { useAuth } from '../../../reducers/auth/useAuth';
 
-const OtherUserProfile = () => {
+const OtherUserProfile = ({ handleExpandPostOpen }) => {
     const { username } = useParams();
     const { authState } = useAuth();
     const navigate = useNavigate();
@@ -68,7 +68,7 @@ const OtherUserProfile = () => {
         <PersonalProfile />
     ) : (
         (isFullViewProfile) ? (
-            <FullViewProfile profileData={profileData} />
+            <FullViewProfile profileData={profileData} handleExpandPostOpen={handleExpandPostOpen} />
         ) : (
             <PartialViewProfile profileData={profileData} />
         )

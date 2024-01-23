@@ -6,7 +6,7 @@ import './expandedPost.css'; // Import the CSS file
 import './expandPostOverlay.css';
 // import '@fortawesome/fontawesome-free/css/all.css';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate from react-router-dom
-import API_BASE_URL from '../../../config';
+import API_BASE_URL, { CLIENT_BASE_URL } from '../../../config';
 import { timeAgo } from './convertDateTIme';
 //import { Link } from 'react-router-dom';
 import { useAuth } from '../../../reducers/auth/useAuth';
@@ -17,6 +17,7 @@ import unlikedImg from '../../../assets/unliked.png';
 import dislikedImg from '../../../assets/disliked.png';
 import undislikedImg from '../../../assets/undisliked.png';
 import VideoPlayer from '../utils/videoPlayer';
+import ProfilePicture from '../../../utils/getProfilePicture';
 
 const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, originalUrl }) => {
   const { authState } = useAuth();
@@ -321,9 +322,9 @@ const ExpandedPost = ({ postIdForOverlay, previousPostId, nextPostId, onClose, o
                           <div className="expanded-post-each-comment">
                             <div className='expanded-post-comment-by-user'>
                               <div className='expanded-post-comment-user-info'>
-                                <a href={myUsernameIsNotSameUser(comment.user.username) ? `http://localhost:3000/profile/${post.user.username}` : `http://localhost:3000/profile`}>
+                                <a href={`${CLIENT_BASE_URL}/personal/profile/${post.user.username}`}>
                                   <div className='expanded-post-info-profile-picture'>
-                                    <img src={`${API_BASE_URL}${comment.user.profile_picture}`} alt={comment.user.username} />
+                            <ProfilePicture src={comment.user.profile_picture} />
                                   </div>
                                   <div className='expanded-post-user-info-post-comment-text'>
                                     {comment.user.username}

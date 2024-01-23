@@ -7,13 +7,17 @@ import ProfilePicture from '../../../../utils/getProfilePicture';
 import { Link } from 'react-router-dom';
 import { CLIENT_BASE_URL } from '../../../../config';
 import UserListOverlay from '../../utils/userListOverlay/userListOverlay';
+import PerPostGrid from '../../postUI/postGrid/postGrid';
 
-const FullViewProfile = ({ profileData }) => {
+const FullViewProfile = ({ profileData, handleExpandPostOpen }) => {
     const { authState } = useAuth();
 
     const [showFollowersOverlay, setShowFollowersOverlay] = useState(false);
     const [showFollowingOverlay, setShowFollowingOverlay] = useState(false);
 
+    const [postsData, setPostsData] = useState(profileData.my_posts);
+    
+    console.log(profileData);
     const handleFollowButtonClick = async () => {
         try {
             const config = {
@@ -60,27 +64,27 @@ const FullViewProfile = ({ profileData }) => {
     }
 
     return (
-        <div className='partial-view-user-profile'>
-            <div className='partial-view-user-profile-inner'>
-                <div className='partial-view-user-profile-info-container'>
-                    <div className='partial-view-user-profile-info-container-inner'>
-                        <div className='partial-view-user-profile-info-card'>
-                            <div className='partial-view-user-profile-info-card-profile-picture'>
-                                <div className='partial-view-user-profile-info-card-profile-picture-inner'>
+        <div className='full-view-user-profile'>
+            <div className='full-view-user-profile-inner'>
+                <div className='full-view-user-profile-info-container'>
+                    <div className='full-view-user-profile-info-container-inner'>
+                        <div className='full-view-user-profile-info-card'>
+                            <div className='full-view-user-profile-info-card-profile-picture'>
+                                <div className='full-view-user-profile-info-card-profile-picture-inner'>
                                     <ProfilePicture src={profileData.profile_picture} />
                                 </div>
                             </div>
-                            <div className='partial-view-user-profile-info-card-user-text-info'>
-                                <div className='partial-view-user-profile-info-card-username'>
+                            <div className='full-view-user-profile-info-card-user-text-info'>
+                                <div className='full-view-user-profile-info-card-username'>
                                     <Link to={`${CLIENT_BASE_URL}/personal/profile/${profileData.username}`} className='custom-link'>
                                         <p>@{profileData.username}</p>
                                     </Link>
                                 </div>
-                                <div className='partial-view-user-profile-info-card-followers-following-count'>
+                                <div className='full-view-user-profile-info-card-followers-following-count'>
                                     <p onClick={() => setShowFollowersOverlay(true)}>{profileData.followers_count} followers</p>
                                     <p onClick={() => setShowFollowingOverlay(true)}>{profileData.following_count} following</p>
                                 </div>
-                                <div className='partial-view-user-profile-info-card-follow-button'>
+                                <div className='full-view-user-profile-info-card-follow-button'>
                                     {profileData.is_followed_by_current_user === false ? (
                                         <button onClick={handleFollowButtonClick}>Follow</button>
                                     ) : (
@@ -92,7 +96,24 @@ const FullViewProfile = ({ profileData }) => {
                         </div>
                     </div>
                 </div>
-                <div className='partial-view-profile-is-private-message-container'>
+                <div className='full-view-profile-posts-container'>
+                {postsData &&
+                      postsData.map((post, index) => {
+                        const previousPost = index > 0 ? postsData[index - 1] : null;
+                        const nextPost = index < postsData.length - 1 ? postsData[index + 1] : null;
+
+                        return (
+                          <div className='grid-per-post' key={`${post.id}-${index}`}>
+                            <PerPostGrid
+                              postData={post}
+                              previousPostId={previousPost ? previousPost.id : null}
+                              nextPostId={nextPost ? nextPost.id : null}
+                              handleExpandPostOpen={handleExpandPostOpen}
+                            />
+                          </div>
+                        );
+                      })
+                    }
                 </div>
             </div>
             {showFollowersOverlay && (

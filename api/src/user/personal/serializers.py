@@ -113,7 +113,7 @@ class PrivatePersonalProfileSerializer(BasePersonalProfileSerializer):
     def get_my_posts(self, obj):
         # Serialize the user's posts as an array of post objects
         posts = obj.my_posts.all()
-        return PostSerializer(posts, many=True).data
+        return MinimalPostSerializer(posts, many=True).data
 
     def get_followers_list(self, obj):
         followers = obj.followers.all()
