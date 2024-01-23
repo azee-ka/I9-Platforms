@@ -10,6 +10,28 @@ class FollowerSerializer(serializers.ModelSerializer):
         model = Personal
         fields = ['id', 'username', 'profile_picture']
 
+
+    
+class BasePersonalProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Personal
+        fields = BaseUserSerializer.Meta.fields + ['followers_count', 'following_count']
+        
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+                
+        # Check if the current user is following the profile
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            data['is_followed_by_current_user'] = instance.followers.filter(id=request.user.id).exists()
+        else:
+            data['is_followed_by_current_user'] = False
+
+        return data
+    
+        
+        
+        
 class PersonalSerializer(BaseUserSerializer):
 
     my_posts = serializers.SerializerMethodField()
@@ -42,7 +64,7 @@ class PersonalSerializer(BaseUserSerializer):
     def get_following_list(self, obj):
         following = obj.following.all()
         return FollowerSerializer(following, many=True).data
-        
+    
     def to_representation(self, instance):
         data = super().to_representation(instance)
                 
@@ -60,47 +82,33 @@ class PersonalSerializer(BaseUserSerializer):
     
     
     
-    
-    
-    
-    
-    
-class BasePersonalProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Personal
-        fields = ['id', 'username', 'profile_picture', 'followers_count', 'following_count']
-
-class MyPersonalProfileSerializer(BasePersonalProfileSerializer):
-    my_posts = serializers.SerializerMethodField()
-    followers_list = serializers.SerializerMethodField()
-    following_list = serializers.SerializerMethodField()
-
-    class Meta(BasePersonalProfileSerializer.Meta):
-        fields = BasePersonalProfileSerializer.Meta.fields + ['my_posts', 'followers_list', 'following_list']
-
-    def get_my_posts(self, obj):
-        # Serialize the user's posts as an array of post objects
-        posts = obj.my_posts.all()
-        return PostSerializer(posts, many=True).data
-
-    def get_followers_list(self, obj):
-        followers = obj.followers.all()
-        return FollowerSerializer(followers, many=True).data
-
-    def get_following_list(self, obj):
-        following = obj.following.all()
-        return FollowerSerializer(following, many=True).data
 
 class PublicPersonalProfileSerializer(BasePersonalProfileSerializer):
-    pass
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+                
+        # Check if the current user is following the profile
+        request = self.context.get('request')
+
+        if request and request.user.is_authenticated:
+            data['is_followed_by_current_user'] = instance.followers.filter(id=request.user.id).exists()
+        else:
+            data['is_followed_by_current_user'] = False
+
+        return data
+    
+
+
+
 
 class PrivatePersonalProfileSerializer(BasePersonalProfileSerializer):
     my_posts = serializers.SerializerMethodField()
     followers_list = serializers.SerializerMethodField()
     following_list = serializers.SerializerMethodField()
+    can_follow = serializers.SerializerMethodField()
 
     class Meta(BasePersonalProfileSerializer.Meta):
-        fields = BasePersonalProfileSerializer.Meta.fields + ['my_posts', 'followers_list', 'following_list']
+        fields = BasePersonalProfileSerializer.Meta.fields + ['my_posts', 'followers_list', 'following_list', 'can_follow']
 
     def get_my_posts(self, obj):
         # Serialize the user's posts as an array of post objects
@@ -114,3 +122,24 @@ class PrivatePersonalProfileSerializer(BasePersonalProfileSerializer):
     def get_following_list(self, obj):
         following = obj.following.all()
         return FollowerSerializer(following, many=True).data
+    
+    def get_can_follow(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            # Check if the current user is not already following the profile
+            return not obj.followers.filter(id=request.user.id).exists()
+        return False
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+                
+        # Check if the current user is following the profile
+        request = self.context.get('request')
+
+        if request and request.user.is_authenticated:
+            data['is_followed_by_current_user'] = instance.followers.filter(id=request.user.id).exists()
+        else:
+            data['is_followed_by_current_user'] = False
+
+        return data
+    

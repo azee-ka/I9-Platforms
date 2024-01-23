@@ -1,7 +1,7 @@
 // followListOverlay.js
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import Link
-import API_BASE_URL from '../../../../config';
+import API_BASE_URL, { CLIENT_BASE_URL } from '../../../../config';
 import './userListOverlay.css'; // Import the CSS file
 import crossIcon from '../../../../assets/cross-icon.png';
 import { useAuth } from '../../../../reducers/auth/useAuth';
@@ -40,7 +40,7 @@ const UserListOverlay = ({ userList, onClose, title }) => {
                 {userList.length !== 0 && (
                     <div className="follow-list">
                         {userList.map((thisUser, index) => (
-                            <a href={myUsernameIsNotSameUser(thisUser.username) ? `http://localhost:3000/profile/${thisUser.username}` : `http://localhost:3000/profile`} key={`${thisUser.id}-${index}`}>
+                            <Link to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`}>
                                 <div className="follow-list-item">
                                     <div className='profile-picture-img-container-user-list-overlay'>
                                     <img src={`${thisUser.profile_picture !== null ? API_BASE_URL + thisUser.profile_picture : default_profile_picture}`} alt={thisUser.username} />
@@ -48,7 +48,7 @@ const UserListOverlay = ({ userList, onClose, title }) => {
                                     </div>
                                     <span>{thisUser.username}</span>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 )}

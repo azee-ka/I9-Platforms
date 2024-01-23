@@ -3,12 +3,16 @@ import React, { useEffect } from 'react';
 import { Navigate, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import { useAuthContext } from '../reducers/authReducer';
 import RoleBasedRouter from './RoleBasedRouter';
-import LoginPage from '../access/login/login';
-import RegisterPage from '../access/register/register';
-import Access from '../access/access';
+// import LoginPage from '../access/login/login';
+// import RegisterPage from '../access/register/register';
+// import Access from '../access/access';
 import Layout from '../struct/layout/layout';
 import { useAuth } from '../reducers/auth/useAuth';
 import ExpandedPostLoading from '../components/personal/postUI/expandPost/expandedPostLoading/expandedPostLoading';
+
+const Access = React.lazy(() => import('../access/access'));
+const LoginPage = React.lazy(() => import('../access/login/login'));
+const RegisterPage = React.lazy(() => import('../access/register/register'));
 
 
 const Calculator = React.lazy(() => import('../components/tools/calculator/calculator'));
@@ -50,7 +54,7 @@ const roleBasedRoutes = [
 
     { name: 'Personal Profile', path: '/personal/profile', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
     { name: 'Personal Profile', path: '/personal/profile/#:overlay', role: 'Personal', component: PersonalProfile, key: 'PersonalProfile', showSidebar: true },
-    
+
     { name: 'Personal Other Profile', path: '/personal/profile/:username', role: 'Personal', component: PersonalOtherProfile, key: 'PersonalProfile', showSidebar: true },
 
     { name: 'Personal Preferences', path: '/personal/preferences', role: 'Personal', component: PersonalSettings, key: 'PersonalPreferences', showSidebar: true },
@@ -80,10 +84,12 @@ const roleBasedRoutes = [
 
 
 const publicRoutes = [
-    { name: 'Access', path: '/', component: <Access />, key: 'Access', showSidebar: false },
-    { name: 'Access', path: '/access', component: <Access />, key: 'Access-1', showSidebar: false },
-    { name: 'Login', path: '/access/login', component: <LoginPage />, key: 'Login', showSidebar: false },
-    { name: 'Register', path: '/access/register', component: <RegisterPage />, key: 'Register', showSidebar: false },
+    { name: 'Access', path: '/', component: Access, key: 'Access', showSidebar: false },
+    { name: 'Access', path: '/access', component: Access, key: 'Access-1', showSidebar: false },
+    { name: 'Login', path: '/access/login', component: LoginPage, key: 'Login', showSidebar: false },
+    { name: 'Register', path: '/access/register', component: RegisterPage, key: 'Register', showSidebar: false },
+
+    { name: 'Personal Other Profile', path: '/personal/profile/:username', role: 'Personal', component: PersonalOtherProfile, key: 'PersonalProfile', showSidebar: true },
 
 ];
 
@@ -105,18 +111,22 @@ const AppRouter = () => {
         <Router>
             <React.Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    {!isAuthenticated && publicRoutes.map((route, index) => (
-                        <Route key={`${index}-${route.path}`} path={route.path} element={
-                            <Layout
-                                key={`${index}-${route.path}`}
-                                className={`${route.path.substring(1)}`}
-                                pageName={route.pageName}
-                                showSidebar={route.showSidebar}
-                            >
-                                {route.component}
-                            </Layout>
-                        } />
-                    ))}
+                    {!isAuthenticated && publicRoutes.map((route, index) => {
+                        const Component = route.component;
+                        return (
+                            <Route key={`${index}-${route.path}`} path={route.path} element={
+                                <Layout
+                                    key={`${index}-${route.path}`}
+                                    className={`${route.path.substring(1)}`}
+                                    pageName={route.pageName}
+                                    showSidebar={route.showSidebar}
+                                >
+                                    <Component />
+                                </Layout>
+                            } />
+                        );
+                    })}
+
 
                     {isAuthenticated &&
                         <Route

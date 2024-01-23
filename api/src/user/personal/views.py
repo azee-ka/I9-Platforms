@@ -13,9 +13,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Personal
 from ..models import BaseUser
-from .serializers import PersonalSerializer, MyPersonalProfileSerializer, PrivatePersonalProfileSerializer, PublicPersonalProfileSerializer
+from .serializers import PersonalSerializer, PrivatePersonalProfileSerializer, PublicPersonalProfileSerializer
 from rest_framework import status
-
+from .utils.cast_down_user import cast_down_user
 
 # View to retrieve the authenticated user's profile
 @api_view(['GET'])
@@ -23,15 +23,8 @@ from rest_framework import status
 def get_my_profile(request):
     base_user = request.user
     
-    # Attempt to cast the base user to more specific user types
-    if hasattr(base_user, 'learner'):
-        user = base_user.learner
-    elif hasattr(base_user, 'educator'):
-        user = base_user.educator
-    elif hasattr(base_user, 'personal'):
-        user = base_user.personal
-    else:
-        # Handle unexpected user types if any
+    user = cast_down_user(base_user)
+    if user is None:
         return Response({"message": "Invalid user type"}, status=400)
     
     serializer = PersonalSerializer(user)
@@ -41,36 +34,30 @@ def get_my_profile(request):
 
 # View to retrieve a user's profile by username
 @api_view(['GET'])
+@permission_classes([AllowAny]) 
 def get_user_profile(request, username):
     base_user = get_object_or_404(BaseUser, username=username)
 
-    # Attempt to cast the base user to more specific user types
-    if hasattr(base_user, 'learner'):
-        user = base_user.learner
-    elif hasattr(base_user, 'educator'):
-        user = base_user.educator
-    elif hasattr(base_user, 'personal'):
-        user = base_user.personal
-    else:
-        # Handle unexpected user types if any
+    user = cast_down_user(base_user)
+    if user is None:
         return Response({"message": "Invalid user type"}, status=400)
 
     is_full_view = None
     if user.is_private_profile and not request.user.is_authenticated:
         # User has a private profile and the viewer is not authenticated
         is_full_view = False
-        serializer = PublicPersonalProfileSerializer(user)
+        serializer = PublicPersonalProfileSerializer(user, context={'request': request})
     elif user == request.user:
         # Viewer is the same user, use the MyProfileSerializer
-        serializer = MyPersonalProfileSerializer(user)
+        serializer = PersonalSerializer(user, context={'request': request})
     elif user.is_private_profile and not user.followers.filter(id=request.user.id).exists():
         # User has a private profile and the viewer is not a follower
         is_full_view = False
-        serializer = PublicPersonalProfileSerializer(user)
+        serializer = PublicPersonalProfileSerializer(user, context={'request': request})
     else:
         # User has either a public profile or the viewer is a follower
         is_full_view = True
-        serializer = PrivatePersonalProfileSerializer(user)
+        serializer = PrivatePersonalProfileSerializer(user, context={'request': request})
 
     response_data = {'profile_data': serializer.data, 'is_full_view': is_full_view}
     return Response(response_data)
@@ -79,35 +66,16 @@ def get_user_profile(request, username):
 
 
 
-
-
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-    base_user_to_follow = get_object_or_404(BaseUser, id=user_id)
-
-    # Attempt to cast the base user to more specific user types
-    if hasattr(base_user_to_follow, 'learner'):
-        user_to_follow = base_user_to_follow.learner
-    elif hasattr(base_user_to_follow, 'educator'):
-        user_to_follow = base_user_to_follow.educator
-    elif hasattr(base_user_to_follow, 'personal'):
-        user_to_follow = base_user_to_follow.personal
-    else:
-        # Handle unexpected user types if any
-        return Response({"message": "Invalid user type"}, status=400)
+@permission_classes([AllowAny])
+def follow_user(request, username):
+    base_user_to_follow = get_object_or_404(BaseUser, username=username)
+    user_to_follow = cast_down_user(base_user_to_follow)
     
     base_current_user = request.user
-    
-    # Attempt to cast the base user to more specific user types
-    if hasattr(base_current_user, 'learner'):
-        current_user = base_user_to_follow.learner
-    elif hasattr(base_current_user, 'educator'):
-        current_user = base_user_to_follow.educator
-    elif hasattr(base_current_user, 'personal'):
-        current_user = base_current_user.personal
-    else:
-        # Handle unexpected user types if any
+    current_user = cast_down_user(base_current_user)
+
+    if user_to_follow is None or current_user is None:
         return Response({"message": "Invalid user type"}, status=400)
 
     if current_user != user_to_follow:
@@ -115,15 +83,25 @@ def follow_user(request, user_id):
         user_to_follow.followers.add(current_user)
         current_user.save()
         user_to_follow.save()
-
+        
     serializer = PersonalSerializer(current_user)
     return Response(serializer.data)
 
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def unfollow_user(request, user_id):
-    user_to_unfollow = get_object_or_404(Personal, id=user_id)
-    current_user = request.user
+def unfollow_user(request, username):
+    
+    base_user_to_unfollow = get_object_or_404(BaseUser, username=username)
+    user_to_unfollow = cast_down_user(base_user_to_unfollow)
+    
+    base_current_user = request.user
+    current_user = cast_down_user(base_current_user)
+
+    if user_to_unfollow is None or current_user is None:
+        return Response({"message": "Invalid user type"}, status=400)
 
     if current_user != user_to_unfollow:
         current_user.following.remove(user_to_unfollow)

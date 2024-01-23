@@ -3,7 +3,7 @@ import axios from 'axios';
 import './otherUserProfile.css';
 import API_BASE_URL from '../../../config';
 
-import PartialViewProfile from './partialViewProfile/privateProfile';
+import PartialViewProfile from './partialViewProfile/partialViewProfile';
 import FullViewProfile from './fullViewProfile/fullViewProfile';
 import PersonalProfile from '../personalProfile/personalProfile';
 
@@ -21,12 +21,23 @@ const OtherUserProfile = () => {
 
     const fetchProfileData = async () => {
         try {
-            const config = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-              }
-            };
+            let config;
+
+            if (authState.token) {
+                config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Token ${authState.token}`
+                    }
+                };
+            } else {
+                config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                };
+            }
+            
       
             const response = await axios.get(`${API_BASE_URL}personal/profile/${username}/`, config);
             // console.log(response.data);

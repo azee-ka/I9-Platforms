@@ -14,6 +14,9 @@ const ProfilePicture = ({ src, onClick }) => {
         } else if (typeof src === 'string' && src.includes('default_profile_picture')) {
             profilePictureSrc = default_profile_picture;
         }
+        else if (typeof src === 'string' && src.includes('http://')) {
+            profilePictureSrc = src;
+        }
         else if(typeof src === 'string') {
             profilePictureSrc = API_BASE_URL + src;
         }

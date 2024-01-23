@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './partialViewProfile.css';
-import API_BASE_URL from '../../../../config';
+import API_BASE_URL, { CLIENT_BASE_URL } from '../../../../config';
 import ProfilePicture from '../../../../utils/getProfilePicture';
 import { useAuth } from '../../../../reducers/auth/useAuth';
+import { Link } from 'react-router-dom';
 
 const PartialViewProfile = ({ profileData }) => {
     const { authState } = useAuth();
@@ -18,8 +19,33 @@ const PartialViewProfile = ({ profileData }) => {
                 }
             };
 
-            const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.id}/`, config);
+            const data = {
+
+            }
+            const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
             console.log(response.data);
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    };
+
+    const handleUnfollowButtonClick = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+
+            const data = {
+
+            }
+            const response = await axios.post(`${API_BASE_URL}personal/unfollow/${profileData.username}/`, data, config);
+            console.log(response.data);
+            window.location.reload();
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
@@ -38,14 +64,21 @@ const PartialViewProfile = ({ profileData }) => {
                             </div>
                             <div className='partial-view-user-profile-info-card-user-text-info'>
                                 <div className='partial-view-user-profile-info-card-username'>
-                                    <p>@{profileData.username}</p>
+                                    <Link to={`${CLIENT_BASE_URL}/personal/profile/${profileData.username}`} className='custom-link'>
+                                        <p>@{profileData.username}</p>
+                                    </Link>
                                 </div>
                                 <div className='partial-view-user-profile-info-card-followers-following-count'>
                                     <p>{profileData.followers_count} followers</p>
                                     <p>{profileData.following_count} following</p>
                                 </div>
                                 <div className='partial-view-user-profile-info-card-follow-button'>
-                                    <button onClick={handleFollowButtonClick}>Follow</button>
+                                    {profileData.is_followed_by_current_user === false ? (
+                                        <button onClick={handleFollowButtonClick}>Follow</button>
+                                    ) : (
+                                        <button onClick={handleUnfollowButtonClick}>Unfollow</button>
+                                    )
+                                    }
                                 </div>
                             </div>
                         </div>
