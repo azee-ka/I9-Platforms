@@ -6,11 +6,10 @@ import { useAuth } from '../../../../reducers/auth/useAuth';
 import ProfilePicture from '../../../../utils/getProfilePicture';
 import { Link } from 'react-router-dom';
 import { CLIENT_BASE_URL } from '../../../../config';
-import UserListOverlay from '../../personalTimeline/followListOverlay';
+import UserListOverlay from '../../utils/userListOverlay/userListOverlay';
 
 const FullViewProfile = ({ profileData }) => {
     const { authState } = useAuth();
-    console.log(profileData);
 
     const [showFollowersOverlay, setShowFollowersOverlay] = useState(false);
     const [showFollowingOverlay, setShowFollowingOverlay] = useState(false);
@@ -28,7 +27,7 @@ const FullViewProfile = ({ profileData }) => {
 
             }
             const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
-            console.log(response.data);
+            // console.log(response.data);
             window.location.reload();
         } catch (error) {
             console.error('Error fetching profile data:', error);

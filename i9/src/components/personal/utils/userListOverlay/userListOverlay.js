@@ -6,6 +6,7 @@ import './userListOverlay.css'; // Import the CSS file
 import crossIcon from '../../../../assets/cross-icon.png';
 import { useAuth } from '../../../../reducers/auth/useAuth';
 import default_profile_picture from '../../../../assets/default_profile_picture.png';
+import ProfilePicture from '../../../../utils/getProfilePicture';
 
 const UserListOverlay = ({ userList, onClose, title }) => {
     const { authState } = useAuth();
@@ -40,11 +41,10 @@ const UserListOverlay = ({ userList, onClose, title }) => {
                 {userList.length !== 0 && (
                     <div className="follow-list">
                         {userList.map((thisUser, index) => (
-                            <Link to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`}>
+                            <Link key={index} to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`}>
                                 <div className="follow-list-item">
                                     <div className='profile-picture-img-container-user-list-overlay'>
-                                    <img src={`${thisUser.profile_picture !== null ? API_BASE_URL + thisUser.profile_picture : default_profile_picture}`} alt={thisUser.username} />
-
+                                        <ProfilePicture src={thisUser.profile_picture} />
                                     </div>
                                     <span>{thisUser.username}</span>
                                 </div>

@@ -20,6 +20,11 @@ const ProfilePicture = ({ src, onClick }) => {
         else if(typeof src === 'string') {
             profilePictureSrc = API_BASE_URL + src;
         }
+        else if(src === null) {
+            profilePictureSrc = default_profile_picture;
+        }
+    } else if(src === null) {
+        profilePictureSrc = default_profile_picture;
     }
 
     const handleClick = () => {
