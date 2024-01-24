@@ -35,16 +35,6 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
-    // const [previousPostId, setPreviousPostId] = useState();
-    // const [nextPostId, setNextPostId] = useState();
-
-    // useEffect(() => {
-    //     setPreviousPostId(prePostID ? prePostID : null);
-    //     setNextPostId(nextPostID ? nextPostID : null);
-    // }, []);
-
-
-
     
     useEffect(() => {
         // Fetch explore page posts from your Django backend using Axios with the token in the headers

@@ -494,24 +494,13 @@
 
 .personal-profile-interaction-posts-grid-inner {
     background-color: rgba(0, 242, 255, 0);
-    width: 99%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
-
-.personal-profile-interaction-posts-grid-inner-inner {
-    margin-top: 1%;
-    margin-bottom: 1%;
-    width: 98%;
-    height: 94%;
-    background-color: rgba(255, 255, 255, 0);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px;
-}
-
 
 
 

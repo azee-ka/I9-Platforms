@@ -9,7 +9,7 @@ import default_profile_picture from '../../../assets/default_profile_picture.png
 import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import PerPostGrid from '../postUI/postGrid/postGrid';
+import PostsGrid from '../postUI/postGrid/postGrid';
 import ProfilePictureEditor from '../utils/profilePictureEditor/profilePictureEditor';
 import ProfilePicture from '../../../utils/getProfilePicture';
 import UserListOverlay from '../utils/userListOverlay/userListOverlay';
@@ -146,7 +146,7 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
                       </div>
                       <div className='personal-profile-followers-following-count-container'>
                         <p onClick={() => setShowFollowersListOverlay(true)}>{profileData.followers_count} followers</p>
-                         <p onClick={() => setShowFollowingListOverlay(true)}>{profileData.following_count} following</p>
+                        <p onClick={() => setShowFollowingListOverlay(true)}>{profileData.following_count} following</p>
                       </div>
                     </div>
                   </div>
@@ -156,26 +156,9 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
             <div className='personal-profile-interaction-content-container'>
               <div className='personal-profile-interaction-posts-grid'>
                 <div className='personal-profile-interaction-posts-grid-inner'>
-                  <div className='personal-profile-interaction-posts-grid-inner-inner'>
                     {postsData &&
-                      postsData.map((post, index) => {
-                        const previousPost = index > 0 ? postsData[index - 1] : null;
-                        const nextPost = index < postsData.length - 1 ? postsData[index + 1] : null;
-
-                        return (
-                          <div className='grid-per-post' key={`${post.id}-${index}`}>
-                            <PerPostGrid
-                              postData={post}
-                              previousPostId={previousPost ? previousPost.id : null}
-                              nextPostId={nextPost ? nextPost.id : null}
-                              handleExpandPostOpen={handleExpandPostOpen}
-                            />
-                          </div>
-                        );
-                      })
+                      <PostsGrid classname={'profile'} postsData={postsData} handleExpandPostOpen={handleExpandPostOpen} />
                     }
-
-                  </div>
                 </div>
               </div>
               <div className='personal-profile-interaction-right-sidebar'>
@@ -200,7 +183,7 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
           }
           {showFollowingListOverlay &&
             <UserListOverlay userList={profileData.following_list} title={'Following'} onClose={handleUserListOverlayClose} />
-}
+          }
         </div>
       </div>
     </div>

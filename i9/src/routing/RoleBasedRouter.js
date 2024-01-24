@@ -35,7 +35,6 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
             setCurrentExpandPostIndex(newIndex);
         }
     }
-    
     const handleNextPostClick = () => {
         if (currentExpandPostIndex < postsList.length - 1) {
             const newIndex = currentExpandPostIndex + 1;

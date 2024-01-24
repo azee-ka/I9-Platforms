@@ -41,8 +41,6 @@ const ExpandPost = ({ overlayPostId, handleExpandPostClose, handlePreviousPostCl
     }, [overlayPostId, postId]);
     
     
-    
-
 
     return (
         <div className={`expanded-post-container ${!overlayPostId ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
