@@ -7,7 +7,7 @@ import ProfilePicture from '../../../../utils/getProfilePicture';
 import { Link } from 'react-router-dom';
 import { CLIENT_BASE_URL } from '../../../../config';
 import UserListOverlay from '../../utils/userListOverlay/userListOverlay';
-import PerPostGrid from '../../postUI/postGrid/postGrid';
+import PostsGrid from '../../postUI/postGrid/postGrid';
 
 const FullViewProfile = ({ profileData, handleExpandPostOpen }) => {
     const { authState } = useAuth();
@@ -16,7 +16,7 @@ const FullViewProfile = ({ profileData, handleExpandPostOpen }) => {
     const [showFollowingOverlay, setShowFollowingOverlay] = useState(false);
 
     const [postsData, setPostsData] = useState(profileData.my_posts);
-    
+
     console.log(profileData);
     const handleFollowButtonClick = async () => {
         try {
@@ -97,22 +97,8 @@ const FullViewProfile = ({ profileData, handleExpandPostOpen }) => {
                     </div>
                 </div>
                 <div className='full-view-profile-posts-container'>
-                {postsData &&
-                      postsData.map((post, index) => {
-                        const previousPost = index > 0 ? postsData[index - 1] : null;
-                        const nextPost = index < postsData.length - 1 ? postsData[index + 1] : null;
-
-                        return (
-                          <div className='grid-per-post' key={`${post.id}-${index}`}>
-                            <PerPostGrid
-                              postData={post}
-                              previousPostId={previousPost ? previousPost.id : null}
-                              nextPostId={nextPost ? nextPost.id : null}
-                              handleExpandPostOpen={handleExpandPostOpen}
-                            />
-                          </div>
-                        );
-                      })
+                    {postsData &&
+                        <PostsGrid className={'full-view-profile'} postsData={postsData} handleExpandPostOpen={handleExpandPostOpen} />
                     }
                 </div>
             </div>

@@ -21,8 +21,13 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
 
     const [postsList, setPostsList] = useState([]);
 
+    const [showPreviousPostButton, setShowPreviousPostButton] = useState(true)
+    const [showNextPostButton, setShowNextPostButton] = useState(true);
+
     const handleExpandPostOpen = (postIdToExpand, posts, originalPreviousUrl, index) => {
         setExpandPostIdReciever(postIdToExpand);
+        setShowPreviousPostButton(index > 0);
+    setShowNextPostButton(index < posts.length - 1);
         setCurrentExpandPostIndex(index);
         setPostsList(posts);
         setExpandPostOnCloseUrl(originalPreviousUrl);
@@ -33,6 +38,8 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
             const newIndex = currentExpandPostIndex - 1;
             handleExpandPostOpen(postsList[newIndex].id, postsList, expandPostOnCloseUrl, newIndex);
             setCurrentExpandPostIndex(newIndex);
+        } else {
+            setShowPreviousPostButton(false)
         }
     }
     const handleNextPostClick = () => {
@@ -40,6 +47,8 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
             const newIndex = currentExpandPostIndex + 1;
             handleExpandPostOpen(postsList[newIndex].id, postsList, expandPostOnCloseUrl, newIndex);
             setCurrentExpandPostIndex(newIndex);
+        } else {
+            setShowNextPostButton(false);
         }
     }
     
@@ -69,6 +78,8 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     handleExpandPostClose={handleExpandPostClose}
                                     handlePreviousPostClick={handlePreviousPostClick}
                                     handleNextPostClick={handleNextPostClick}
+                                    showPreviousPostButton={showPreviousPostButton}
+                                    showNextPostButton={showNextPostButton}
                                 >
                                     <Component handleExpandPostOpen={handleExpandPostOpen} />
                                 </Layout>

@@ -7,7 +7,7 @@ import './expandPost.css';
 import ExpandedPostOverlay from './expandPostOverlay/expandPostOverlay';
 import ExpandedPostNonOverlay from './expandPostNonOverlay/expandPostNonOverlay';
 
-const ExpandPost = ({ overlayPostId, handleExpandPostClose, handlePreviousPostClick, handleNextPostClick }) => {
+const ExpandPost = ({ overlayPostId, handleExpandPostClose, handlePreviousPostClick, handleNextPostClick,  showPreviousPostButton, showNextPostButton }) => {
     const { authState } = useAuth();
 
     const [expandPostData, setExpandPostData] = useState();
@@ -46,7 +46,13 @@ const ExpandPost = ({ overlayPostId, handleExpandPostClose, handlePreviousPostCl
         <div className={`expanded-post-container ${!overlayPostId ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
             {overlayPostId !== undefined &&
                 <div className='expanded-post-overlay' onClick={(e) => e.stopPropagation()}>
-                    <ExpandedPostOverlay postId={expandPostIdFinal} handlePreviousPostClick={handlePreviousPostClick} handleNextPostClick={handleNextPostClick} />
+                    <ExpandedPostOverlay
+                        postId={expandPostIdFinal}
+                        handlePreviousPostClick={handlePreviousPostClick}
+                        handleNextPostClick={handleNextPostClick}
+                        showPreviousPostButton={showPreviousPostButton}
+                        showNextPostButton={showNextPostButton}
+                    />
                 </div>
             }
             {overlayPostId === undefined &&

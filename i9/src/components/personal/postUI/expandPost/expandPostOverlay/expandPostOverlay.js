@@ -19,8 +19,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 import ProfilePicture from '../../../../../utils/getProfilePicture';
 
-const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostClick }) => {
-    console.log(postId);
+const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostClick, showPreviousPostButton, showNextPostButton }) => {
     const navigate = useNavigate();
     const { authState } = useAuth();
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -35,26 +34,26 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
-    
+
     useEffect(() => {
         // Fetch explore page posts from your Django backend using Axios with the token in the headers
         axios.get(`${API_BASE_URL}posts/${postId}`, {
-          headers: {
-            Authorization: `Token ${authState.token}` // Include the token in headers for authentication
-          }
+            headers: {
+                Authorization: `Token ${authState.token}` // Include the token in headers for authentication
+            }
         })
-          .then(response => {
-            console.log(response.data);
-            setPost(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching timeline page posts:', error);
-          });
-      }, [postId]);
+            .then(response => {
+                console.log(response.data);
+                setPost(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching timeline page posts:', error);
+            });
+    }, [postId]);
 
 
     useEffect(() => {
-    
+
         // Fetch initial like/dislike status when component mounts
         const fetchInitialLikeStatus = async () => {
             try {
@@ -70,13 +69,13 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
                 console.error('Error fetching like status:', error);
             }
         };
-    
-        if(post) {
+
+        if (post) {
             fetchInitialLikeStatus();
         }
-    
+
     }, [authState.token, post]);
-    
+
 
     const handleCloseOverlay = () => {
         setShowLikesOverlay(false);
@@ -324,8 +323,8 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
                 </div>
                 {post.user.username === authState.user.username &&
                     <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
-                    <i className='fa fa-trash' id="delete-icon" />
-                </div>
+                        <i className='fa fa-trash' id="delete-icon" />
+                    </div>
                 }
             </div>
             {showLikesOverlay && (
@@ -337,14 +336,14 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
             <div className='expand-overlay-previous-next-post-button-container'>
                 <div className='expand-overlay-previous-next-post-button-container-inner '>
                     <div className='expanded-post-overlay-previous-post-button-container'>
-                        {
+                        {showPreviousPostButton &&
                             <div className='expanded-post-overlay-previous-post-button-container-inner' onClick={handlePreviousPostClick}>
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </div>
                         }
                     </div>
                     <div className='expanded-post-overlay-next-post-button-container'>
-                        { 
+                        {showNextPostButton &&
                             <div className='expanded-post-overlay-next-post-button-container-inner' onClick={handleNextPostClick}>
                                 <FontAwesomeIcon icon={faChevronRight} />
                             </div>
