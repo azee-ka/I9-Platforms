@@ -25,7 +25,7 @@ const PartialViewProfile = ({ profileData }) => {
             }
             const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
             console.log(response.data);
-            setFollowRequested(response.data.message === 'Follow request sent. Waiting for approval.')
+            setFollowRequested(response.data.message === 'Request to follow was sent! Pending approval.')
             // window.location.reload();
 
         } catch (error) {

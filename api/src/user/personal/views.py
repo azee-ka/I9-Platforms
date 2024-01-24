@@ -88,14 +88,15 @@ def follow_user(request, username):
                 message=f'{user_to_follow.username} attempted to follow you account!',
                 notification_type='follow_request'
             )
+            return Response({"message": "Request to follow was sent! Pending approval."})
         else:
             current_user.following.add(user_to_follow)
             user_to_follow.followers.add(current_user)
             current_user.save()
             user_to_follow.save()
         
-    serializer = PersonalSerializer(current_user)
-    return Response(serializer.data)
+            serializer = PersonalSerializer(current_user)
+            return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -113,8 +114,17 @@ def accept_follow_request(request, notification_id):
     user_to_follow.followers.add(follow_requesting_user)
     follow_requesting_user.save()
     user_to_follow.save()
+    
+    notification.delete()
+    
+    send_notification(
+        sender=user_to_follow,
+        recipient=follow_requesting_user,
+        message=f'Your request to follow {follow_requesting_user.username} has been approved. You now follow {follow_requesting_user.username}!',
+        notification_type='message'
+    )
             
-    return Response({"message": "Follow request accepeted"})
+    return Response({"message": "Follow request accepted"})
     
     
 # views.py
