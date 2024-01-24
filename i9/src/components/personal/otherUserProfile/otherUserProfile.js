@@ -40,7 +40,7 @@ const OtherUserProfile = ({ handleExpandPostOpen }) => {
             
       
             const response = await axios.get(`${API_BASE_URL}personal/profile/${username}/`, config);
-            // console.log(response.data);
+            console.log(response.data);
             setProfileData(response.data.profile_data);
             setIsFullViewProfile(response.data.is_full_view);
           } catch (error) {

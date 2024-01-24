@@ -12,10 +12,14 @@ import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fort
 import PerPostGrid from '../postUI/postGrid/postGrid';
 import ProfilePictureEditor from '../utils/profilePictureEditor/profilePictureEditor';
 import ProfilePicture from '../../../utils/getProfilePicture';
+import UserListOverlay from '../utils/userListOverlay/userListOverlay';
 
 const PersonalProfile = ({ handleExpandPostOpen }) => {
   const { authState } = useAuth();
   const navigate = useNavigate();
+
+  const [showFollowingListOverlay, setShowFollowingListOverlay] = useState(false);
+  const [showFollowersListOverlay, setShowFollowersListOverlay] = useState(false);
 
   const { overlay } = useParams();
   const [profileData, setProfileData] = useState({});
@@ -55,9 +59,9 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
         }
       };
 
-      const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
+      const response = await axios.get(`${API_BASE_URL}personal/get-profile/`, config);
       setProfileData(response.data);
-      // console.log(response.data)
+      console.log(response.data)
       setCurrentProfilePicture(response.data.profile_picture === null ? default_profile_picture : response.data.profile_picture);
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -70,6 +74,11 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
     fetchProfileDataSpecific();
   }, []);
 
+
+  const handleUserListOverlayClose = () => {
+    setShowFollowersListOverlay(false);
+    setShowFollowingListOverlay(false);
+  }
 
   const handleProfilePictureOverlayClickOpen = () => {
     console.log('open')
@@ -131,7 +140,15 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
                     </div>
                   </div>
                   <div className='personal-profile-interaction-tab-user-info-container-inner-left'>
-
+                    <div className='personal-profile-user-info-followers-following-posts-counts-widget-container'>
+                      <div className='personal-profile-posts-count-container'>
+                        <p>{profileData.my_posts && profileData.my_posts.length} posts</p>
+                      </div>
+                      <div className='personal-profile-followers-following-count-container'>
+                        <p onClick={() => setShowFollowersListOverlay(true)}>{profileData.followers_count} followers</p>
+                         <p onClick={() => setShowFollowingListOverlay(true)}>{profileData.following_count} following</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -178,6 +195,12 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
               setCurrentProfilePicture={setCurrentProfilePicture}
             />
           }
+          {showFollowersListOverlay &&
+            <UserListOverlay userList={profileData.followers_list} title={'Followers'} onClose={handleUserListOverlayClose} />
+          }
+          {showFollowingListOverlay &&
+            <UserListOverlay userList={profileData.following_list} title={'Following'} onClose={handleUserListOverlayClose} />
+}
         </div>
       </div>
     </div>

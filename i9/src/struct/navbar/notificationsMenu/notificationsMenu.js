@@ -58,6 +58,38 @@ const NotificationsMenu = ({ setCountNotifications, notificationsList, fetchNoti
 
 
 
+    const handleAcceptFollowAccountRequest = async (notificationId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.post(`${API_BASE_URL}personal/accept_follow_request/${notificationId}/`, {}, config);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error accepting link request:', error);
+        }
+        fetchNotifications()
+    };
+    const handleDeclineFollowAccountRequest = async (notificationId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${authState.token}`
+            }
+        };
+        try {
+            const response = await axios.post(`${API_BASE_URL}personal/reject_follow_request/${notificationId}/`, {}, config);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error rejecting link request:', error);
+        }
+        fetchNotifications()
+    };
+
+
     return (
         <div className='notifications-menu-container'>
             <div className='notifications-menu-notifications-list'>
@@ -82,6 +114,12 @@ const NotificationsMenu = ({ setCountNotifications, notificationsList, fetchNoti
                                 {notification.notification_type === 'message' && (
                                     <div className='profile-link-request-buttons-container'>
                                         <button onClick={() => handleDeleteNotification(notification.id)}>Dismiss</button>
+                                    </div>
+                                )}
+                                {notification.notification_type === 'follow_request' && (
+                                    <div className='profile-link-request-buttons-container'>
+                                        <button onClick={() => handleAcceptFollowAccountRequest(notification.id)}>Confirm</button>
+                                        <button onClick={() => handleDeclineFollowAccountRequest(notification.id)}>Decline</button>
                                     </div>
                                 )}
                             </div>

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const PartialViewProfile = ({ profileData }) => {
     const { authState } = useAuth();
     console.log(profileData);
+    const [followRequested, setFollowRequested] = useState(false);
 
     const handleFollowButtonClick = async () => {
         try {
@@ -24,7 +25,8 @@ const PartialViewProfile = ({ profileData }) => {
             }
             const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
             console.log(response.data);
-            window.location.reload();
+            setFollowRequested(response.data.message === 'Follow request sent. Waiting for approval.')
+            // window.location.reload();
 
         } catch (error) {
             console.error('Error fetching profile data:', error);
@@ -74,7 +76,11 @@ const PartialViewProfile = ({ profileData }) => {
                                 </div>
                                 <div className='partial-view-user-profile-info-card-follow-button'>
                                     {profileData.is_followed_by_current_user === false ? (
-                                        <button onClick={handleFollowButtonClick}>Follow</button>
+                                        followRequested ? (
+                                            <button>Requested</button>
+                                        ) : (
+                                            <button onClick={handleFollowButtonClick}>Follow</button>
+                                        )
                                     ) : (
                                         <button onClick={handleUnfollowButtonClick}>Unfollow</button>
                                     )
