@@ -117,6 +117,8 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
         setSearchResults([]);
     };
 
+
+
     return (
         <div className={`sidebar-container ${showLargeSidebar ? 'sidebar-visible' : ''}`}>
             <div className={`sidebar-menu-toggle`}>
@@ -130,7 +132,9 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
                     </div>
                 </div>
                 {showLargeSidebar &&
-                    <div className='sidebar-search-container'>
+                    <div 
+                        className={`sidebar-search-container`}
+                        >
                         <div className='sidebar-search-bar-container'>
                             <input
                                 type="text"

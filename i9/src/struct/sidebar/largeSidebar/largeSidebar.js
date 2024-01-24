@@ -10,11 +10,13 @@ const LargeSidebar = ({ showLargeSidebar, privatePagesLargeSidebar, handleSideba
     const { authState } = useAuth();
 
 
-    const largeContainerRef = useRef(null);
 
+    const largeContainerRef = useRef(null);
     const handleTransitionEnd = () => {
-        if (showLargeSidebar || searchResults.length === 0) {
-            largeContainerRef.current.classList.add('visible');
+        if (largeContainerRef.current) {
+            if (showLargeSidebar || searchResults.length === 0) {
+                    largeContainerRef.current.classList.add('visible');
+            }
         }
     };
 
@@ -24,30 +26,29 @@ const LargeSidebar = ({ showLargeSidebar, privatePagesLargeSidebar, handleSideba
 
     return (
         <div
-            ref={largeContainerRef}
-            className={`sidebar-large-container ${showLargeSidebar ? 'expand' : ''}`}
-            onTransitionEnd={handleTransitionEnd}
-        >
-            {showLargeSidebar &&
-                <div className='sidebar-large-container-content'>
-                    <ul>
-                        {privatePagesLargeSidebar.map((item, index) => (
-                            (item.role === authState.user.role || item.role === 'any') ? (
-                                <button key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
-                                    <li>
-                                        <div className='sidebar-large-per-item'>
-                                            {item.label}
-                                        </div>
-                                    </li>
-                                </button>
-                            ) : (
-                                null
-                            )
-                        ))}
-                    </ul>
-                </div>
-            }
+                ref={largeContainerRef}
+                className={`sidebar-large-container ${showLargeSidebar ? 'expand' : ''}`}
+                onTransitionEnd={handleTransitionEnd}
+            >
+        <div className='sidebar-large-container-content'>
+            <ul>
+                {privatePagesLargeSidebar.map((item, index) => (
+                    (item.role === authState.user.role || item.role === 'any') ? (
+                        <button key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
+                            <li>
+                                <div className='sidebar-large-per-item'>
+                                    {item.label}
+                                </div>
+                            </li>
+                        </button>
+                    ) : (
+                        null
+                    )
+                ))}
+            </ul>
         </div>
+                </div>
+
     );
 }
 

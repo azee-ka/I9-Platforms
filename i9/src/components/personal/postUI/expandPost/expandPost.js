@@ -7,20 +7,17 @@ import './expandPost.css';
 import ExpandedPostOverlay from './expandPostOverlay/expandPostOverlay';
 import ExpandedPostNonOverlay from './expandPostNonOverlay/expandPostNonOverlay';
 
-const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
+const ExpandPost = ({ overlayPostId, handleExpandPostClose, handlePreviousPostClick, handleNextPostClick }) => {
     const { authState } = useAuth();
 
     const [expandPostData, setExpandPostData] = useState();
 
     const { postId } = useParams();
 
-
     const [expandPostIdFinal, setExpandPostIdFinal] = useState(overlayPostId ? overlayPostId : postId);
 
 
-
-
-    const fetchPostData = async () => {
+    const fetchPostData = async (postId) => {
         try {
             const config = {
                 headers: {
@@ -28,27 +25,30 @@ const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
                     Authorization: `Token ${authState.token}`
                 }
             };
-            const response = await axios.get(`${API_BASE_URL}posts/${expandPostIdFinal}/`, config);
-            console.log(response.data)
+            const response = await axios.get(`${API_BASE_URL}posts/${postId}/`, config);
             setExpandPostData(response.data);
-
         } catch (error) {
-            console.error('Error fetching profile data:', error);
+            console.error('Error fetching post data:', error);
         }
     };
-
+    
 
     useEffect(() => {
-        fetchPostData();
+        if (overlayPostId !== undefined) {
+            fetchPostData(overlayPostId);
+        }
         setExpandPostIdFinal(overlayPostId ? overlayPostId : postId);
-    }, []);
+    }, [overlayPostId, postId]);
+    
+    
+    
 
 
     return (
         <div className={`expanded-post-container ${!overlayPostId ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
             {overlayPostId !== undefined &&
                 <div className='expanded-post-overlay' onClick={(e) => e.stopPropagation()}>
-                    <ExpandedPostOverlay postId={expandPostIdFinal} />
+                    <ExpandedPostOverlay postId={expandPostIdFinal} handlePreviousPostClick={handlePreviousPostClick} handleNextPostClick={handleNextPostClick} />
                 </div>
             }
             {overlayPostId === undefined &&

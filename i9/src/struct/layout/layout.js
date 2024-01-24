@@ -7,7 +7,7 @@ import ExpandPost from '../../components/personal/postUI/expandPost/expandPost';
 import CreatePost from '../../components/personal/createPost/createPost';
 import { useNavigate } from 'react-router';
 
-function Layout({ children, pageName, showSidebar, expandPostIdReciever, handleExpandPostClose }) {
+function Layout({ children, pageName, showSidebar, expandPostIdReciever, handleExpandPostClose, handlePreviousPostClick, handleNextPostClick }) {
     const navigate = useNavigate();
 
     const [showCreatePostOverlay, setShowCreatePostOverlay] = useState(false);
@@ -44,7 +44,7 @@ function Layout({ children, pageName, showSidebar, expandPostIdReciever, handleE
                 </div>
             </div>
             {expandPostIdReciever !== undefined && expandPostIdReciever !== null &&
-                <ExpandPost overlayPostId={expandPostIdReciever} handleExpandPostClose={handleExpandPostClose} />
+                <ExpandPost overlayPostId={expandPostIdReciever} handleExpandPostClose={handleExpandPostClose} handlePreviousPostClick={handlePreviousPostClick} handleNextPostClick={handleNextPostClick} />
             }
             {showCreatePostOverlay &&
                 <CreatePost originalUrl={originalUrlBeforeCreatePostOverlay} handleCreatePostOverlayClose={handleCreatePostOverlayClose} />

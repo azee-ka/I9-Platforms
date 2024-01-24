@@ -15,13 +15,35 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
 
     const [expandPostIdReciever, setExpandPostIdReciever] = useState();
 
+    const [currentExpandPostIndex, setCurrentExpandPostIndex] = useState();
+
     const [expandPostOnCloseUrl, setExpandPostOnCloseUrl] = useState();
 
-    const handleExpandPostOpen = (postIdToExpand, originalPreviousUrl) => {
-        setExpandPostIdReciever(postIdToExpand);
+    const [postsList, setPostsList] = useState([]);
 
+    const handleExpandPostOpen = (postIdToExpand, posts, originalPreviousUrl, index) => {
+        setExpandPostIdReciever(postIdToExpand);
+        setCurrentExpandPostIndex(index);
+        setPostsList(posts);
         setExpandPostOnCloseUrl(originalPreviousUrl);
+        window.history.replaceState(null, null, `/post/${postIdToExpand}`);
     };
+    const handlePreviousPostClick = () => {
+        if (currentExpandPostIndex > 0) {
+            const newIndex = currentExpandPostIndex - 1;
+            handleExpandPostOpen(postsList[newIndex].id, postsList, expandPostOnCloseUrl, newIndex);
+            setCurrentExpandPostIndex(newIndex);
+        }
+    }
+    
+    const handleNextPostClick = () => {
+        if (currentExpandPostIndex < postsList.length - 1) {
+            const newIndex = currentExpandPostIndex + 1;
+            handleExpandPostOpen(postsList[newIndex].id, postsList, expandPostOnCloseUrl, newIndex);
+            setCurrentExpandPostIndex(newIndex);
+        }
+    }
+    
 
     const handleExpandPostClose = () => {
         // e.stopPropagation();
@@ -46,6 +68,8 @@ const RoleBasedRouter = ({ routes, isAuthenticated }) => {
                                     showSidebar={route.showSidebar}
                                     expandPostIdReciever={expandPostIdReciever}
                                     handleExpandPostClose={handleExpandPostClose}
+                                    handlePreviousPostClick={handlePreviousPostClick}
+                                    handleNextPostClick={handleNextPostClick}
                                 >
                                     <Component handleExpandPostOpen={handleExpandPostOpen} />
                                 </Layout>

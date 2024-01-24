@@ -80,7 +80,7 @@
 
 .sidebar-large-container.expand {
     width: 220px;
-    transition: width 0.8s ease;
+    transition: width 1s ease;
 }
 
 .sidebar-large-container.expand > div {

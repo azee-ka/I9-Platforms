@@ -19,8 +19,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 import ProfilePicture from '../../../../../utils/getProfilePicture';
 
-const ExpandedPostOverlay = ({ postId }) => {
-
+const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostClick }) => {
+    console.log(postId);
     const navigate = useNavigate();
     const { authState } = useAuth();
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -60,7 +60,7 @@ const ExpandedPostOverlay = ({ postId }) => {
           .catch(error => {
             console.error('Error fetching timeline page posts:', error);
           });
-      }, []);
+      }, [postId]);
 
 
     useEffect(() => {
@@ -348,14 +348,14 @@ const ExpandedPostOverlay = ({ postId }) => {
                 <div className='expand-overlay-previous-next-post-button-container-inner '>
                     <div className='expanded-post-overlay-previous-post-button-container'>
                         {
-                            <div className='expanded-post-overlay-previous-post-button-container-inner' >
+                            <div className='expanded-post-overlay-previous-post-button-container-inner' onClick={handlePreviousPostClick}>
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </div>
                         }
                     </div>
                     <div className='expanded-post-overlay-next-post-button-container'>
                         { 
-                            <div className='expanded-post-overlay-next-post-button-container-inner' >
+                            <div className='expanded-post-overlay-next-post-button-container-inner' onClick={handleNextPostClick}>
                                 <FontAwesomeIcon icon={faChevronRight} />
                             </div>
                         }
