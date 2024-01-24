@@ -50,10 +50,10 @@
 }
 
 .personal-timeline-post-user-username {
-    /* width: 30%; */
+    min-width: 15%;
     height: 100%;
     display: flex;
-    background-color: rgba(128, 0, 128, 0.3);
+    background-color: rgba(128, 0, 128, 0);
     justify-content: flex-start;
     align-items: center;
     font-size: 14px;
@@ -65,33 +65,39 @@
 
 
 .personal-timeline-post-stats {
-    background-color: rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0);
     flex-grow: 1;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    font-size: 10px;
+    font-size: 11px;
 }
 .personal-timeline-post-stats-count,
 .personal-timeline-post-created-at {
-    border-radius: 8px;
-    border: 1px solid gray;
+    border-radius: 10px;
+    border: 0.5px solid rgba(128, 128, 128, 0.481);
     padding: 5px;
     height: 15px;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.008);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    color: rgb(152, 152, 152);
 }
 .personal-timeline-post-stats-count {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.personal-timeline-post-stats-count p:nth-child(3):hover,
+.personal-timeline-post-stats-count p:nth-child(2):hover {
+    cursor: pointer;
 }
 
 
