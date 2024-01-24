@@ -12,22 +12,14 @@ const PostsGrid = ({ classname, postsData, handleExpandPostOpen }) => {
 
   const [posts, setPosts] = useState(postsData);
 
+  useEffect(() => {
+    setPosts(postsData);
+  }, [postsData]);
+
   const handlePostClick = (post, index) => {
     handleExpandPostOpen(post.id, posts, window.location.pathname, index);
   };
 
-
-  // console.log(posts);
-
-  // {postData.thumbnail.media_type === 'mp4' || postData.thumbnail.media_type === 'MOV' ? (
-  //   <VideoPlayer
-  //     mediaFile={postData.thumbnail}
-  //     onEnded={null}
-  //     playable={false}
-  //   />
-  // ) : (
-  //   <img src={`${API_BASE_URL}${postData.thumbnail.file}`} alt={postData.id} />
-  // )}
 
   return posts ? (
     <div className='post-for-grid'>
