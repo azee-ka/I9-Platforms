@@ -5,11 +5,14 @@ import API_BASE_URL, { CLIENT_BASE_URL } from '../../../../config';
 import ProfilePicture from '../../../../utils/getProfilePicture';
 import { useAuth } from '../../../../reducers/auth/useAuth';
 import { Link } from 'react-router-dom';
+import AlertModule from '../../../../alert/alert';
 
 const PartialViewProfile = ({ profileData }) => {
     const { authState } = useAuth();
     console.log(profileData);
     const [followRequested, setFollowRequested] = useState(false);
+
+    const [followErrorMessage, setFollowErrorMessage] = useState('');
 
     const handleFollowButtonClick = async () => {
         try {
@@ -25,9 +28,12 @@ const PartialViewProfile = ({ profileData }) => {
             }
             const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
             console.log(response.data);
-            setFollowRequested(response.data.message === 'Request to follow was sent! Pending approval.')
-            // window.location.reload();
-
+            if(response.data.message === 'Request to follow was sent! Pending approval.') {
+                setFollowRequested(true)
+            } else if(response.data.message === 'Your previous request to follow is still pending! Wait for the approval.') {
+                setFollowErrorMessage(response.data.message);
+            }
+                        // window.location.reload();
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
@@ -77,7 +83,7 @@ const PartialViewProfile = ({ profileData }) => {
                                 <div className='partial-view-user-profile-info-card-follow-button'>
                                     {profileData.is_followed_by_current_user === false ? (
                                         followRequested ? (
-                                            <button>Requested</button>
+                                            <button onClick={handleFollowButtonClick}>Requested</button>
                                         ) : (
                                             <button onClick={handleFollowButtonClick}>Follow</button>
                                         )
@@ -94,6 +100,9 @@ const PartialViewProfile = ({ profileData }) => {
                     <p>This profile is private! Follow user to view their content.</p>
                 </div>
             </div>
+            {followErrorMessage !== '' &&
+                <AlertModule message={followErrorMessage} showAlert={followErrorMessage} setShowAlert={setFollowErrorMessage} />
+            }
         </div>
     );
 }

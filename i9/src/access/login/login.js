@@ -12,7 +12,6 @@ import AlertModule from '../../alert/alert';
 const LoginPage = () => {
     const navigate = useNavigate();
 
-    const [showAlert, setShowAlert] = useState(true);
 
     const { login } = useAuth();
 
@@ -21,7 +20,7 @@ const LoginPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const [loginError, setLoginError] = useState(null);
+    const [loginError, setLoginError] = useState('');
 
     const handleLoginSuccess = () => {
         navigate('/calculator');
@@ -49,7 +48,6 @@ const LoginPage = () => {
             // console.error('Error logging in:', error.message);
             // Handle the error as needed
             setLoginError(error.response.data.message);
-            setShowAlert(true);
         }
     };
 
@@ -99,11 +97,11 @@ const LoginPage = () => {
                 </form>
             </div>
             </div>
-            <div className='login-error-display'>
-                    {loginError !== null &&
-                       <AlertModule message={loginError} showAlert={showAlert} setShowAlert={setShowAlert} />
+            {/* <div className='login-error-display'> */}
+                    {loginError !== '' &&
+                       <AlertModule message={loginError} setShowAlert={setLoginError} />
                     }
-                </div>
+                {/* </div> */}
         </div>
     );
 };

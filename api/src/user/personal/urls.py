@@ -7,7 +7,7 @@ urlpatterns = [
     path('profile/<str:username>/', get_user_profile, name='user-profile'),
     path('follow/<str:username>/', follow_user, name='follow-user'),
     
-     path('accept_follow_request/<int:notification_id>/', accept_follow_request, name='accept_follow_request'),
+    path('accept_follow_request/<int:notification_id>/', accept_follow_request, name='accept_follow_request'),
     path('reject_follow_request/<int:notification_id>/', reject_follow_request, name='reject_follow_request'),
         
     path('unfollow/<str:username>/', unfollow_user, name='unfollow-user'),

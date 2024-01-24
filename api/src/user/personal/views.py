@@ -80,6 +80,12 @@ def follow_user(request, username):
     if user_to_follow is None or current_user is None:
         return Response({"message": "Invalid user type"}, status=400)
 
+    notification = get_object_or_404(Notification, recipient=user_to_follow, sender=current_user, is_accepted=False)
+    print(notification)
+    if not notification is None:
+        return Response({"message": "Your previous request to follow is still pending! Wait for the approval."})
+            
+        
     if current_user != user_to_follow:
         if user_to_follow.is_private_profile:
             send_notification(
@@ -136,6 +142,13 @@ def reject_follow_request(request, notification_id):
     
     notification = get_object_or_404(Notification, id=notification_id, recipient=user, is_accepted=False)
 
+    send_notification(
+            sender=notification.recipient,
+            recipient=notification.sender,
+            message=f'Your request to follow {notification.recipient.username} was declined!',
+            notification_type='message'
+    )
+
     # Mark the notification as rejected
     notification.delete()
 
@@ -165,6 +178,7 @@ def unfollow_user(request, username):
 
     serializer = PersonalSerializer(current_user)
     return Response(serializer.data)
+
 
 
 

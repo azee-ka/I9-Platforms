@@ -1,7 +1,7 @@
-.alert-module {
+/* .alert-module {
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.4);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,27 +12,30 @@
     min-width: 30%;
     width: auto;
     height: 50%;
-    background-color: rgba(188, 61, 61, 0);
+    background-color: rgba(188, 61, 61, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-}
+} */
+
+
 .alert-message-container {
     background-color: rgba(181, 181, 181);
-    /* min-width: 25%; */
     width: fit-content;
     width: auto;
     height: fit-content;
-    padding: 10px;
+    padding: 20px;
     color: #000;
     display: flex;
-    flex-direction: row;
-    gap: 13px;
-    justify-content: center;
-    align-items: center;
-    margin-left: 2%;
+    /* flex-direction: row; */
+    /* gap: 13px; */
+    /* justify-content: center;
+    align-items: center; */
     border-radius: 6px;
+    position: absolute;
+    top: 725px;
+    left: 25px;
 }
 
 .alert-message-container-inner {
@@ -47,14 +50,17 @@
 }
 
 .alert-message-dismiss {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     background-color: rgba(0, 128, 0, 0);
-    flex-grow: 1;
+    /* flex-grow: 1; */
     height: 100%;
     font-size: 23px;
     cursor: pointer;
     font-style: normal;
+    position: relative;
+    top: -10px;
+    left: 10px;
 }
