@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import create_post, get_post_by_id, create_comment, create_like, create_dislike, delete_post
+from .views import create_post, get_post_by_id, create_comment, create_like, create_dislike, delete_post, get_like_status
 
 
 urlpatterns = [
@@ -10,5 +10,7 @@ urlpatterns = [
     path('posts/<uuid:post_id>/like/', create_like, name='like-post'),
     path('posts/<uuid:post_id>/dislike/', create_dislike, name='dislike-post'),
     path('posts/<uuid:post_id>/delete/', delete_post, name='delete-post'),
+    
+    path('posts/<uuid:post_id>/like-status/', get_like_status, name='get_like_status'),
 
 ]

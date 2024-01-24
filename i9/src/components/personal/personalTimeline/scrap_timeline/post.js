@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './post.css';
-import API_BASE_URL from '../../../config';
+import API_BASE_URL from '../../../../config';
 import { Link } from 'react-router-dom'; // Import Link
-import { timeAgo } from '../expandPost/convertDateTIme';
-import { useAuth } from '../../../reducers/auth/useAuth';
+import { timeAgo } from '../../expandPost/convertDateTIme';
+import { useAuth } from '../../../../reducers/auth/useAuth';
 import UserListOverlay from './followListOverlay';
 import likedImg from '../../../assets/liked.png';
 import unlikedImg from '../../../assets/unliked.png';
 import dislikedImg from '../../../assets/disliked.png';
 import undislikedImg from '../../../assets/undisliked.png';
 import three_dots_dark from '../../../assets/three-dots-dark.png';
-import VideoPlayer from '../utils/videoPlayer';
+import VideoPlayer from '../../utils/videoPlayer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 

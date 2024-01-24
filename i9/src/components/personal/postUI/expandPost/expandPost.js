@@ -48,11 +48,11 @@ const ExpandPost = ({ overlayPostId, handleExpandPostClose }) => {
         <div className={`expanded-post-container ${!overlayPostId ? 'non-overlay' : 'overlay'}`} onClick={handleExpandPostClose}>
             {overlayPostId !== undefined &&
                 <div className='expanded-post-overlay' onClick={(e) => e.stopPropagation()}>
-                    <ExpandedPostOverlay postData={expandPostData} />
+                    <ExpandedPostOverlay postId={expandPostIdFinal} />
                 </div>
             }
             {overlayPostId === undefined &&
-                <ExpandedPostNonOverlay postData={expandPostData}/>
+                <ExpandedPostNonOverlay postId={expandPostIdFinal}/>
             }
         </div>
     );

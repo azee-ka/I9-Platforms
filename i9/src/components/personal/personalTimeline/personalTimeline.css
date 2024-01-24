@@ -40,7 +40,7 @@
 .personal-timeline-content {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -50,17 +50,23 @@
 .personal-timeline-content-inner {
     background-color: rgba(255, 0, 0, 0);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     text-align: center;
+    margin-bottom: 3%;
 }
 .timeline-left-side-container {
-    background-color: green;
+    background-color: rgba(0, 128, 0, 0);
     width: 60%;
-    height: 100%;
+    /* height: fit-content; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 50px;
 }
 
 .timeline-right-side-container {

@@ -86,11 +86,6 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 
-import cv2
-import numpy as np
-import tempfile
-import os
-
 class MinimalPostSerializer(serializers.ModelSerializer):
     thumbnail = serializers.SerializerMethodField()
 
@@ -112,3 +107,13 @@ class MinimalPostSerializer(serializers.ModelSerializer):
             }
 
         return None
+    
+    
+    
+class TimelinePostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post
+        fields = [
+            'id',
+        ]

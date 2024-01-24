@@ -190,3 +190,24 @@ def delete_post(request, post_id):
         return Response({'success': True, 'message': 'Post deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
     else:
         return Response({'error': 'You do not have permission to delete this post'}, status=status.HTTP_403_FORBIDDEN)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_like_status(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return Response({'message': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    user = request.user
+
+    # Check if the user has liked the post
+    liked = user in post.likes.all()
+
+    # Check if the user has disliked the post
+    disliked = user in post.dislikes.all()
+
+    # Return the like status
+    return Response({'liked': liked, 'disliked': disliked}, status=status.HTTP_200_OK)

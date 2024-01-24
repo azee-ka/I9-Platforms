@@ -18,14 +18,13 @@ import UserListOverlay from '../../../utils/userListOverlay/userListOverlay';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 
-const ExpandedPostNonOverlay = ({ postData }) => {
-    console.log(postData);
+const ExpandedPostNonOverlay = ({ postId }) => {
 
     const navigate = useNavigate();
     const { authState } = useAuth();
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
-    const [post, setPost] = useState(postData);
+    const [post, setPost] = useState(null);
 
     const [commentTextField, setCommentTextField] = useState('');
 
@@ -35,22 +34,50 @@ const ExpandedPostNonOverlay = ({ postData }) => {
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
-    // const [previousPostId, setPreviousPostId] = useState();
-    // const [nextPostId, setNextPostId] = useState();
-
-    // useEffect(() => {
-    //     setPreviousPostId(prePostID ? prePostID : null);
-    //     setNextPostId(nextPostID ? nextPostID : null);
-    // }, []);
-
 
 
     
 
     useEffect(() => {
-        setPost(postData);
-        console.log(postData)
-    }, [postData]);
+        // Fetch explore page posts from your Django backend using Axios with the token in the headers
+        axios.get(`${API_BASE_URL}posts/${postId}`, {
+          headers: {
+            Authorization: `Token ${authState.token}` // Include the token in headers for authentication
+          }
+        })
+          .then(response => {
+            console.log(response.data);
+            setPost(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching timeline page posts:', error);
+          });
+      }, []);
+
+
+    useEffect(() => {    
+        // Fetch initial like/dislike status when component mounts
+        const fetchInitialLikeStatus = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}posts/${postId}/like-status/`, {
+                    headers: {
+                        'Authorization': `Token ${authState.token}`,
+                    },
+                });
+                const { liked, disliked } = response.data;
+                setPostLiked(liked);
+                setPostDisliked(disliked);
+            } catch (error) {
+                console.error('Error fetching like status:', error);
+            }
+        };
+    
+            
+        if(post) {
+            fetchInitialLikeStatus();
+        }
+    
+    }, [authState.token, post]);
 
     const handleCloseOverlay = () => {
         setShowLikesOverlay(false);
@@ -73,7 +100,7 @@ const ExpandedPostNonOverlay = ({ postData }) => {
     const handlePostCommentButton = async () => {
         const formData = new FormData();
         formData.append('text', commentTextField);
-        formData.append('post_id', postData.id);
+        formData.append('post_id', postId);
 
         try {
             const config = {

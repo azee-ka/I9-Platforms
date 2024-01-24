@@ -33,7 +33,7 @@ const LargeSidebar = ({ showLargeSidebar, privatePagesLargeSidebar, handleSideba
                     <ul>
                         {privatePagesLargeSidebar.map((item, index) => (
                             (item.role === authState.user.role || item.role === 'any') ? (
-                                <button to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
+                                <button key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
                                     <li>
                                         <div className='sidebar-large-per-item'>
                                             {item.label}

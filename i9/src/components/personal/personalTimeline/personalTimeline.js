@@ -4,7 +4,8 @@ import axios from 'axios';
 import './personalTimeline.css';
 import { useAuth } from '../../../reducers/auth/useAuth';
 import API_BASE_URL from '../../../config';
-import TimelinePost from './timelinePost';
+import TimelinePerPost from './timelinePerPost/timelinePerPost';
+
 
 const PersonalTimeline = () => {
   const { authState } = useAuth();
@@ -36,11 +37,10 @@ const PersonalTimeline = () => {
         <div className='personal-timeline-content'>
           <div className="personal-timeline-content-inner">
             <div className="timeline-left-side-container">
-              {posts.map((post) =>
-                post.media !== null ? (
-                  <TimelinePost postData={post} />
-                ) : null
-              )}
+              {posts.map((post, index) => (
+                <TimelinePerPost postId={post.id} key={index} />
+              ))
+              }
             </div>
             <div className="timeline-right-side-container"></div>
 

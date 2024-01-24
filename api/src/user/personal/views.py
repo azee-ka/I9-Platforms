@@ -71,6 +71,7 @@ from ...notification.models import Notification
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def follow_user(request, username):
+    print(f'fsgsfgsf {username}')
     base_user_to_follow = get_object_or_404(BaseUser, username=username)
     user_to_follow = cast_down_user(base_user_to_follow)
     
@@ -80,18 +81,20 @@ def follow_user(request, username):
     if user_to_follow is None or current_user is None:
         return Response({"message": "Invalid user type"}, status=400)
 
-    notification = get_object_or_404(Notification, recipient=user_to_follow, sender=current_user, is_accepted=False)
-    print(notification)
-    if not notification is None:
+    try:
+        # Try to get the notification, if it doesn't exist, proceed with the follow operation
+        notification = Notification.objects.get(recipient=user_to_follow, sender=current_user, is_accepted=False)
         return Response({"message": "Your previous request to follow is still pending! Wait for the approval."})
-            
+    except ObjectDoesNotExist:
+        # Notification not found, continue with follow operation
+        pass
         
     if current_user != user_to_follow:
         if user_to_follow.is_private_profile:
             send_notification(
                 sender=current_user,
                 recipient=user_to_follow,
-                message=f'{user_to_follow.username} attempted to follow you account!',
+                message=f'@{current_user.username} attempted to follow your account!',
                 notification_type='follow_request'
             )
             return Response({"message": "Request to follow was sent! Pending approval."})
@@ -126,14 +129,13 @@ def accept_follow_request(request, notification_id):
     send_notification(
         sender=user_to_follow,
         recipient=follow_requesting_user,
-        message=f'Your request to follow {follow_requesting_user.username} has been approved. You now follow {follow_requesting_user.username}!',
+        message=f'Your request to follow @{user_to_follow.username} has been approved. You now follow @{user_to_follow.username}!',
         notification_type='message'
     )
             
     return Response({"message": "Follow request accepted"})
     
     
-# views.py
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def reject_follow_request(request, notification_id):
@@ -145,7 +147,7 @@ def reject_follow_request(request, notification_id):
     send_notification(
             sender=notification.recipient,
             recipient=notification.sender,
-            message=f'Your request to follow {notification.recipient.username} was declined!',
+            message=f'Your request to follow @{notification.recipient.username} was declined!',
             notification_type='message'
     )
 
@@ -160,7 +162,6 @@ def reject_follow_request(request, notification_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def unfollow_user(request, username):
-    
     base_user_to_unfollow = get_object_or_404(BaseUser, username=username)
     user_to_unfollow = cast_down_user(base_user_to_unfollow)
     

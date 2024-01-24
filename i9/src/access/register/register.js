@@ -15,8 +15,6 @@ const RegisterPage = () => {
 
     const { login } = useAuth();
 
-    const [showAlert, setShowAlert] = useState(true);
-
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -74,7 +72,6 @@ const RegisterPage = () => {
             // Handle registration error
             // console.error('Registration failed:', error);
             setRegisterError(error.response.data.username);
-            setShowAlert(true);
         }
     };
 
@@ -140,8 +137,8 @@ const RegisterPage = () => {
                 </div>
             </div>
             <div className='register-error-display'>
-                {registerError !== null &&
-                    <AlertModule message={registerError} showAlert={showAlert} setShowAlert={setShowAlert} />
+                {registerError !== '' &&
+                    <AlertModule message={registerError} setShowAlert={setRegisterError} />
                 }
             </div>
         </div>

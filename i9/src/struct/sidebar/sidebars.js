@@ -105,7 +105,6 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
 
     const handleSidebarClick = (path, action) => {
         if (action) {
-            console.log('fdagfaf')
             action();
         } else {
             navigate(path);

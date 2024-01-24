@@ -28,12 +28,12 @@ const PartialViewProfile = ({ profileData }) => {
             }
             const response = await axios.post(`${API_BASE_URL}personal/follow/${profileData.username}/`, data, config);
             console.log(response.data);
+
             if(response.data.message === 'Request to follow was sent! Pending approval.') {
                 setFollowRequested(true)
-            } else if(response.data.message === 'Your previous request to follow is still pending! Wait for the approval.') {
+            } else {
                 setFollowErrorMessage(response.data.message);
             }
-                        // window.location.reload();
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
@@ -101,7 +101,7 @@ const PartialViewProfile = ({ profileData }) => {
                 </div>
             </div>
             {followErrorMessage !== '' &&
-                <AlertModule message={followErrorMessage} showAlert={followErrorMessage} setShowAlert={setFollowErrorMessage} />
+                <AlertModule message={followErrorMessage} setShowAlert={setFollowErrorMessage} />
             }
         </div>
     );
