@@ -156,9 +156,9 @@ const PersonalProfile = ({ handleExpandPostOpen }) => {
             <div className='personal-profile-interaction-content-container'>
               <div className='personal-profile-interaction-posts-grid'>
                 <div className='personal-profile-interaction-posts-grid-inner'>
-                    {postsData &&
-                      <PostsGrid classname={'profile'} postsData={postsData} handleExpandPostOpen={handleExpandPostOpen} />
-                    }
+                  {postsData &&
+                    <PostsGrid classname={'profile'} postsData={postsData} handleExpandPostOpen={handleExpandPostOpen} />
+                  }
                 </div>
               </div>
               <div className='personal-profile-interaction-right-sidebar'>

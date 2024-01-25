@@ -68,42 +68,6 @@
     justify-content: flex-start;
     align-items: center;
 }
-.personal-profile-mode-switch-tab-inner button {
-    border: 0px solid white;
-    background-color: rgba(0, 147, 142, 0.681);
-    padding: 5px;
-    height: 40px;
-    width: 100px;
-    color: white;
-    font-size: 16px;
-}
-
-.personal-profile-academic-tab button {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-.personal-profile-academic-tab button:hover {
-    background-color: black;
-    box-shadow: -2px 0px 2px 2px rgba(1, 130, 117, 0.689);
-}
-
-.personal-profile-interaction-tab button {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-.personal-profile-interaction-tab button:hover {
-    background-color: black;
-    box-shadow: 2px 0px 2px 2px rgba(1, 130, 117, 0.689);
-}
-
-.personal-profile-interaction-tab.active button,
-.personal-profile-academic-tab.active button {
-    background-color: rgba(0, 147, 142, 0.341);
-}
-.personal-profile-interaction-tab.active button:hover,
-.personal-profile-academic-tab.active button:hover {
-    background-color: black;
-}
 
 .personal-profile-description {
     background-color: rgba(255, 0, 0, 0);
@@ -394,14 +358,17 @@
 }
 
 .personal-profile-interaction-tab-user-info-container-inner {
-    background-color: rgb(0, 27, 30);
+    /* background-color: rgb(0, 27, 30); */
     width: 99%;
-    height: 95%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-content: center;
     border-radius: 12px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 8px;
+    border: 1px solid rgba(58, 58, 58, 0.678);
 }
 
 .personal-profile-interaction-tab-user-info-container-inner-inner {
@@ -488,7 +455,8 @@
 .personal-profile-interaction-posts-grid {
     background-color: rgba(255, 255, 255, 0);
     width: 75%;
-    /* flex-grow: 1; */
+    flex-grow: 1;
+    /* height: 98%; */
     margin-bottom: 1%;
     display: flex;
     justify-content: flex-start;
@@ -501,8 +469,8 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 100%;
-    /* height: 100%; */
+    width: 98%;
+    height: 98%;
 }
 
 

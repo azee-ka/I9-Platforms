@@ -26,19 +26,20 @@
 .sidebar-large-container-content button {
     background-color: rgba(16, 151, 23, 0);
     width: 100% !important;
-    height: 50px;
-    border-radius: 10px;
+    height: 43px;
+    border-radius: 7px;
     font-size: 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    transition: background-color 0.3s ease-in;
+    transition: background-color 0.1s ease-in;
     border: 0 !important;
 }
 .sidebar-large-container-content button:hover {
-    background-color: rgba(91, 91, 91, 0.367);
+    background-color: rgba(81, 81, 81, 0.367);
+    cursor: pointer;
 }
 .sidebar-large-container-content li {
     background-color: rgba(16, 151, 23, 0);

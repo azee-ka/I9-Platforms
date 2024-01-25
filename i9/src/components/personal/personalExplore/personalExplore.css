@@ -51,8 +51,8 @@
 }
 
 .personal-explore-content-left-container {
-    width: 75%;
-    height: 100%;
+    width: 74%;
+    /* height: 100%; */
     background-color: rgba(0, 128, 0, 0);
 }
 .personal-explore-content-right-container {
@@ -67,7 +67,7 @@
     background-color: rgba(255, 255, 255, 0);
     width: 100%;
     height: 100%;
-    margin-bottom: 1%;
+
 }
 
 .personal-explore-posts-grid-inner {
@@ -77,11 +77,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.personal-explore-posts-grid-inner-inner {
-    margin-top: 1%;
-    margin-bottom: 1%;
-    width: 98%;
-    height: 94%;
 }

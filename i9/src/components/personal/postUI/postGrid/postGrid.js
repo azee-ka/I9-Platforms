@@ -39,7 +39,6 @@ const PostsGrid = ({ classname, postsData, handleExpandPostOpen }) => {
             </div>
           </div>
         ))}
-
       </div>
     </div>
   ) : (
