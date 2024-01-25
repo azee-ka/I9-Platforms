@@ -84,20 +84,20 @@
 
 .icon-bar.rotate:nth-child(1) {
     opacity: 1;
-    transform: rotate(90deg) translate(9px, -8px);
+    transform: rotate(90deg) translate(9px, -1px);
     width: 19px;
 }
 
 .icon-bar.rotate:nth-child(2) {
     opacity: 1;
-    transform: rotate(90deg) translate(1px, 0px);
+    transform: rotate(90deg) translate(1px, 7px);
     width: 22px;
 
 }
 
 .icon-bar.rotate:nth-child(3) {
     opacity: 1;
-    transform: rotate(90deg) translate(-7px, 8px);
+    transform: rotate(90deg) translate(-7px, 15px);
     width: 25px;
 }
 

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './tools.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator } from '@fortawesome/free-solid-svg-icons';
+library.add(faChartBar, faEdit, faPlus, faCompass, faCalculator);
 
 const Tools = () => {
 
     const [toolsList, setToolsList] = useState([
         {
             name: 'Calculator',
-            icon: '',
+            icon: <FontAwesomeIcon icon="calculator" />,
             path: '/calculator',
         },
         {
@@ -28,7 +32,8 @@ const Tools = () => {
                         <Link to={tool.path} key={`${index}-${tool.title}`} className='custom-link'>
                             <div className='tool-widget-container'>
                                 <div className='tool-widget-icon'>
-                                    <img src={tool.path} alt={`tool-icon`} />
+                                    {tool.icon}
+                                    {/* <img src={tool.icon} alt={`tool-icon`} /> */}
                                 </div>
                                 <div className='tool-widget-name'>
                                     {tool.name}

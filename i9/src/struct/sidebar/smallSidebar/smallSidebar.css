@@ -24,8 +24,8 @@
 }
 .sidebar-small-container-content button {
     background-color: rgba(16, 151, 23, 0);
-    width: 55px !important;
-    height: 50px;
+    width: 49px !important;
+    height: 49px;
     border-radius: 8px;
     font-size: 16px;
     display: flex;
@@ -38,7 +38,8 @@
 }
 .sidebar-small-container-content button:hover {
     background-color: rgba(57, 57, 57, 0.2);
-    border: 1px solid white !important;
+    border: 1px solid rgba(255, 255, 255, 0.611) !important;
+    cursor: pointer;
 }
 .sidebar-small-container-content li {
     background-color: rgba(16, 151, 23, 0);

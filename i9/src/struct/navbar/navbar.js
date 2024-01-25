@@ -9,10 +9,13 @@ import ProfileMenu from './profileMenu/profileMenu';
 import API_BASE_URL from '../../config';
 import default_profile_picture from '../../assets/default_profile_picture.png'
 import NotificationsMenu from './notificationsMenu/notificationsMenu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import ProfilePicture from '../../utils/getProfilePicture';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine} from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const { authState, logout } = useAuth();

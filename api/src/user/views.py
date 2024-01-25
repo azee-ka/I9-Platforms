@@ -263,14 +263,24 @@ def unlink_profile(request, linked_profile_id):
 
 
 
+from django.core.serializers.json import DjangoJSONEncoder
 
 def perform_login(request, user):
     # Login the user and generate a new token
     login(request, user)
     token, created = Token.objects.get_or_create(user=user)
 
-    response_data = {'user': {'id': user.id, 'username': user.username, 'role': user.role, 'profile_picture': user.profile_picture}, 'token': token.key}
+    # Serialize the user data appropriately
+    user_data = {
+        'id': user.id,
+        'username': user.username,
+        'role': user.role,
+        'profile_picture': user.profile_picture.url if user.profile_picture else None,
+    }
+
+    response_data = {'user': user_data, 'token': token.key}
     return Response(response_data, status=200)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

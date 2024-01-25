@@ -12,8 +12,8 @@ import API_BASE_URL, { CLIENT_BASE_URL } from '../../config';
 import ProfilePicture from '../../utils/getProfilePicture';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faEdit, faPlus, faCompass, faCalculator } from '@fortawesome/free-solid-svg-icons';
-library.add(faChartBar, faEdit, faPlus, faCompass, faCalculator);
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine} from '@fortawesome/free-solid-svg-icons';
+library.add(faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine);
 
 const Sidebar = ({ handleCreatePostOverlayOpen }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -69,7 +69,7 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
         { path: '/professional/explore', icon: <FontAwesomeIcon icon="compass" />, role: 'Professional' },
     
         // Personal Links
-        { path: '/personal/dashboard', icon: <FontAwesomeIcon icon="chart-bar" />, role: 'Personal' },
+        { path: '/personal/dashboard', icon: <FontAwesomeIcon icon={faChartBar} />, role: 'Personal' },
         { path: '', icon: <FontAwesomeIcon icon="edit" />, role: 'Personal', action: handleCreatePostOverlayOpen },
         { path: '/personal/explore', icon: <FontAwesomeIcon icon="compass" />, role: 'Personal' },
     

@@ -42,8 +42,9 @@ const PersonalTimeline = () => {
               ))
               }
             </div>
-            <div className="timeline-right-side-container"></div>
-
+            <div className="timeline-right-side-container">
+              
+            </div>
           </div>
         </div>
       </div>
