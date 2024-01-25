@@ -26,18 +26,19 @@
     background-color: rgba(16, 151, 23, 0);
     width: 55px !important;
     height: 50px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    transition: background-color 0.3s ease-in;
+    transition: background-color 0.1s ease-in, border 0.1s ease;
     border: 0 !important;
 }
 .sidebar-small-container-content button:hover {
-    background-color: rgba(91, 91, 91, 0.367);
+    background-color: rgba(57, 57, 57, 0.2);
+    border: 1px solid white !important;
 }
 .sidebar-small-container-content li {
     background-color: rgba(16, 151, 23, 0);
@@ -52,14 +53,13 @@
 .sidebar-small-per-item {
     width: 100%;
     height: 100%;
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 23px !important;
+    color: #ffffffde;
 }
-
-
 
 .sidebar-small-container {
     width: 90px;

@@ -16,6 +16,7 @@ const RegisterPage = React.lazy(() => import('../access/register/register'));
 
 
 const Calculator = React.lazy(() => import('../components/tools/calculator/calculator'));
+const Tools = React.lazy(() => import('../components/tools/tools'));
 
 const LearnerDashboard = React.lazy(() => import('../components/learner/learnerDashboard/learnerDashboard'));
 const LearnerProfile = React.lazy(() => import('../components/learner/learnerProfile/learnerProfile'));
@@ -78,6 +79,8 @@ const roleBasedRoutes = [
 
 
     // Any Role Pages
+    { name: 'Tools', path: '/tools', role: 'any', component: Tools, key: 'Tools', showSidebar: true },
+
     { name: 'Calculator', path: '/calculator', role: 'any', component: Calculator, key: 'Calculator', showSidebar: true },
     { name: 'Calculator', path: '/calculator/:expression', role: 'any', component: Calculator, key: 'Calculator-expression', showSidebar: true },
 ];

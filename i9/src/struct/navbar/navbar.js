@@ -112,7 +112,7 @@ const Navbar = () => {
 
         { path: '/educator/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Educator' },
 
-        { path: '/calculator', label: 'Calculator', id: 'navbar-phrase', role: 'any' },
+        { path: '/tools', label: 'Tools', id: 'navbar-phrase', role: 'any' },
 
     ];
 

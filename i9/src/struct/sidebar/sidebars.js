@@ -10,6 +10,10 @@ import LargeSidebar from './largeSidebar/largeSidebar';
 import SmallSidebar from './smallSidebar/smallSidebar';
 import API_BASE_URL, { CLIENT_BASE_URL } from '../../config';
 import ProfilePicture from '../../utils/getProfilePicture';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator } from '@fortawesome/free-solid-svg-icons';
+library.add(faChartBar, faEdit, faPlus, faCompass, faCalculator);
 
 const Sidebar = ({ handleCreatePostOverlayOpen }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -56,27 +60,22 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
 
     const privatePagesSmallSidebar = [
         // Learner Links
-        { path: '/learner/dashboard', label: 'D', id: 'navbar-phrase', role: 'Learner' },
-        { path: '', label: 'C', id: 'navbar-phrase', role: 'Learner', action: handleCreatePostOverlayOpen },
-
-
-
+        { path: '/learner/dashboard', icon: <FontAwesomeIcon icon="chart-bar" />, role: 'Learner' },
+        { path: '', icon: <FontAwesomeIcon icon="edit" />, role: 'Learner', action: handleCreatePostOverlayOpen },
+    
         // Professional Links
-        { path: '/professional/dashboard', label: 'D', id: 'navbar-phrase', role: 'Professional' },
-        { path: '', label: '+', id: 'navbar-phrase', role: 'Professional', action: handleCreatePostOverlayOpen },
-        { path: '/professional/explore', label: 'E', id: 'navbar-phrase', role: 'Professional' },
-
-
-
-
+        { path: '/professional/dashboard', icon: <FontAwesomeIcon icon="chart-bar" />, role: 'Professional' },
+        { path: '', icon: <FontAwesomeIcon icon="plus" />, role: 'Professional', action: handleCreatePostOverlayOpen },
+        { path: '/professional/explore', icon: <FontAwesomeIcon icon="compass" />, role: 'Professional' },
+    
         // Personal Links
-        { path: '/personal/dashboard', label: 'D', id: 'navbar-phrase', role: 'Personal' },
-        { path: '', label: 'C', id: 'navbar-phrase', role: 'Personal', action: handleCreatePostOverlayOpen },
-        { path: '/personal/explore', label: 'E', id: 'navbar-phrase', role: 'Personal' },
-
-
-        { path: '/calculator', label: 'C', id: 'navbar-phrase', role: 'any' },
+        { path: '/personal/dashboard', icon: <FontAwesomeIcon icon="chart-bar" />, role: 'Personal' },
+        { path: '', icon: <FontAwesomeIcon icon="edit" />, role: 'Personal', action: handleCreatePostOverlayOpen },
+        { path: '/personal/explore', icon: <FontAwesomeIcon icon="compass" />, role: 'Personal' },
+    
+        { path: '/calculator', icon: <FontAwesomeIcon icon="calculator" />, role: 'any' },
     ];
+    
 
     const privatePagesLargeSidebar = [
         // Learner Links
@@ -88,7 +87,7 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
         // Professional Links
         { path: '/professional/dashboard', label: 'Dashboard', id: 'navbar-phrase', role: 'Professional' },
         { path: '', label: '+', id: 'navbar-phrase', role: 'Professional', action: handleCreatePostOverlayOpen },
-        { path: '/professional/explore', label: 'EExplore', id: 'navbar-phrase', role: 'Professional' },
+        { path: '/professional/explore', label: 'Explore', id: 'navbar-phrase', role: 'Professional' },
 
 
 

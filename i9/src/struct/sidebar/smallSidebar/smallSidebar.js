@@ -1,12 +1,9 @@
-import React, { useState, useRef } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './smallSidebar.css';
-import { useActionData, useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../../reducers/auth/useAuth';
 
-const SmallSidebar = ({showLargeSidebar, privatePagesSmallSidebar, handleSidebarClick}) => {
+const SmallSidebar = ({ showLargeSidebar, privatePagesSmallSidebar, handleSidebarClick }) => {
     const { authState } = useAuth();
 
     return (
@@ -18,7 +15,7 @@ const SmallSidebar = ({showLargeSidebar, privatePagesSmallSidebar, handleSidebar
                             <button to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
                                 <li>
                                     <div className='sidebar-small-per-item'>
-                                        {item.label}
+                                        {item.icon}
                                     </div>
                                 </li>
                             </button>
