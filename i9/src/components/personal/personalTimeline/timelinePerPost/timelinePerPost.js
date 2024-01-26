@@ -17,7 +17,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 import { timeAgo } from '../../expandPost/convertDateTIme';
 
-const TimelinePerPost = ({ postId }) => {
+const TimelinePerPost = ({ postId, posts, handleExpandPostOpen, index }) => {
     const navigate = useNavigate();
     const { authState } = useAuth();
 
@@ -32,6 +32,9 @@ const TimelinePerPost = ({ postId }) => {
     const [showLikesOverlay, setShowLikesOverlay] = useState(false);
     const [showDislikesOverlay, setShowDislikesOverlay] = useState(false);
 
+    const handlePostClick = (post, index) => {
+        handleExpandPostOpen(post.id, posts, window.location.pathname, index);
+      };
 
     useEffect(() => {
         // Fetch explore page posts from your Django backend using Axios with the token in the headers
@@ -50,7 +53,6 @@ const TimelinePerPost = ({ postId }) => {
       }, []);
       
     useEffect(() => {
-    
         // Fetch initial like/dislike status when component mounts
         const fetchInitialLikeStatus = async () => {
             try {
@@ -175,7 +177,7 @@ const TimelinePerPost = ({ postId }) => {
                             <p>Posted {timeAgo(post.created_at)}</p>
                         </div>
                         <div className='personal-timeline-post-stats-count'>
-                            <p >{post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}</p>
+                            <p onClick={() => handlePostClick(post, index)}>{post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}</p>
                             <p onClick={() => setShowLikesOverlay(!showLikesOverlay)}>{post.likes.length} {post.likes.length === 1 ? 'like' : 'likes'}</p>
                             <p onClick={() => setShowDislikesOverlay(!showDislikesOverlay)}>{post.dislikes.length} {post.dislikes.length === 1 ? 'dislike' : 'dislikes'}</p>
                         </div>

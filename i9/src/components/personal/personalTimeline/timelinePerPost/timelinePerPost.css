@@ -95,8 +95,7 @@
     align-items: center;
 }
 
-.personal-timeline-post-stats-count p:nth-child(3):hover,
-.personal-timeline-post-stats-count p:nth-child(2):hover {
+.personal-timeline-post-stats-count p:hover {
     cursor: pointer;
 }
 

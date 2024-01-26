@@ -7,7 +7,7 @@ import API_BASE_URL from '../../../config';
 import TimelinePerPost from './timelinePerPost/timelinePerPost';
 
 
-const PersonalTimeline = () => {
+const PersonalTimeline = ({ handleExpandPostOpen }) => {
   const { authState } = useAuth();
   const [posts, setPosts] = useState([]);
 
@@ -38,7 +38,7 @@ const PersonalTimeline = () => {
           <div className="personal-timeline-content-inner">
             <div className="timeline-left-side-container">
               {posts.map((post, index) => (
-                <TimelinePerPost postId={post.id} key={index} />
+                <TimelinePerPost postId={post.id} posts={posts} handleExpandPostOpen={handleExpandPostOpen} key={index} />
               ))
               }
             </div>

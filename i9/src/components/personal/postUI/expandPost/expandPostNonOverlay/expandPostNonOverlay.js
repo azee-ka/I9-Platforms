@@ -323,9 +323,11 @@ const ExpandedPostNonOverlay = ({ postId }) => {
                 <div onClick={handlePostDislike}>
                     <img src={postDisliked ? disliked : undisliked} />
                 </div>
-                <div onClick={handleDeletePost} className='expanded-post-non-overlay-delete-post'>
-                    <i className='fa fa-trash' id="delete-icon" />
-                </div>
+                {post.user.username === authState.user.username &&
+                    <div onClick={handleDeletePost} className='expanded-post-overlay-delete-post'>
+                        <i className='fa fa-trash' id="delete-icon" />
+                    </div>
+                }
             </div>
             {showLikesOverlay && (
                 <UserListOverlay userList={post.likes} onClose={handleCloseOverlay} title={'Likes'} username={authState.user.username} />

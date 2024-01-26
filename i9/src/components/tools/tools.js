@@ -15,9 +15,9 @@ const Tools = () => {
             path: '/calculator',
         },
         {
-            name: 'Workspace',
+            name: 'Workflow',
             icon: '',
-            path: '/workspace',
+            path: '/workflow',
         },
     ]);
 
