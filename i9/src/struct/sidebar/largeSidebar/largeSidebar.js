@@ -6,30 +6,11 @@ import { useActionData, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../reducers/auth/useAuth';
 
-const LargeSidebar = ({ showLargeSidebar, privatePagesLargeSidebar, handleSidebarClick, searchResults }) => {
+const LargeSidebar = ({ privatePagesLargeSidebar, handleSidebarClick }) => {
     const { authState } = useAuth();
 
-
-
-    const largeContainerRef = useRef(null);
-    const handleTransitionEnd = () => {
-        if (largeContainerRef.current) {
-            if (showLargeSidebar || searchResults.length === 0) {
-                    largeContainerRef.current.classList.add('visible');
-            }
-        }
-    };
-
-    useEffect(() => {
-        handleTransitionEnd();
-    }, [searchResults])
-
     return (
-        <div
-                ref={largeContainerRef}
-                className={`sidebar-large-container ${showLargeSidebar ? 'expand' : ''}`}
-                onTransitionEnd={handleTransitionEnd}
-            >
+        <div className={`sidebar-large-container`}>
         <div className='sidebar-large-container-content'>
             <ul>
                 {privatePagesLargeSidebar.map((item, index) => (

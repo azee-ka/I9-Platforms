@@ -15,7 +15,7 @@ import ProfilePicture from '../../utils/getProfilePicture';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine} from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const { authState, logout } = useAuth();
@@ -127,17 +127,38 @@ const Navbar = () => {
         }
     };
 
+    const [showHighOrderSidebar, setShowHighOrderSidebar] = useState(false);
+
+    const handleHighOrderSidebarToggle = () => {
+        setShowHighOrderSidebar(!showHighOrderSidebar);
+    };
+
     const pagesNavbar = authState.isAuthenticated ? privatePagesNavbar : publicPagesNavbar;
 
     return (
         <div className={`site-navbar`}>
             <div className='navbar-container'>
                 <div className='navbar-inner'>
-                    <div className={`app-logo`}>
-                        <Link to={'/'}>
-                            <img src={AppLogo} alt=''></img>
-                        </Link>
+                    <div className='navbar-menu-logo-container'>
+                        <div className={`navbar-sidebar-menu-toggle`}>
+                            <div className={`navbar-sidebar-menu-toggle-inner ${showHighOrderSidebar ? 'sidebar-visible' : ''}`}>
+                                <div className='navbar-sidebar-menu-toggle-inner-content'>
+                                    <button onClick={handleHighOrderSidebarToggle}>
+                                        <span className={`icon-bar ${showHighOrderSidebar ? 'rotate' : ''}`}></span>
+                                        <span className={`icon-bar ${showHighOrderSidebar ? 'rotate' : ''}`}></span>
+                                        <span className={`icon-bar ${showHighOrderSidebar ? 'rotate' : ''}`}></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={`app-logo`}>
+                            <Link to={'/'}>
+                                <img src={AppLogo} alt=''></img>
+                            </Link>
+                        </div>
                     </div>
+
                     <nav className={`top-nav`}>
                         <div className='menu-items-containter'>
                             <div className='right-side-menu-items'>

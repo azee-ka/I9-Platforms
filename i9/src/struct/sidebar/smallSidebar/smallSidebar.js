@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './smallSidebar.css';
 import { useAuth } from '../../../reducers/auth/useAuth';
 
-const SmallSidebar = ({ showLargeSidebar, privatePagesSmallSidebar, handleSidebarClick }) => {
+const SmallSidebar = ({ privatePagesSmallSidebar, handleSidebarClick }) => {
     const { authState } = useAuth();
 
     return (
-        <div className={`sidebar-small-container ${showLargeSidebar ? 'shrink' : ''}`}>
+        <div className={`sidebar-small-container`}>
             <div className='sidebar-small-container-content'>
                 <ul>
                     {privatePagesSmallSidebar.map((item, index) => (

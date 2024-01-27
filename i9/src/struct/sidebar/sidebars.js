@@ -12,49 +12,21 @@ import API_BASE_URL, { CLIENT_BASE_URL } from '../../config';
 import ProfilePicture from '../../utils/getProfilePicture';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine} from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine, faSearch} from '@fortawesome/free-solid-svg-icons';
+import SearchSidebar from './searchSidebar/searchSidebar';
 library.add(faChartBar, faEdit, faPlus, faCompass, faCalculator, faTachometerAlt, faChartLine);
 
 const Sidebar = ({ handleCreatePostOverlayOpen }) => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
 
+    const [showSeachSidebar, setShowSearchSidebar] = useState(false);
 
     const [showLargeSidebar, setShowLargeSidebar] = useState(false);
 
     const navigate = useNavigate();
     const { authState } = useAuth();
 
-    const notSearchingCurrrently = () => {
-        return (searchResults.length === 0);
-    }
-
-    const handleInputChange = (e) => {
-        const inputValue = e.target.value;
-        setSearchQuery(inputValue);
-
-        if (inputValue !== "") {
-            handleSubmitSearch();
-        } else {
-            setSearchResults([]);
-        }
-
-    };
-
-    const handleSubmitSearch = (e) => {
-        // Make an API request to search for users
-        axios.get(`${API_BASE_URL}personal/search/?query=${searchQuery}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${authState.token}`,
-            },
-        })
-            .then((response) => {
-                setSearchResults(response.data);
-            })
-            .catch((error) => {
-                console.error('Error searching for users:', error);
-            });
+    const handleShowSearchSidebbar = () => {
+        setShowSearchSidebar(!showSeachSidebar);
     };
 
 
@@ -70,6 +42,7 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
     
         // Personal Links
         { path: '/personal/dashboard', icon: <FontAwesomeIcon icon={faChartBar} />, role: 'Personal' },
+        { path: '', icon: <FontAwesomeIcon icon={faSearch} />, role: 'Personal', action: handleShowSearchSidebbar },
         { path: '', icon: <FontAwesomeIcon icon="edit" />, role: 'Personal', action: handleCreatePostOverlayOpen },
         { path: '/personal/explore', icon: <FontAwesomeIcon icon="compass" />, role: 'Personal' },
     
@@ -112,66 +85,28 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
 
     const handleSidebarToggle = () => {
         setShowLargeSidebar(!showLargeSidebar);
-        setSearchQuery('');
-        setSearchResults([]);
+        // setSearchQuery('');
+        // setSearchResults([]);
     };
 
 
 
     return (
-        <div className={`sidebar-container ${showLargeSidebar ? 'sidebar-visible' : ''}`}>
-            <div className={`sidebar-menu-toggle`}>
-                <div className={`sidebar-menu-toggle-inner ${showLargeSidebar ? 'sidebar-visible' : ''}`}>
-                    <div className='sidebar-menu-toggle-inner-content'>
-                        <button onClick={handleSidebarToggle}>
-                            <span className={`icon-bar ${showLargeSidebar ? 'rotate' : ''}`}></span>
-                            <span className={`icon-bar ${showLargeSidebar ? 'rotate' : ''}`}></span>
-                            <span className={`icon-bar ${showLargeSidebar ? 'rotate' : ''}`}></span>
-                        </button>
-                    </div>
-                </div>
-                {showLargeSidebar &&
-                    <div 
-                        className={`sidebar-search-container`}
-                        >
-                        <div className='sidebar-search-bar-container'>
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                value={searchQuery}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </div>
-                }
-            </div>
-            <div className='sidebar-content'>
-                <SmallSidebar showLargeSidebar={showLargeSidebar} privatePagesSmallSidebar={privatePagesSmallSidebar} handleSidebarClick={handleSidebarClick} />
-                {showLargeSidebar && searchResults.length !== 0 &&
-                    <div className={`show-users-search ${showLargeSidebar ? 'expand' : ''}`}>
-                        <div className='show-users-search-inner'>
-                            {searchResults.map((thisUser) => (
-                                <Link to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`} key={thisUser.id} className="custom-link">
-                                    <div className="users-search-list-item">
-                                        <div className="users-search-list-item-inner">
-                                            <div className="users-search-list-item-profile-picture">
-                                                <div className="users-search-list-item-profile-picture-inner">
-                                                    <ProfilePicture src={thisUser.profile_picture} />
-                                                </div>
-                                            </div>
-                                            <div className="users-search-list-item-username">
-                                                <p>{thisUser.username}</p>
-                                            </div>
-                                        </div>
+        <div className={`sidebar-container`}>
+           
 
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
+            <div className='sidebar-content'>
+                <SmallSidebar privatePagesSmallSidebar={privatePagesSmallSidebar} handleSidebarClick={handleSidebarClick} />
+
+
+                
+                {showSeachSidebar &&
+                    <SearchSidebar showSeachSidebar={showSeachSidebar} />
                 }
-                {searchResults.length === 0 &&
-                    <LargeSidebar showLargeSidebar={showLargeSidebar} privatePagesLargeSidebar={privatePagesLargeSidebar} handleSidebarClick={handleSidebarClick} searchResults={searchResults} />
+
+
+                {
+                    <LargeSidebar privatePagesLargeSidebar={privatePagesLargeSidebar} handleSidebarClick={handleSidebarClick}/>
                 }
             </div>
         </div>

@@ -1,6 +1,6 @@
 # urls.py
 from django.urls import path, include
-from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request, update_user_profile_picture, remove_user_profile_picture, toggle_profile_visibility, get_profile_visibility
+from .views import login_view, register_view, get_user_info, link_profile, get_linked_profiles, switch_profile, accept_link_request, reject_link_request, update_user_profile_picture, remove_user_profile_picture, toggle_profile_visibility, get_profile_visibility, unlink_profile
 
 urlpatterns = [
     path('access/login/', login_view, name='login'),
@@ -17,6 +17,8 @@ urlpatterns = [
     
     
     path('link-profile/', link_profile, name='link-profile'),
+    path('unlink-profile/<str:username>/', unlink_profile, name='link-profile'),
+        
      path('accept_link_request/<int:notification_id>/', accept_link_request, name='accept_link_request'),
     path('reject_link_request/<int:notification_id>/', reject_link_request, name='reject_link_request'),
     

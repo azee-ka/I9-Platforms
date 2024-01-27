@@ -1,0 +1,82 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import API_BASE_URL from '../../../config';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../reducers/auth/useAuth';
+import { CLIENT_BASE_URL } from '../../../config';
+import ProfilePicture from '../../../utils/getProfilePicture';
+import './searchSidebar.css';
+
+const SearchSidebar = ({ showSeachSidebar }) => {
+    const { authState } = useAuth();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        setSearchQuery(inputValue);
+
+        if (inputValue !== "") {
+            handleSubmitSearch();
+        } else {
+            setSearchResults([]);
+        }
+
+    };
+
+    const handleSubmitSearch = (e) => {
+        // Make an API request to search for users
+        axios.get(`${API_BASE_URL}personal/search/?query=${searchQuery}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${authState.token}`,
+            },
+        })
+            .then((response) => {
+                setSearchResults(response.data);
+            })
+            .catch((error) => {
+                console.error('Error searching for users:', error);
+            });
+    };
+
+
+    return (
+        <div className='search-sidebar-container'>
+            <div className={`sidebar-search-container`}>
+                <div className='sidebar-search-bar-container'>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            </div>
+
+            <div className={`show-users-search ${showSeachSidebar ? 'expand' : ''}`}>
+                <div className='show-users-search-inner'>
+                    {searchResults.map((thisUser) => (
+                        <Link to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`} key={thisUser.id} className="custom-link">
+                            <div className="users-search-list-item">
+                                <div className="users-search-list-item-inner">
+                                    <div className="users-search-list-item-profile-picture">
+                                        <div className="users-search-list-item-profile-picture-inner">
+                                            <ProfilePicture src={thisUser.profile_picture} />
+                                        </div>
+                                    </div>
+                                    <div className="users-search-list-item-username">
+                                        <p>{thisUser.username}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SearchSidebar;

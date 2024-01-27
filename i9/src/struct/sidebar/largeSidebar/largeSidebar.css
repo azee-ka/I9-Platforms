@@ -68,7 +68,7 @@
 
 
 .sidebar-large-container {
-    width: 0;
+    width: 220px;
     background-color: rgb(32, 195, 111, 0);
     height: 100%;
     overflow: hidden;
@@ -79,7 +79,7 @@
     align-items: center;
 }
 
-.sidebar-large-container.expand {
+/* .sidebar-large-container.expand {
     width: 220px;
     transition: width 1s ease;
 }
@@ -91,4 +91,4 @@
 .sidebar-large-container.expand.visible > div {
     visibility: visible;
     color: white;
-}
+} */

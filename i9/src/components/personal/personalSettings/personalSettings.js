@@ -8,6 +8,7 @@ import default_profile_picture from '../../../assets/default_profile_picture.png
 import { formatDateTime } from '../../../utils/formatDateTime';
 
 import ProfileConfiguration from './settingsComponents/profileConfiguration/profileConfiguration';
+import LinkedProfiles from './settingsComponents/linkedProfiles/linkedProfiles';
 
 const PersonalSettings = () => {
 
@@ -19,6 +20,10 @@ const PersonalSettings = () => {
         {
             title: 'Profile Congifuration',
             contentComponent: ProfileConfiguration,
+        },
+        {
+            title: 'Manage Linked Profiles',
+            contentComponent: LinkedProfiles,
         },
     ]);
 

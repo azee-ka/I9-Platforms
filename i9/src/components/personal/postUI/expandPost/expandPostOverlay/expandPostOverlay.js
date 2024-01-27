@@ -3,7 +3,7 @@ import './expandPostOverlay.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.css';
-import API_BASE_URL from '../../../../../config';
+import API_BASE_URL, { CLIENT_BASE_URL } from '../../../../../config';
 import default_profile_picture from '../../../../../assets/default_profile_picture.png';
 import axios from 'axios';
 import { useAuth } from '../../../../../reducers/auth/useAuth';
@@ -18,6 +18,7 @@ import UserListOverlay from '../../../utils/userListOverlay/userListOverlay';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
 import ProfilePicture from '../../../../../utils/getProfilePicture';
+import { Link } from 'react-router-dom';
 
 const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostClick, showPreviousPostButton, showNextPostButton }) => {
     const navigate = useNavigate();
@@ -217,7 +218,9 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
                         </div>
                         <div className='expanded-post-overlay-user-info-text-contatiner'>
                             <div className='expanded-post-overlay-user-info-username-contatiner'>
+                            <Link to={`${CLIENT_BASE_URL}/personal/profile/${post.user.username}`} className='custom-link'>
                                 {post.user.username}
+                             </Link>
                             </div>
                         </div>
                     </div>
@@ -234,7 +237,7 @@ const ExpandedPostOverlay = ({ postId, handlePreviousPostClick, handleNextPostCl
                                                     </div>
                                                 </div>
                                                 <div className='expanded-post-commenting-user-username'>
-                                                    <p>{commentData.user.username}</p>
+                                                        <p>{commentData.user.username}</p>
                                                 </div>
                                             </div>
                                             <div className='expanded-post-comment-info'>

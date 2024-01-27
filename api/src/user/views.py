@@ -178,6 +178,10 @@ def link_profile(request):
     if not linked_profile:
         return Response({"message": "Invalid credentials for linking profiles"}, status=401)
 
+    if user == linked_profile:
+        return Response({"message": "You cannot link your own profile!"})
+
+
     # Send link request notification to the linked profile
     # send_notification(sender=user, recipient=linked_profile, message=f"{user.username} wants to link profiles. Do you accept?")
     send_notification(
@@ -248,10 +252,10 @@ def get_linked_profiles(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def unlink_profile(request, linked_profile_id):
+def unlink_profile(request, username):
     # Ensure the user is authenticated and authorized to unlink profiles
     user = request.user
-    linked_profile = get_object_or_404(BaseUser, id=linked_profile_id)
+    linked_profile = get_object_or_404(BaseUser, username=username)
 
     # Unlink the profiles
     user.unlink_profile(linked_profile)

@@ -4,7 +4,7 @@ import './workflow.css';
 const Workflow = () => {
     return (
         <div className='workflow-container'>
-gsddfsdf
+
         </div>
     );
 }

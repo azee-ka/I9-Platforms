@@ -14,7 +14,7 @@
   display: flex;
 }
 
-
-/*
-npm install react-router-dom axios react-mathquill react-katex react-router
-*/
+.custom-link {
+  color: inherit;
+  text-decoration: none;
+}
