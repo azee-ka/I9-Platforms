@@ -63,7 +63,8 @@
 }
 
 .sidebar-small-container {
-    width: 90px;
+    max-width: 70px;
+    min-width: 70px;
     background-color: rgba(0, 0, 255, 0);
     height: 100%;
     display: flex;
@@ -73,10 +74,10 @@
     transition: width 1s ease;
 }
 
-.sidebar-small-container.shrink {
+/* .sidebar-small-container.shrink {
     width: 70px;
     transition: width 1s ease;
     border-right: 0px solid rgba(255, 255, 255, 0.264);
     justify-content: right;
     align-items: center;
-}
+} */

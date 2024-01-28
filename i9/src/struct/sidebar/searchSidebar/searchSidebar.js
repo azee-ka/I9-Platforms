@@ -42,7 +42,13 @@ const SearchSidebar = ({ showSeachSidebar }) => {
 
 
     return (
-        <div className='search-sidebar-container'>
+        <div className={`search-sidebar-container ${showSeachSidebar ? 'show' : ''}`}>
+            <div className='search-sidebar-title'>
+                <div className='search-sidebar-title-inner'>
+                <h3>Search</h3>
+
+                </div>
+            </div>
             <div className={`sidebar-search-container`}>
                 <div className='sidebar-search-bar-container'>
                     <input
@@ -54,8 +60,8 @@ const SearchSidebar = ({ showSeachSidebar }) => {
                 </div>
             </div>
 
-            <div className={`show-users-search ${showSeachSidebar ? 'expand' : ''}`}>
-                <div className='show-users-search-inner'>
+            <div className={`sidebar-search-show-users-search`}>
+                <div className='sidebar-search-show-users-search-inner'>
                     {searchResults.map((thisUser) => (
                         <Link to={`${CLIENT_BASE_URL}/personal/profile/${thisUser.username}`} key={thisUser.id} className="custom-link">
                             <div className="users-search-list-item">

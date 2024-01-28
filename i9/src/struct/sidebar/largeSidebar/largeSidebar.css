@@ -1,3 +1,22 @@
+.sidebar-large-container {
+    width: 220px;
+    background-color: rgb(32, 195, 111, 0);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.4s ease;
+    visibility: visible;
+}
+.sidebar-large-container.collapse {
+    width: 0;
+    visibility: hidden;
+    
+}
+
+
 
 .sidebar-large-container-content {
     background-color: rgba(255, 255, 255, 0);
@@ -67,17 +86,7 @@
 
 
 
-.sidebar-large-container {
-    width: 220px;
-    background-color: rgb(32, 195, 111, 0);
-    height: 100%;
-    overflow: hidden;
-    transition: width 1s ease;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
+
 
 /* .sidebar-large-container.expand {
     width: 220px;

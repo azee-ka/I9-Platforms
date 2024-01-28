@@ -20,13 +20,14 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
 
     const [showSeachSidebar, setShowSearchSidebar] = useState(false);
 
-    const [showLargeSidebar, setShowLargeSidebar] = useState(false);
+    const [showLargeSidebar, setShowLargeSidebar] = useState(true);
 
     const navigate = useNavigate();
     const { authState } = useAuth();
 
     const handleShowSearchSidebbar = () => {
         setShowSearchSidebar(!showSeachSidebar);
+        setShowLargeSidebar(!showLargeSidebar);
     };
 
 
@@ -100,14 +101,14 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
 
 
                 
-                {showSeachSidebar &&
+                {/* {showSeachSidebar && */}
                     <SearchSidebar showSeachSidebar={showSeachSidebar} />
-                }
+                {/* } */}
 
 
-                {
-                    <LargeSidebar privatePagesLargeSidebar={privatePagesLargeSidebar} handleSidebarClick={handleSidebarClick}/>
-                }
+                {/* {showLargeSidebar && */}
+                    <LargeSidebar showLargeSidebar={showLargeSidebar} privatePagesLargeSidebar={privatePagesLargeSidebar} handleSidebarClick={handleSidebarClick}/>
+                {/* } */}
             </div>
         </div>
     );
