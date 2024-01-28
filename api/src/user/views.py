@@ -78,7 +78,19 @@ def login_view(request):
         return Response({"message": "Invalid credentials"}, status=401)
 
 
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_user_profile(request):
+    user = request.user
 
+    # Update the user profile with the data from the request
+    serializer = BaseUserSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=200)
+    else:
+        return Response(serializer.errors, status=400)
+    
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -109,6 +121,7 @@ def get_user_info(request):
 
     serializer = BaseUserSerializer(base_user)
     return Response(serializer.data, status=200)
+
 
 
 

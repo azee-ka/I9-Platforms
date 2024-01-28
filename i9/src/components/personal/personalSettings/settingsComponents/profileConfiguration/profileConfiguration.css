@@ -30,96 +30,108 @@
     background-color: rgb(139, 139, 138, 0);
 }
 
-.settings-profile-profile-privacy-container {
+.settings-profile-profile-config-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 0, 0, 0);
-    border-bottom: 0.5px solid rgba(128, 128, 128, 0.609);
+    /* border-bottom: 0.5px solid rgba(128, 128, 128, 0.609); */
 }
 
-.settings-profile-profile-privacy-content {
-    width: 95%;
+.settings-profile-profile-config-content {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    background-color: rgba(0, 0, 255, 0);
+    background-color: rgba(8, 8, 222, 0);
     gap: 0px;
 }
 
+.settings-profile-spec-fields {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+}
 
-
-.settings-profile-profile-privacy-content-toggle-visibility-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between; /* Updated to space between */
-    background-color: rgba(0, 0, 255, 0);
-    padding: 10px; /* Added padding for better spacing */
-  }
-
-  .settings-profile-profile-privacy-content-toggle-visibility-description-container {
-    width: 90%;
-    height: 100%;
-    background-color: rgba(238, 130, 238, 0);
-    display: flex;
-    font-size: 15px;
-    color: rgb(198, 198, 198);
-  }
-  .settings-profile-profile-privacy-content-toggle-visibility-button-container {
-    background-color: rgba(255, 192, 203, 0);
-    height: 100%;
-    flex-grow: 1;
+.settings-profile-edit-fields {
+    height: 200px;
+    width: 100%;
+    background-color: rgba(0, 128, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  /* Toggle Switch Styles */
-  .profile-settings-per-tab-content .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-  }
+}
+.settings-profile-edit-fields-inner {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 255, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+.settings-profile-edit-fields-inner input {
+    width: 100%;
+    height: 25px;
+    font-size: 16px;
+    background-color: black;
+    outline: none;
+    border: 1px solid gray;
+    padding: 6px;
+    border-radius: 6px;
+    box-shadow: 0px 0px 0px 0px rgb(0, 176, 192);
+    transition: box-shadow 0.3s ease;
+    color: white;
+}
+.settings-profile-edit-fields-inner input:hover {
+    border: 1px solid white;
+}
+
+.settings-profile-edit-fields-inner input:focus {
+    box-shadow: 0px 0px 4px 2px rgb(0, 176, 192);
+    border: 1px solid rgba(128, 128, 128, 0);
+}
+
+.settings-profile-name-fields {
+    background-color: rgba(238, 130, 238, 0);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    gap: 15px;
+}
+
+.settings-profile-display-name-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
-  .profile-settings-per-tab-content .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .profile-settings-per-tab-content .slider {
-    position: absolute;
+.settings-profile-update-save-button {
+    width: 100%;
+    height: 45px;
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.settings-profile-update-save-button button {
+    height: 40px;
+    width: 70px;
+    background-color: rgb(0, 149, 157);
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    font-size: 15px;
+}
+.settings-profile-update-save-button button:hover {
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0px 0px 4px 2px rgb(0, 211, 214);
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 34px;
-  }
-  
-  .profile-settings-per-tab-content .slider:before {
-    position: absolute;
-    content: '';
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-  
-  .profile-settings-per-tab-content input:checked + .slider {
-    background-color: #06a4b3;
-  }
-  
-  .profile-settings-per-tab-content input:checked + .slider:before {
-    transform: translateX(20px);
-  }
+}

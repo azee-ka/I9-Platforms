@@ -9,6 +9,7 @@ import { formatDateTime } from '../../../utils/formatDateTime';
 
 import ProfileConfiguration from './settingsComponents/profileConfiguration/profileConfiguration';
 import LinkedProfiles from './settingsComponents/linkedProfiles/linkedProfiles';
+import ProfilePrivacy from './settingsComponents/profilePrivacy/profilePrivacy';
 
 const PersonalSettings = () => {
 
@@ -20,6 +21,10 @@ const PersonalSettings = () => {
         {
             title: 'Profile Congifuration',
             contentComponent: ProfileConfiguration,
+        },
+        {
+            title: 'Profile Privacy',
+            contentComponent: ProfilePrivacy,
         },
         {
             title: 'Manage Linked Profiles',

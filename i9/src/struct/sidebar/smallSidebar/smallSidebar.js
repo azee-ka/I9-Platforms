@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './smallSidebar.css';
 import { useAuth } from '../../../reducers/auth/useAuth';
 
-const SmallSidebar = ({ privatePagesSmallSidebar, handleSidebarClick }) => {
+const SmallSidebar = ({ showSeachSidebar, privatePagesSmallSidebar, handleSidebarClick }) => {
     const { authState } = useAuth();
 
     return (
@@ -12,7 +12,7 @@ const SmallSidebar = ({ privatePagesSmallSidebar, handleSidebarClick }) => {
                 <ul>
                     {privatePagesSmallSidebar.map((item, index) => (
                         (item.role === authState.user.role || item.role === 'any') ? (
-                            <button to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
+                            <button className={`sidebar-small-container-content-button ${showSeachSidebar ? 'active' : ''}`} to={item.path} key={`${item.label}-${index}`} onClick={() => handleSidebarClick(item.path, item.action)}>
                                 <li>
                                     <div className='sidebar-small-per-item'>
                                         {item.icon}

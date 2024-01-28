@@ -1,0 +1,125 @@
+.settings-profile-privacy-tab {
+    background-color: rgb(124, 211, 124, 0);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.settings-profile-privacy-tab-inner {
+    background-color: rgba(0, 128, 0, 0);
+    width: 90%;
+    height: 100%;
+}
+
+.settings-profile-privacy-tab-inner h3 {
+    color: white;
+    font-size: 20px;
+    height: 24px;
+    width: 100%;
+    background-color: rgb(139, 139, 138, 0);
+}
+.settings-profile-privacy-tab-inner h4 {
+    color: white;
+    font-size: 16px;
+    height: 20px;
+    width: 100%;
+    font-weight: 500;
+    background-color: rgb(139, 139, 138, 0);
+}
+
+.settings-profile-profile-privacy-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 0, 0, 0);
+    border-bottom: 0.5px solid rgba(128, 128, 128, 0.609);
+}
+
+.settings-profile-profile-privacy-content {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: rgba(0, 0, 255, 0);
+    gap: 0px;
+}
+
+
+
+.settings-profile-profile-privacy-content-toggle-visibility-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Updated to space between */
+    background-color: rgba(0, 0, 255, 0);
+    padding: 10px; /* Added padding for better spacing */
+  }
+
+  .settings-profile-profile-privacy-content-toggle-visibility-description-container {
+    width: 90%;
+    height: 100%;
+    background-color: rgba(238, 130, 238, 0);
+    display: flex;
+    font-size: 15px;
+    color: rgb(198, 198, 198);
+  }
+  .settings-profile-profile-privacy-content-toggle-visibility-button-container {
+    background-color: rgba(255, 192, 203, 0);
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Toggle Switch Styles */
+  .profile-settings-per-tab-content .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+
+
+  .profile-settings-per-tab-content .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .profile-settings-per-tab-content .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  .profile-settings-per-tab-content .slider:before {
+    position: absolute;
+    content: '';
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .profile-settings-per-tab-content input:checked + .slider {
+    background-color: #06a4b3;
+  }
+  
+  .profile-settings-per-tab-content input:checked + .slider:before {
+    transform: translateX(20px);
+  }

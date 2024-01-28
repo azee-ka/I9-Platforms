@@ -97,7 +97,7 @@ const Sidebar = ({ handleCreatePostOverlayOpen }) => {
            
 
             <div className='sidebar-content'>
-                <SmallSidebar privatePagesSmallSidebar={privatePagesSmallSidebar} handleSidebarClick={handleSidebarClick} />
+                <SmallSidebar showSeachSidebar={showSeachSidebar} privatePagesSmallSidebar={privatePagesSmallSidebar} handleSidebarClick={handleSidebarClick} />
 
 
                 

@@ -6,80 +6,87 @@ import { useAuth } from '../../../../../reducers/auth/useAuth';
 
 const ProfileConfiguration = () => {
     const { authState } = useAuth();
-    // State to manage the visibility toggle
-    const [isProfilePrivate, setIsProfilePrivate] = useState(false);
+    const [profileData, setProfileData] = useState([]);
 
-    // Function to handle the toggle
-    const handleToggle = () => {
-        setIsProfilePrivate(!isProfilePrivate);
-        handleChangeProfileVisiblity();
-    };
-
-    const handleChangeProfileVisiblity = async () => {
+    const fetchProfileSpecs = async () => {
         try {
             const config = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-              }
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`,
+                },
             };
-      
-            const data = {
-                is_profile_private: isProfilePrivate,
-            };
-      
-            const response = await axios.post(`${API_BASE_URL}toggle-profile-visibility/`, data, config);
-            console.log(response.data);
-
-          } catch (error) {
+            const response = await axios.get(`${API_BASE_URL}profile/get-user-info/`, config);
+            setProfileData(response.data);
+            console.log(response.data)
+        } catch (error) {
             console.error('Error fetching profile data:', error);
-          }
-    }
-
-
-    const fetchUserProfileVisiblity = async () => {
-        try {
-            const config = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-              }
-            };
-
-            const response = await axios.get(`${API_BASE_URL}get-profile-visibility/`, config);
-            console.log(response.data);
-            setIsProfilePrivate(response.data.visibility === 'private' ? true : false);
-          } catch (error) {
-            console.error('Error fetching profile data:', error);
-          }
+        }
     };
 
     useEffect(() => {
-        fetchUserProfileVisiblity();
+        fetchProfileSpecs();
     }, []);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setProfileData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const saveNewProfileSpecs = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`,
+                },
+            };
+            const response = await axios.patch(`${API_BASE_URL}update-user-profile/`, profileData, config);
+            console.log(response.data)
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    };
 
     return (
         <div className='settings-profile-config-tab'>
             <div className='settings-profile-config-tab-inner'>
-                <div className='settings-profile-profile-privacy-container'>
-                    <h3>Profile Privacy</h3>
-                    <div className='settings-profile-profile-privacy-content'>
-                        <h4>Profile Visibility</h4>
-                        <div className='settings-profile-profile-privacy-content-toggle-visibility-container'>
-                            <div className='settings-profile-profile-privacy-content-toggle-visibility-description-container'>
-                                <p>
-                                    Adjust the visibility of your profile to control who can view your content. When set to private,
-                                    only your followers will have access to your content. A public profile allows anyone to view your
-                                    content. When toggled on, the profile is set to private mode.
-                                </p>
+                <div className='settings-profile-profile-config-container'>
+                    <h3>Profile Configuration</h3>
+                    <div className='settings-profile-profile-config-content'>
+                        <div className='settings-profile-spec-fields'>
+                            <div className='settings-profile-edit-fields'>
+                                <div className='settings-profile-edit-fields-inner'>
+                                    <div className='settings-profile-name-fields'>
+                                        <input
+                                            name='first_name'
+                                            value={profileData.first_name || ''}
+                                            placeholder='First Name'
+                                            onChange={handleInputChange}
+                                        />
+                                        <input
+                                            name='last_name'
+                                            value={profileData.last_name || ''}
+                                            placeholder='Last Name'
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                    <div className='settings-profile-display-name-field'>
+                                        <input
+                                            name='display_name'
+                                            value={profileData.display_name || ''}
+                                            placeholder='Display Name'
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div className='settings-profile-profile-privacy-content-toggle-visibility-button-container'>
-                                {/* Toggle Slider */}
-                                <label className='toggle-switch'>
-                                    <input type='checkbox' checked={isProfilePrivate} onChange={handleToggle} />
-                                    <span className='slider round'></span>
-                                </label>
-                            </div>
+                        </div>
+                        <div className='settings-profile-update-save-button'>
+                            <button onClick={saveNewProfileSpecs}>Save</button>
                         </div>
                     </div>
                 </div>
