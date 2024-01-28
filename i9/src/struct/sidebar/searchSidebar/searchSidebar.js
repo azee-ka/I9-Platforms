@@ -27,7 +27,7 @@ const SearchSidebar = ({ showSeachSidebar }) => {
             };
 
             const response = await axios.get(`${API_BASE_URL}personal/search/history/`, config);
-            console.log(response.data);
+            // console.log(response.data);
             setSearchHistory(response.data);
         } catch (error) {
             console.error('Error fetching profile data:', error);
@@ -116,6 +116,29 @@ const SearchSidebar = ({ showSeachSidebar }) => {
 
             <div className={`sidebar-search-show-users-search`}>
                 <div className='sidebar-search-show-users-search-inner'>
+                    {searchQuery === '' &&
+                        <div className='sidebar-search-history-results'>
+                            <div className='sidebar-search-history-title'>
+                                <h4>Recent</h4>
+                            </div>
+                            {searchHistory.map((searchQuery, index) => (
+                                <div className="users-search-list-item" onClick={() => handleUserClick(searchQuery.searched_user)} key={`${searchQuery.searched_user.username}-${index}`}>
+                                    <div className="users-search-list-item-inner">
+                                        <div className="users-search-list-item-profile-picture">
+                                            <div className="users-search-list-item-profile-picture-inner">
+                                                <ProfilePicture src={searchQuery.searched_user.profile_picture} />
+                                            </div>
+                                        </div>
+                                        <div className="users-search-list-item-username">
+                                            <p>{searchQuery.searched_user.username}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                            }
+                        </div>
+                    }
+
                     {searchResults.map((thisUser, index) => (
                         <div className="users-search-list-item" onClick={() => handleUserClick(thisUser)} key={`${thisUser.username}-${index}`}>
                             <div className="users-search-list-item-inner">
@@ -128,7 +151,6 @@ const SearchSidebar = ({ showSeachSidebar }) => {
                                     <p>{thisUser.username}</p>
                                 </div>
                             </div>
-
                         </div>
                     ))}
                 </div>

@@ -114,6 +114,29 @@
     align-items: center;
 }
 
+.sidebar-search-history-results {
+    background-color: rgba(255, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+}
+.sidebar-search-history-title {
+    width: 100%;
+    height: 30px;
+    background-color: rgba(0, 0, 255, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.sidebar-search-history-title h4 {
+    width: 100%;
+    background-color: blue;
+    line-height: 0;
+}
+
+
 /* .sidebar-search-show-users-search-inner a {
     width: 100%;
     height: 58px;
