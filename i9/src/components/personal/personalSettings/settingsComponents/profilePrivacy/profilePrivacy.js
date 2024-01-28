@@ -15,41 +15,41 @@ const ProfilePrivacy = () => {
 
     const handleChangeProfileVisiblity = async () => {
         try {
-            const privacy = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-              }
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
             };
-      
+
             const data = {
                 is_profile_private: isProfilePrivate,
             };
-      
-            const response = await axios.post(`${API_BASE_URL}toggle-profile-visibility/`, data, privacy);
+
+            const response = await axios.post(`${API_BASE_URL}toggle-profile-visibility/`, data, config);
             console.log(response.data);
 
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching profile data:', error);
-          }
+        }
     }
 
 
     const fetchUserProfileVisiblity = async () => {
         try {
-            const privacy = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${authState.token}`
-              }
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
             };
 
-            const response = await axios.get(`${API_BASE_URL}get-profile-visibility/`, privacy);
+            const response = await axios.get(`${API_BASE_URL}get-profile-visibility/`, config);
             console.log(response.data);
             setIsProfilePrivate(response.data.visibility === 'private' ? true : false);
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching profile data:', error);
-          }
+        }
     };
 
     useEffect(() => {

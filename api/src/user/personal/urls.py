@@ -15,4 +15,7 @@ urlpatterns = [
     
     path('timeline/', include('src.user.personal.timeline.urls')),
     path('explore/', include('src.user.personal.explore.urls')),
+    
+    path('', include('src.user.personal.userSearchHistory.urls')),
+
 ]
