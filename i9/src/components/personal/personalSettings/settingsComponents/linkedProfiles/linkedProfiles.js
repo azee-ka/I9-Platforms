@@ -65,7 +65,6 @@ const switchProfileFromSettings = async (linkedProfileUsername) => {
         };
 
         const data = {
-            // linked_profile_username: linkedProfileUsername,
         };
 
         try {
