@@ -85,9 +85,9 @@ const ProfileConfiguration = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='settings-profile-update-save-button'>
-                            <button onClick={saveNewProfileSpecs}>Save</button>
-                        </div>
+                    </div>
+                    <div className='settings-profile-update-save-button'>
+                        <button onClick={saveNewProfileSpecs}>Save Changes</button>
                     </div>
                 </div>
             </div>

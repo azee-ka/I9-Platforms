@@ -40,3 +40,22 @@ def get_search_history(request):
     search_history = SearchHistory.objects.filter(user=user).order_by('-timestamp')
     serializer = SearchHistorySerializer(search_history, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_search_history(request):
+    print("sdgj,fdgsdf")
+    username_to_delete = request.data.get('username')
+
+    if username_to_delete:
+        # Get the user based on the provided username
+        user_to_delete = get_object_or_404(BaseUser, username=username_to_delete)
+
+        # Delete search history entries for the specified user
+        SearchHistory.objects.filter(user=request.user, searched_user=user_to_delete).delete()
+
+        return Response({"message": f"Search history for {username_to_delete} deleted successfully."})
+    else:
+        return Response({"message": "Invalid request data."}, status=400)

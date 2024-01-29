@@ -79,15 +79,34 @@ const SearchSidebar = ({ showSeachSidebar }) => {
         })
             .then(() => {
                 // Redirect to the user's profile page
-                window.location.pathname = `/personal/profile/${clickedUser.username}`;
+                // window.location.pathname = `/personal/profile/${clickedUser.username}`;
+                navigate(`/personal/profile/${clickedUser.username}`);
             })
             .catch((error) => {
                 console.error('Error storing search history:', error);
             });
     };
 
-    const handleDeleteFromHistory = () => {
-        console.log("dsj.fdgdf")
+
+
+    const handleDeleteFromHistory = async (usernameToDelete) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+
+            const data = {
+                username: usernameToDelete
+            }
+
+            const response = await axios.post(`${API_BASE_URL}personal/search/delete/`, data, config);
+            fetchUserSearchHistory();
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
     };
 
 
@@ -138,11 +157,11 @@ const SearchSidebar = ({ showSeachSidebar }) => {
                                         </div>
                                     </div>
                                     <div className={`clear-search-history-result-container ${showSeachSidebar ? 'show' : ''}`}>
-                                            <FontAwesomeIcon
-                                                icon={faClose}
-                                                className="clear-search-history-result"
-                                                onClick={handleDeleteFromHistory}
-                                            />
+                                        <FontAwesomeIcon
+                                            icon={faClose}
+                                            className="clear-search-history-result"
+                                            onClick={() => handleDeleteFromHistory(searchQuery.searched_user.username)}
+                                        />
                                     </div>
                                 </div>
                             ))
