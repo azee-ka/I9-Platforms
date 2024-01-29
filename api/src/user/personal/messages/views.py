@@ -34,11 +34,28 @@ def get_specific_user_messages(request, recipient_username):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_message(request):
-    serializer = MessageSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(sender=request.user)
+    print(request.data)
+    try:
+        recipient_username = request.data['recipient_username']
+        content = request.data['content']
+        print('fask')
+
+        recipient = BaseUser.objects.get(username=recipient_username)
+        # Assuming your Message model has 'recipient' and 'content' fields
+        message = Message.objects.create(sender=request.user, recipient=recipient, content=content)
+
+        serializer = MessageSerializer(message)
         return Response(serializer.data, status=201)
-    return Response(serializer.errors, status=400)
+
+    except BaseUser.DoesNotExist:
+        return Response({'error': 'Recipient does not exist.'}, status=400)
+
+    except KeyError as e:
+        return Response({'error': f'Missing required field: {e}'}, status=400)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
 
 
 @api_view(['GET'])

@@ -7,7 +7,8 @@ import API_BASE_URL from '../../../config';
 import default_profile_picture from '../../../assets/default_profile_picture.png';
 import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import NewMessageOverlay from './newMessageOverlay/newMessageOverlay';
 
 const PersonalMessages = () => {
     const { authState } = useAuth();
@@ -17,9 +18,15 @@ const PersonalMessages = () => {
 
     const [collapsed, setCollapsed] = useState(true);
 
+    const [sendNewMessageOverlay, setSendNewMessageOverlay] = useState(false);
+
+
+
     const handleCollapseToggle = () => {
         setCollapsed(!collapsed);
     };
+
+
 
     const fetchUserMessagesList = async () => {
         try {
@@ -40,6 +47,8 @@ const PersonalMessages = () => {
     useEffect(() => {
         fetchUserMessagesList();
     }, []);
+
+    console.log(messagesList);
 
     return (
         <div className={`personal-messages-container`}>
@@ -72,14 +81,20 @@ const PersonalMessages = () => {
                         }
                         <div className={`personal-messages-content-inner-inner`}>
                             <div className='personal-messages-left-container'>
+                                <div className='personal-messages-send-new'>
+                                    <div className='personal-messages-send-new-inner'>
+                                        <FontAwesomeIcon
+                                            className='send-new-message-icon'
+                                            icon={faPaperPlane}
+                                            onClick={() => setSendNewMessageOverlay(true)}
+                                            />
+                                    </div>
+                                </div>
                                 <div className='personal-messages-list-container'>
-                                    <div className='personal-messages-list-container-inner'>
-                                        {messagesList.map((all_messages_by_recipient_role, index) => (
-                                            <div className='personal-messages-per-list' key={`${index}-${all_messages_by_recipient_role.recpienct_role}`}>
+                                            <div className='personal-messages-per-list'>
                                                 <div className='personal-messages-per-list-inner'>
-                                                    <h4>{all_messages_by_recipient_role.recpienct_role}</h4>
                                                     <div className='personal-messages-all-messages-per-list'>
-                                                        {all_messages_by_recipient_role.properties.map((per_message_element, index) => (
+                                                        {messagesList.map((per_message_element, index) => (
                                                             <div className='personal-messages-list-per-message' key={`${index}-${per_message_element.user.username}`}>
                                                                 <div className='personal-messages-list-per-message-inner'>
                                                                     <div className='personal-messages-list-per-message-inner-inner'>
@@ -102,8 +117,6 @@ const PersonalMessages = () => {
                                                         ))}
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -114,6 +127,9 @@ const PersonalMessages = () => {
                     </div>
                 </div>
             </div>
+            {sendNewMessageOverlay &&
+                <NewMessageOverlay setSendNewMessageOverlay={setSendNewMessageOverlay} />
+            }
         </div>
     );
 };
