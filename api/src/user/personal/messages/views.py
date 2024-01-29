@@ -17,11 +17,13 @@ def get_all_user_messages(request):
     return Response(serializer.data)
 
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_specific_user_messages(request, recipient_username):
+def get_specific_user_messages(request):
+
     user = request.user
-    recipient = BaseUser.objects.get(username=recipient_username)
+    recipient = BaseUser.objects.get(username=request.data.recipient_username)
     # Get all messages between the authenticated user and the specified recipient, without considering the server
     messages = Message.objects.filter(Q(sender=user, recipient=recipient) | Q(sender=recipient, recipient=user), server=None)
     serializer = MinimalMessageSerializer(messages, many=True)

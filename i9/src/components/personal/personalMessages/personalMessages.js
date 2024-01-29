@@ -38,6 +38,7 @@ const PersonalMessages = () => {
             };
             const response = await axios.get(`${API_BASE_URL}personal/get-user-messages/`, config);
             setMessagesList(response.data);
+            console.log(response.data);
 
         } catch (error) {
             console.error('Error fetching profile data:', error);
@@ -48,7 +49,25 @@ const PersonalMessages = () => {
         fetchUserMessagesList();
     }, []);
 
-    console.log(messagesList);
+    const handleMessageChatAccessClick = async (userNameToAccess) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+
+            const data = {
+                recipient_username: userNameToAccess
+            };
+
+            const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/`, data, config);
+            console.log(response.data)
+        } catch (error) {
+
+        }
+    };
 
     return (
         <div className={`personal-messages-container`}>
@@ -87,36 +106,34 @@ const PersonalMessages = () => {
                                             className='send-new-message-icon'
                                             icon={faPaperPlane}
                                             onClick={() => setSendNewMessageOverlay(true)}
-                                            />
+                                        />
                                     </div>
                                 </div>
                                 <div className='personal-messages-list-container'>
-                                            <div className='personal-messages-per-list'>
-                                                <div className='personal-messages-per-list-inner'>
-                                                    <div className='personal-messages-all-messages-per-list'>
-                                                        {messagesList.map((per_message_element, index) => (
-                                                            <div className='personal-messages-list-per-message' key={`${index}-${per_message_element.user.username}`}>
-                                                                <div className='personal-messages-list-per-message-inner'>
-                                                                    <div className='personal-messages-list-per-message-inner-inner'>
-                                                                        <div className='personal-messages-per-user-profile-picture-container'>
-                                                                            <img src={`${API_BASE_URL}${per_message_element.profile_picture}`} />
-                                                                        </div>
-                                                                        <div className='personal-messages-per-user-info'>
-                                                                            <div className='personal-messages-per-user-info-inner'>
-                                                                                <div>
-                                                                                    {`${per_message_element.user.first_name} ${per_message_element.user.last_name}`}
-                                                                                </div>
-                                                                                <div>
-                                                                                    @{per_message_element.user.username}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                    <div className='personal-messages-per-list'>
+                                        <div className='personal-messages-per-list-inner'>
+                                            {messagesList.map((per_message_element, index) => (
+                                                <div className='personal-messages-list-per-message' onClick={() => handleMessageChatAccessClick(per_message_element.recipient.username)} key={`${index}-${per_message_element.recipient.username}`}  >
+                                                    <div className='personal-messages-list-per-message-inner'>
+                                                        <div className='personal-messages-list-per-message-inner-inner'>
+                                                            <div className='personal-messages-per-user-profile-picture-container'>
+                                                                <img src={`${API_BASE_URL}${per_message_element.recipient.profile_picture}`} />
+                                                            </div>
+                                                            <div className='personal-messages-per-user-info'>
+                                                                <div className='personal-messages-per-user-info-inner'>
+                                                                    <div>
+                                                                        {`${per_message_element.recipient.first_name} ${per_message_element.recipient.last_name}`}
+                                                                    </div>
+                                                                    <div>
+                                                                        @{per_message_element.recipient.username}
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        ))}
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
