@@ -48,6 +48,8 @@ class Post(models.Model):
 
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
 
-
+    class Meta:
+        ordering = ['-created_at']
+        
     def __str__(self):
         return f"Post by {self.user.username}"

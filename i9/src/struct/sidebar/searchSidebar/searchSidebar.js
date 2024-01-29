@@ -86,6 +86,10 @@ const SearchSidebar = ({ showSeachSidebar }) => {
             });
     };
 
+    const handleDeleteFromHistory = () => {
+        console.log("dsj.fdgdf")
+    };
+
 
     return (
         <div className={`search-sidebar-container ${showSeachSidebar ? 'show' : ''}`}>
@@ -122,8 +126,8 @@ const SearchSidebar = ({ showSeachSidebar }) => {
                                 <h4>Recent</h4>
                             </div>
                             {searchHistory.map((searchQuery, index) => (
-                                <div className="users-search-list-item" onClick={() => handleUserClick(searchQuery.searched_user)} key={`${searchQuery.searched_user.username}-${index}`}>
-                                    <div className="users-search-list-item-inner">
+                                <div className="users-search-list-item" key={`${searchQuery.searched_user.username}-${index}`}>
+                                    <div className="users-search-list-item-inner" onClick={() => handleUserClick(searchQuery.searched_user)}>
                                         <div className="users-search-list-item-profile-picture">
                                             <div className="users-search-list-item-profile-picture-inner">
                                                 <ProfilePicture src={searchQuery.searched_user.profile_picture} />
@@ -132,6 +136,13 @@ const SearchSidebar = ({ showSeachSidebar }) => {
                                         <div className="users-search-list-item-username">
                                             <p>{searchQuery.searched_user.username}</p>
                                         </div>
+                                    </div>
+                                    <div className={`clear-search-history-result-container ${showSeachSidebar ? 'show' : ''}`}>
+                                            <FontAwesomeIcon
+                                                icon={faClose}
+                                                className="clear-search-history-result"
+                                                onClick={handleDeleteFromHistory}
+                                            />
                                     </div>
                                 </div>
                             ))

@@ -10,7 +10,7 @@ from ....post.serializers import PostSerializer, MinimalPostSerializer
 @permission_classes([IsAuthenticated])  # You can add authentication as needed
 def get_explore_posts(request):
     # Get all posts from the database
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('?')
     
     # Serialize the posts
     serializer = MinimalPostSerializer(posts, many=True)

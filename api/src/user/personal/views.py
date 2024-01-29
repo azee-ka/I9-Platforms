@@ -71,7 +71,6 @@ from ...notification.models import Notification
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def follow_user(request, username):
-    print(f'fsgsfgsf {username}')
     base_user_to_follow = get_object_or_404(BaseUser, username=username)
     user_to_follow = cast_down_user(base_user_to_follow)
     
