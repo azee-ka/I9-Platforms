@@ -58,11 +58,7 @@ const PersonalMessages = () => {
                 }
             };
 
-            const data = {
-                recipient_username: userNameToAccess
-            };
-
-            const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/`, data, config);
+            const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/${userNameToAccess}`, config);
             console.log(response.data)
         } catch (error) {
 
