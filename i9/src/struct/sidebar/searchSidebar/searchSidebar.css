@@ -217,8 +217,13 @@
     visibility: visible;
 }
 
+.clear-search-history-result:hover {
+    color: rgb(255, 255, 255);
+}
+
 .clear-search-history-result {
     background-color: rgba(255, 0, 0, 0);
     font-size: 23px;
     position: relative;
+    color: gray;
 }

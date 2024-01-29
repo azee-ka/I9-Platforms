@@ -10,207 +10,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const PersonalMessages = () => {
+    const { authState } = useAuth();
+    const [serversList, setServersList] = useState([])
 
-    const [serversList, setServersList] = useState([
-        {
-            server_name: 'Server 1',
-            server_cover_picture: '',
-            
-        },
-        {
-            server_name: 'Server 2',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 3',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 4',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 5',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 6',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 7',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 8',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 9',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 10',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 11',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 12',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 13',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 14',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 14',
-            server_cover_picture: '',
-        },
-        {
-            server_name: 'Server 15',
-            server_cover_picture: '',
-        },
-
-
-    ])
-
-    const [messagesList, setMessagesList] = useState([
-        {
-            recpienct_role: 'Personal',
-            properties: [
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-
-            ]
-        },
-        {
-            recpienct_role: 'Educator',
-            properties: [
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                },
-
-            ]
-        },
-        {
-            recpienct_role: 'Admin',
-            properties: [
-                {
-                    user: {
-                        username: 'user',
-                        first_name: 'User',
-                        last_name: 'User',
-                    },
-                    profile_picture: '',
-                    last_active: '',
-                    last_message_info: {
-                        message: '',
-                        date_time: '',
-                    },
-                }
-
-            ]
-        },
-    ]);
+    const [messagesList, setMessagesList] = useState([]);
 
     const [collapsed, setCollapsed] = useState(true);
 
     const handleCollapseToggle = () => {
         setCollapsed(!collapsed);
     };
+
+    const fetchUserMessagesList = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${authState.token}`
+                }
+            };
+            const response = await axios.get(`${API_BASE_URL}personal/get-user-messages/`, config);
+            setMessagesList(response.data);
+
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserMessagesList();
+    }, []);
 
     return (
         <div className={`personal-messages-container`}>
