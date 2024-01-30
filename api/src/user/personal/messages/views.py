@@ -3,7 +3,7 @@ from django.db.models import Q  # Add this import statement
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Message, Server
+from .models import Message, Server, Chat
 from .serializers import MessageSerializer, MinimalMessageSerializer, ServerSerializer
 from ..models import BaseUser
 
@@ -26,7 +26,7 @@ def get_specific_user_messages(request, recipient_username):
     recipient = BaseUser.objects.get(username=recipient_username)
     # Get all messages between the authenticated user and the specified recipient, without considering the server
     messages = Message.objects.filter(Q(sender=user, recipient=recipient) | Q(sender=recipient, recipient=user), server=None)
-    serializer = MinimalMessageSerializer(messages, many=True)
+    serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
 
 
@@ -36,15 +36,14 @@ def get_specific_user_messages(request, recipient_username):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_message(request):
-    print(request.data)
     try:
         recipient_username = request.data['recipient_username']
         content = request.data['content']
-        print('fask')
 
         recipient = BaseUser.objects.get(username=recipient_username)
-        # Assuming your Message model has 'recipient' and 'content' fields
-        message = Message.objects.create(sender=request.user, recipient=recipient, content=content)
+        chat, created = Chat.objects.get_or_create(participants=[request.user, recipient])
+
+        message = Message.objects.create(sender=request.user, recipient=recipient, content=content, chat=chat)
 
         serializer = MessageSerializer(message)
         return Response(serializer.data, status=201)

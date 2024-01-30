@@ -6,8 +6,8 @@ import { useAuth } from '../../../../reducers/auth/useAuth';
 import './chatContainer.css';
 
 const ChatContainer = ({ recipient_username }) => {
-    const { authState } = useAuth()
-    const [chatUsername, setChatUsername] = useState(null);
+    const { authState } = useAuth();
+    const [chat, setChat] = useState(null);
 
     const fetchMessageChatInfo = async () => {
         try {
@@ -18,31 +18,27 @@ const ChatContainer = ({ recipient_username }) => {
                 }
             };
 
-
             const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/${recipient_username}`, config);
             console.log(response.data)
+            setChat(response.data.chat);
         } catch (error) {
-
+            console.error('Error fetching chat information:', error);
         }
     };
 
     useEffect(() => {
-        setChatUsername(recipient_username);
         fetchMessageChatInfo();
     }, [recipient_username]);
 
-
-    return chatUsername ? (
+    return recipient_username ? (
         <div className='personal-messages-chat-container'>
-            <div className='chat-container'>
-
-            </div>
+            {/* Display chat messages here */}
         </div>
     ) : (
         <div>
             Loading...
         </div>
-    )
+    );
 };
 
 export default ChatContainer;

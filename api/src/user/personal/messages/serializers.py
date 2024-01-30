@@ -8,7 +8,7 @@ class MinimalMessageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Message
-        fields = ['id', 'content', 'timestamp', 'recipient']
+        fields = ['id', 'timestamp', 'recipient']
         
 
     def get_recipient(self, obj):
@@ -27,6 +27,9 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'
+        
+    def get_chat_id(self, obj):
+        return obj.chat.id if obj.chat else None
 
 class ServerSerializer(serializers.ModelSerializer):
     class Meta:
