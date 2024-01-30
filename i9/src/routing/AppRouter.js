@@ -93,7 +93,7 @@ const publicRoutes = [
     { name: 'Login', path: '/access/login', component: LoginPage, key: 'Login', showSidebar: false },
     { name: 'Register', path: '/access/register', component: RegisterPage, key: 'Register', showSidebar: false },
 
-    { name: 'Personal Other Profile', path: '/personal/profile/:username', role: 'Personal', component: PersonalOtherProfile, key: 'PersonalProfile', showSidebar: true },
+    { name: 'Personal Other Profile', path: '/personal/profile/:username', component: PersonalOtherProfile, key: 'PersonalProfile', showSidebar: false },
 
 ];
 

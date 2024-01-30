@@ -97,11 +97,9 @@
     height: 20px;
 }
 
-.new-message-card-message-to-field textarea {
-    width: 100%;
-    height: 100px;
+.new-message-user-search-list {
+    
 }
-
 
 .new-send-card-send-message-button {
     width: 100%;

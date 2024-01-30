@@ -2,13 +2,46 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../../reducers/auth/useAuth';
 import API_BASE_URL from '../../../../config';
-
 import './newMessageOverlay.css';
+import ProfilePicture from '../../../../utils/getProfilePicture';
 
 const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
     const { authState } = useAuth();
     const [sendMessageToField, setSendMessageToField] = useState('');
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+
     const [sendMessageContentField, setSendMessageContentField] = useState('');
+
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        setSearchQuery(inputValue);
+
+        if (inputValue !== "") {
+            handleSubmitSearch();
+        } else {
+            setSearchResults([]);
+        }
+
+    };
+
+    const handleSubmitSearch = (e) => {
+        // Make an API request to search for users
+        axios.get(`${API_BASE_URL}personal/search/?query=${searchQuery}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${authState.token}`,
+            },
+        })
+            .then((response) => {
+                setSearchResults(response.data);
+            })
+            .catch((error) => {
+                console.error('Error searching for users:', error);
+            });
+    };
+
 
     const handleSubmitSendNewMessage = async () => {
         try {
@@ -31,6 +64,8 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
         }
     };
 
+    console.log(searchResults);
+
     return (
         <div className='new-message-overlay' onClick={() => setSendNewMessageOverlay(false)}>
             <div className='new-message-overlay-card' onClick={(e) => e.stopPropagation()}>
@@ -43,16 +78,25 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
                             <div className='new-message-card-message-to-field'>
                                 <input
                                     placeholder='Send Message To...'
-                                    value={sendMessageToField}
-                                    onChange={(e) => setSendMessageToField(e.target.value)}
+                                    value={searchQuery}
+                                    onChange={handleInputChange}
                                 ></input>
                             </div>
-                            <div className='new-message-card-message-to-field'>
-                                <textarea
-                                    placeholder='Type your message here...'
-                                    value={sendMessageContentField}
-                                    onChange={(e) => setSendMessageContentField(e.target.value)}
-                                ></textarea>
+                            <div className='new-message-user-search-list'>
+                                {searchResults.map((thisUser, index) => (
+                        <div className="users-search-list-item" key={`${thisUser.username}-${index}`}>
+                            <div className="users-search-list-item-inner">
+                                <div className="users-search-list-item-profile-picture">
+                                    <div className="users-search-list-item-profile-picture-inner">
+                                        <ProfilePicture src={thisUser.profile_picture} />
+                                    </div>
+                                </div>
+                                <div className="users-search-list-item-username">
+                                    <p>{thisUser.username}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                             </div>
                             <div className='new-send-card-send-message-button'>
                                 <div className='new-send-card-send-message-button-inner'>
