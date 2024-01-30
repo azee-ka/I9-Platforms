@@ -9,12 +9,15 @@ import { formatDateTime } from '../../../utils/formatDateTime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import NewMessageOverlay from './newMessageOverlay/newMessageOverlay';
+import ChatContainer from './chatContainer/chatContainer';
 
 const PersonalMessages = () => {
     const { authState } = useAuth();
     const [serversList, setServersList] = useState([])
 
     const [messagesList, setMessagesList] = useState([]);
+
+    const [chatToViewUsername, setChatToViewUsername] = useState(null);
 
     const [collapsed, setCollapsed] = useState(true);
 
@@ -48,22 +51,6 @@ const PersonalMessages = () => {
     useEffect(() => {
         fetchUserMessagesList();
     }, []);
-
-    const handleMessageChatAccessClick = async (userNameToAccess) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Token ${authState.token}`
-                }
-            };
-
-            const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/${userNameToAccess}`, config);
-            console.log(response.data)
-        } catch (error) {
-
-        }
-    };
 
     return (
         <div className={`personal-messages-container`}>
@@ -109,7 +96,7 @@ const PersonalMessages = () => {
                                     <div className='personal-messages-per-list'>
                                         <div className='personal-messages-per-list-inner'>
                                             {messagesList.map((per_message_element, index) => (
-                                                <div className='personal-messages-list-per-message' onClick={() => handleMessageChatAccessClick(per_message_element.recipient.username)} key={`${index}-${per_message_element.recipient.username}`}  >
+                                                <div className='personal-messages-list-per-message' onClick={() => setChatToViewUsername(per_message_element.recipient.username)} key={`${index}-${per_message_element.recipient.username}`}  >
                                                     <div className='personal-messages-list-per-message-inner'>
                                                         <div className='personal-messages-list-per-message-inner-inner'>
                                                             <div className='personal-messages-per-user-profile-picture-container'>
@@ -134,7 +121,12 @@ const PersonalMessages = () => {
                                 </div>
                             </div>
                             <div className='personal-messages-right-container'>
-
+                                {chatToViewUsername ? (
+                                    <ChatContainer recipient_username={chatToViewUsername} />
+                                    ) : (
+                                    <div></div>
+                                )
+                                }
                             </div>
                         </div>
                     </div>

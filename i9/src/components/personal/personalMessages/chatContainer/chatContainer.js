@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './chatContainer.css';
 import API_BASE_URL from '../../../../config';
+import axios from 'axios';
+import { useAuth } from '../../../../reducers/auth/useAuth';
+import './chatContainer.css';
 
 const ChatContainer = ({ recipient_username }) => {
-
+    const { authState } = useAuth()
     const [chatUsername, setChatUsername] = useState(null);
 
-    useEffect(() => {
-        setChatUsername(recipient_username);
-    }, [recipient_username]);
-
-    const handleMessageChatAccessClick = async () => {
+    const fetchMessageChatInfo = async () => {
         try {
             const config = {
                 headers: {
@@ -26,6 +25,12 @@ const ChatContainer = ({ recipient_username }) => {
 
         }
     };
+
+    useEffect(() => {
+        setChatUsername(recipient_username);
+        fetchMessageChatInfo();
+    }, [recipient_username]);
+
 
     return chatUsername ? (
         <div className='personal-messages-chat-container'>
