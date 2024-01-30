@@ -1,75 +1,77 @@
 # views.py
-from django.db.models import Q  # Add this import statement
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from .models import Message, Server, Chat
-from .serializers import MessageSerializer, MinimalMessageSerializer, ServerSerializer
+from rest_framework import status
+from .models import Chat, Message
+from .serializers import ChatSerializer, MessageSerializer
 from ..models import BaseUser
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_all_user_messages(request):
-    user = request.user
-    # Get all messages where the user is either sender or recipient, without considering the server
-    messages = Message.objects.filter(Q(sender=user) | Q(recipient=user), server=None)
-    serializer = MinimalMessageSerializer(messages, many=True)
-    return Response(serializer.data)
-
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_specific_user_messages(request, recipient_username):
-    print(request)
-    user = request.user
-    recipient = BaseUser.objects.get(username=recipient_username)
-    # Get all messages between the authenticated user and the specified recipient, without considering the server
-    messages = Message.objects.filter(Q(sender=user, recipient=recipient) | Q(sender=recipient, recipient=user), server=None)
-    serializer = MessageSerializer(messages, many=True)
-    return Response(serializer.data)
-
-
-
-
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def send_message(request):
+def create_chat(request, username):
+    user = request.user
+    other_user = get_user_by_username(username)
+
+    if not other_user:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    participants = [user, other_user]
+    
+    # Check if a chat already exists between these participants
+    chat = Chat.objects.filter(participants__in=participants).distinct()
+
+    if chat.exists():
+        chat_serializer = ChatSerializer(chat.first())
+        return Response(chat_serializer.data, status=status.HTTP_200_OK)
+    else:
+        chat_serializer = ChatSerializer(data={"participants": participants})
+        if chat_serializer.is_valid():
+            chat_serializer.save()
+            return Response(chat_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def list_create_messages(request, chat_id):
     try:
-        recipient_username = request.data['recipient_username']
-        content = request.data['content']
+        chat = Chat.objects.get(pk=chat_id)
+    except Chat.DoesNotExist:
+        return Response({"error": "Chat not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        recipient = BaseUser.objects.get(username=recipient_username)
-        chat, created = Chat.objects.get_or_create(participants=[request.user, recipient])
+    if request.method == 'GET':
+        messages = Message.objects.filter(chat=chat)
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
 
-        message = Message.objects.create(sender=request.user, recipient=recipient, content=content, chat=chat)
+    elif request.method == 'POST':
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(chat=chat, sender=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = MessageSerializer(message)
-        return Response(serializer.data, status=201)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_user_chats(request):
+    print('gdsbk')
+    user = request.user
+
+    # Retrieve all chats where the user is a participant
+    chats = Chat.objects.filter(participants=user)
+    serializer = ChatSerializer(chats, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+def get_user_by_username(username):
+    try:
+        user = BaseUser.objects.get(username=username)
+        return user
     except BaseUser.DoesNotExist:
-        return Response({'error': 'Recipient does not exist.'}, status=400)
-
-    except KeyError as e:
-        return Response({'error': f'Missing required field: {e}'}, status=400)
-
-    except Exception as e:
-        return Response({'error': str(e)}, status=500)
-
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_server_messages(request, server_id):
-    server = Server.objects.get(pk=server_id)
-    messages = Message.objects.filter(server=server)
-    serializer = MessageSerializer(messages, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_user_servers(request):
-    servers = Server.objects.filter(members=request.user)
-    serializer = ServerSerializer(servers, many=True)
-    return Response(serializer.data)
+        return None

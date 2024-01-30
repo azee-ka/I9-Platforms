@@ -1,11 +1,10 @@
 # urls.py
-from django.urls import path, include
-from .views import send_message, get_all_user_messages, get_specific_user_messages, get_server_messages, get_user_servers
+
+from django.urls import path
+from .views import create_chat, list_create_messages, list_user_chats
 
 urlpatterns = [
-    path('send-message/', send_message, name='send-message'),
-    path('get-user-messages/', get_all_user_messages, name='get-user-messages'),
-    path('get-specific-user-messages/<str:recipient_username>', get_specific_user_messages, name='get-specific-user-messages'),
-    path('get-server-messages', get_server_messages, name='get-server-messages'),
-    path('get-user-servers/', get_user_servers, name='get-user-servers'),
+    path('chats/create/<str:username>/', create_chat, name='create-chat'),
+    path('chats/<int:chat_id>/messages/', list_create_messages, name='list-create-messages'),
+    path('chats/', list_user_chats, name='list-user-chats'),
 ]

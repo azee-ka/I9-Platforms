@@ -43,7 +43,7 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
     };
 
 
-    const handleSubmitSendNewMessage = async () => {
+    const handleSelectUserToStartChat = async (usernameToChatWith) => {
         try {
             const config = {
                 headers: {
@@ -52,19 +52,13 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
                 }
             };
 
-            const data = {
-                recipient_username: sendMessageToField,
-                content: sendMessageContentField
-            };
-
-            const response = await axios.post(`${API_BASE_URL}personal/send-message/`, data, config);
+            const response = await axios.post(`${API_BASE_URL}personal/chats/create/${usernameToChatWith}/`, config);
             console.log(response.data);
         } catch (error) {
             console.error('Error sending message:', error);
         }
     };
 
-    console.log(searchResults);
 
     return (
         <div className='new-message-overlay' onClick={() => setSendNewMessageOverlay(false)}>
@@ -84,24 +78,19 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
                             </div>
                             <div className='new-message-user-search-list'>
                                 {searchResults.map((thisUser, index) => (
-                        <div className="users-search-list-item" key={`${thisUser.username}-${index}`}>
-                            <div className="users-search-list-item-inner">
-                                <div className="users-search-list-item-profile-picture">
-                                    <div className="users-search-list-item-profile-picture-inner">
-                                        <ProfilePicture src={thisUser.profile_picture} />
+                                    <div className="users-search-list-item" onClick={() => handleSelectUserToStartChat(thisUser.username)} key={`${thisUser.username}-${index}`}>
+                                        <div className="users-search-list-item-inner">
+                                            <div className="users-search-list-item-profile-picture">
+                                                <div className="users-search-list-item-profile-picture-inner">
+                                                    <ProfilePicture src={thisUser.profile_picture} />
+                                                </div>
+                                            </div>
+                                            <div className="users-search-list-item-username">
+                                                <p>{thisUser.username}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="users-search-list-item-username">
-                                    <p>{thisUser.username}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                            </div>
-                            <div className='new-send-card-send-message-button'>
-                                <div className='new-send-card-send-message-button-inner'>
-                                    <button onClick={handleSubmitSendNewMessage}>Send Message</button>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>

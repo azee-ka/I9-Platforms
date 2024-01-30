@@ -39,7 +39,8 @@ const PersonalMessages = () => {
                     Authorization: `Token ${authState.token}`
                 }
             };
-            const response = await axios.get(`${API_BASE_URL}personal/get-user-messages/`, config);
+
+            const response = await axios.get(`${API_BASE_URL}personal/chats`, config);
             setMessagesList(response.data);
             console.log(response.data);
 
