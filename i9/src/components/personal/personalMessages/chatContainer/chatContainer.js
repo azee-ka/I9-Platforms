@@ -34,18 +34,46 @@ const ChatContainer = ({ chat_info }) => {
         fetchMessageChatInfo();
     }, [chat_info]);
 
+
     useEffect(() => {
-        const socket = new WebSocket('ws://localhost:8000/ws/messages/inbox/');
+        // const socket = new WebSocket('ws://localhost:8000/ws/messages/inbox/');
+        const socket = new WebSocket(`ws://messages/inbox/`);
+
+        socket.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            console.log('Received message:', message);
+            setMessages((prevMessages) => [...prevMessages, message]);
+        };
+
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        socket.onclose = () => {
+            console.log('WebSocket closed');
+        };
+
         setSocket(socket);
-    
+
+        // Cleanup function
         return () => {
-            socket.close();
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.close();
+            }
         };
     }, []);
 
-    
+
+
     const handleSendMessage = () => {
-        if (!socket) return;
+        if (!socket || socket.readyState !== WebSocket.OPEN) {
+            console.error('WebSocket connection not open.');
+            return;
+        }
 
         // Send the message to the server
         socket.send(JSON.stringify({
@@ -56,6 +84,7 @@ const ChatContainer = ({ chat_info }) => {
         // Clear the message input
         setMessageToSend('');
     };
+
 
     useEffect(() => {
         if (!socket) return;

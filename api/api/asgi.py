@@ -8,12 +8,10 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 
 import os
-from django.urls import path
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from src.user.personal.messages.config.consumers import ChatConsumer
-from src.user.personal.messages.config.routing import application as personal_messages_routing
+from src.user.personal.messages.config.routing import application as websocket_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api.settings')
 
@@ -21,10 +19,7 @@ application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            [
-                path("ws/messages/inbox/", personal_messages_routing),
-            ]
+            websocket_application
         )
     ),
-
 })

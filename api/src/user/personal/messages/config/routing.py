@@ -1,4 +1,5 @@
-# routing.py
+# src/user/personal/messages/config/routing.py
+
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from .consumers import ChatConsumer
