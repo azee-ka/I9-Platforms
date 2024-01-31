@@ -11,8 +11,8 @@ const ChatContainer = ({ chat_info }) => {
     const { authState } = useAuth();
     const [chat, setChat] = useState(null);
     const [messageToSend, setMessageToSend] = useState('');
-
     const [socket, setSocket] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     const fetchMessageChatInfo = async () => {
         try {
@@ -24,19 +24,18 @@ const ChatContainer = ({ chat_info }) => {
             };
 
             const response = await axios.get(`${API_BASE_URL}personal/chats/${chat_info.id}/messages/`, config);
-            console.log(response.data)
+            console.log(response.data);
             setChat(response.data.chat);
         } catch (error) {
             console.error('Error fetching chat information:', error);
         }
     };
 
-
     useEffect(() => {
         fetchMessageChatInfo();
 
         // Connect to WebSocket when the component mounts
-        const socket = io(API_BASE_URL, { transports: ['websocket'] });
+        const socket = io(`${API_BASE_URL}ws/messages/inbox/`, { transports: ['websocket'] });
         setSocket(socket);
 
         return () => {
@@ -46,27 +45,11 @@ const ChatContainer = ({ chat_info }) => {
     }, [chat_info]);
 
 
-    useEffect(() => {
-        if (!socket) return;
-
-        // Listen for incoming messages from the server
-        socket.on('chat.message', (message) => {
-            // Handle incoming messages
-            console.log('Received message:', message);
-        });
-
-        return () => {
-            // Clean up event listeners when the component unmounts
-            socket.off('chat.message');
-        };
-    }, [socket]);
-
-
     const handleSendMessage = () => {
         if (!socket) return;
 
         // Send the message to the server
-        socket.emit('chat.message', {
+        socket.emit('message', {
             chat_id: chat_info.id,
             message: messageToSend
         });
@@ -74,6 +57,24 @@ const ChatContainer = ({ chat_info }) => {
         // Clear the message input
         setMessageToSend('');
     };
+
+    useEffect(() => {
+        if (!socket) return;
+
+        // Listen for incoming messages from the server
+        socket.on('message', (message) => {
+            // Handle incoming messages
+            console.log('Received message:', message);
+
+            // Update messages state with the new message
+            setMessages((prevMessages) => [...prevMessages, message]);
+        });
+
+        return () => {
+            // Clean up event listeners when the component unmounts
+            socket.off('message');
+        };
+    }, [socket]);
 
     return chat_info ? (
         <div className='personal-messages-chat-container'>
@@ -86,7 +87,11 @@ const ChatContainer = ({ chat_info }) => {
                 </div>
             </div>
             <div className='chat-messages-container'>
-
+                {messages.map((message, index) => (
+                    <div key={index} className={`chat-message-bubble ${message.sender === authState.user.id ? 'sent-message' : 'received-message'}`}>
+                        {message.content}
+                    </div>
+                ))}
             </div>
             <div className='chat-message-new-message-field'>
                 <div className='new-message-input-field'>

@@ -84,3 +84,24 @@
     flex-grow: 1;
     background-color: rgba(255, 0, 0, 0);
 }
+
+
+
+.chat-message-bubble {
+    max-width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.sent-message {
+    background-color: #4CAF50;
+    color: white;
+    align-self: flex-end;
+}
+
+.received-message {
+    background-color: #f1f1f1;
+    color: black;
+    align-self: flex-start;
+}
