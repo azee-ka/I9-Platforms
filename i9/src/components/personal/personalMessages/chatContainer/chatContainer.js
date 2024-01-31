@@ -36,8 +36,8 @@ const ChatContainer = ({ chat_info }) => {
 
 
     useEffect(() => {
-        // const socket = new WebSocket('ws://localhost:8000/ws/messages/inbox/');
-        const socket = new WebSocket(`ws://messages/inbox/`);
+        const socket = new WebSocket('ws://localhost:8000/ws/messages/inbox/');
+        // const socket = new WebSocket(`ws://messages/inbox/`);
 
         socket.onopen = () => {
             console.log('WebSocket connected');

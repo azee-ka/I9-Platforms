@@ -3,7 +3,7 @@
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from .consumers import ChatConsumer
-from django.urls import re_path
+from django.urls import path, re_path
 
 websocket_urlpatterns = [
     re_path(r'ws/messages/inbox/', ChatConsumer.as_asgi()),
