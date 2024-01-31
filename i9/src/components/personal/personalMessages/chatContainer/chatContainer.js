@@ -43,19 +43,16 @@ const ChatContainer = ({ chat_info }) => {
             console.log('WebSocket connected');
         };
 
-        socket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            console.log('Received message:', message);
-            setMessages((prevMessages) => [...prevMessages, message]);
-        };
+        // socket.onmessage = (event) => {
+        //     const message = JSON.parse(event.data);
+        //     console.log('Received message:', message);
+        //     setMessages((prevMessages) => [...prevMessages, message]);
+        // };
 
-        socket.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
+        // socket.onerror = (error) => {
+        //     console.error('WebSocket error:', error);
+        // };
 
-        socket.onclose = () => {
-            console.log('WebSocket closed');
-        };
 
         setSocket(socket);
 
