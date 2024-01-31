@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useAuth } from '../../../../reducers/auth/useAuth';
 import './chatContainer.css';
 import ProfilePicture from '../../../../utils/getProfilePicture';
-import io from 'socket.io-client';
 
 const ChatContainer = ({ chat_info }) => {
     const { authState } = useAuth();
@@ -33,26 +32,26 @@ const ChatContainer = ({ chat_info }) => {
 
     useEffect(() => {
         fetchMessageChatInfo();
-
-        // Connect to WebSocket when the component mounts
-        const socket = io(`${API_BASE_URL}ws/messages/inbox/`, { transports: ['websocket'] });
-        setSocket(socket);
-
-        return () => {
-            // Disconnect from WebSocket when the component unmounts
-            socket.disconnect();
-        };
     }, [chat_info]);
 
+    useEffect(() => {
+        const socket = new WebSocket('ws://localhost:8000/ws/messages/inbox/');
+        setSocket(socket);
+    
+        return () => {
+            socket.close();
+        };
+    }, []);
 
+    
     const handleSendMessage = () => {
         if (!socket) return;
 
         // Send the message to the server
-        socket.emit('message', {
+        socket.send(JSON.stringify({
             chat_id: chat_info.id,
             message: messageToSend
-        });
+        }));
 
         // Clear the message input
         setMessageToSend('');
@@ -62,17 +61,19 @@ const ChatContainer = ({ chat_info }) => {
         if (!socket) return;
 
         // Listen for incoming messages from the server
-        socket.on('message', (message) => {
+        socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+
             // Handle incoming messages
             console.log('Received message:', message);
 
             // Update messages state with the new message
             setMessages((prevMessages) => [...prevMessages, message]);
-        });
+        };
 
         return () => {
             // Clean up event listeners when the component unmounts
-            socket.off('message');
+            socket.onmessage = null;
         };
     }, [socket]);
 

@@ -13,6 +13,7 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from src.user.personal.messages.config.consumers import ChatConsumer
+from src.user.personal.messages.config.routing import application as personal_messages_routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api.settings')
 
@@ -21,8 +22,9 @@ application = ProtocolTypeRouter({
     "websocket": AuthMiddlewareStack(
         URLRouter(
             [
-                path("ws/messages/inbox/", ChatConsumer.as_asgi()),
+                path("ws/messages/inbox/", personal_messages_routing),
             ]
         )
     ),
+
 })
