@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import NewMessageOverlay from './newMessageOverlay/newMessageOverlay';
 import ChatContainer from './chatContainer/chatContainer';
+import ProfilePicture from '../../../utils/getProfilePicture';
 
 const PersonalMessages = () => {
     const { authState } = useAuth();
@@ -17,7 +18,7 @@ const PersonalMessages = () => {
 
     const [messagesList, setMessagesList] = useState([]);
 
-    const [chatToViewUsername, setChatToViewUsername] = useState(null);
+    const [chatToViewObj, setChatToViewObj] = useState(null);
 
     const [collapsed, setCollapsed] = useState(true);
 
@@ -97,19 +98,19 @@ const PersonalMessages = () => {
                                     <div className='personal-messages-per-list'>
                                         <div className='personal-messages-per-list-inner'>
                                             {messagesList.map((per_message_element, index) => (
-                                                <div className='personal-messages-list-per-message' onClick={() => setChatToViewUsername(per_message_element.recipient.username)} key={`${index}-${per_message_element.recipient.username}`}  >
+                                                <div className='personal-messages-list-per-message' onClick={() => setChatToViewObj(per_message_element)} key={`${index}-${per_message_element.other_user.username}`}  >
                                                     <div className='personal-messages-list-per-message-inner'>
                                                         <div className='personal-messages-list-per-message-inner-inner'>
                                                             <div className='personal-messages-per-user-profile-picture-container'>
-                                                                <img src={`${API_BASE_URL}${per_message_element.recipient.profile_picture}`} />
+                                                                <ProfilePicture src={per_message_element.other_user.profile_picture} />
                                                             </div>
                                                             <div className='personal-messages-per-user-info'>
                                                                 <div className='personal-messages-per-user-info-inner'>
                                                                     <div>
-                                                                        {`${per_message_element.recipient.first_name} ${per_message_element.recipient.last_name}`}
+                                                                        {`${per_message_element.other_user.first_name} ${per_message_element.other_user.last_name}`}
                                                                     </div>
                                                                     <div>
-                                                                        @{per_message_element.recipient.username}
+                                                                        @{per_message_element.other_user.username}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -122,8 +123,8 @@ const PersonalMessages = () => {
                                 </div>
                             </div>
                             <div className='personal-messages-right-container'>
-                                {chatToViewUsername ? (
-                                    <ChatContainer recipient_username={chatToViewUsername} />
+                                {chatToViewObj ? (
+                                    <ChatContainer chat_info={chatToViewObj} />
                                     ) : (
                                     <div></div>
                                 )

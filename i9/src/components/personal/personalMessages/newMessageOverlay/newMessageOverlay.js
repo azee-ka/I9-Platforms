@@ -44,6 +44,8 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
 
 
     const handleSelectUserToStartChat = async (usernameToChatWith) => {
+        console.log(usernameToChatWith);
+
         try {
             const config = {
                 headers: {
@@ -51,13 +53,14 @@ const NewMessageOverlay = ({ setSendNewMessageOverlay }) => {
                     Authorization: `Token ${authState.token}`
                 }
             };
-
-            const response = await axios.post(`${API_BASE_URL}personal/chats/create/${usernameToChatWith}/`, config);
+    
+            const response = await axios.post(`${API_BASE_URL}personal/chats/create/${usernameToChatWith}/`, null, config);
             console.log(response.data);
         } catch (error) {
             console.error('Error sending message:', error);
         }
     };
+    
 
 
     return (

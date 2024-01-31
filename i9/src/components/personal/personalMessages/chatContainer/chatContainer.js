@@ -4,10 +4,15 @@ import API_BASE_URL from '../../../../config';
 import axios from 'axios';
 import { useAuth } from '../../../../reducers/auth/useAuth';
 import './chatContainer.css';
+import ProfilePicture from '../../../../utils/getProfilePicture';
+import io from 'socket.io-client';
 
-const ChatContainer = ({ recipient_username }) => {
+const ChatContainer = ({ chat_info }) => {
     const { authState } = useAuth();
     const [chat, setChat] = useState(null);
+    const [messageToSend, setMessageToSend] = useState('');
+
+    const [socket, setSocket] = useState(null);
 
     const fetchMessageChatInfo = async () => {
         try {
@@ -18,7 +23,7 @@ const ChatContainer = ({ recipient_username }) => {
                 }
             };
 
-            const response = await axios.get(`${API_BASE_URL}personal/get-specific-user-messages/${recipient_username}`, config);
+            const response = await axios.get(`${API_BASE_URL}personal/chats/${chat_info.id}/messages/`, config);
             console.log(response.data)
             setChat(response.data.chat);
         } catch (error) {
@@ -26,13 +31,75 @@ const ChatContainer = ({ recipient_username }) => {
         }
     };
 
+
     useEffect(() => {
         fetchMessageChatInfo();
-    }, [recipient_username]);
 
-    return recipient_username ? (
+        // Connect to WebSocket when the component mounts
+        const socket = io(API_BASE_URL, { transports: ['websocket'] });
+        setSocket(socket);
+
+        return () => {
+            // Disconnect from WebSocket when the component unmounts
+            socket.disconnect();
+        };
+    }, [chat_info]);
+
+
+    useEffect(() => {
+        if (!socket) return;
+
+        // Listen for incoming messages from the server
+        socket.on('chat.message', (message) => {
+            // Handle incoming messages
+            console.log('Received message:', message);
+        });
+
+        return () => {
+            // Clean up event listeners when the component unmounts
+            socket.off('chat.message');
+        };
+    }, [socket]);
+
+
+    const handleSendMessage = () => {
+        if (!socket) return;
+
+        // Send the message to the server
+        socket.emit('chat.message', {
+            chat_id: chat_info.id,
+            message: messageToSend
+        });
+
+        // Clear the message input
+        setMessageToSend('');
+    };
+
+    return chat_info ? (
         <div className='personal-messages-chat-container'>
-            {/* Display chat messages here */}
+            <div className='chat-user-info'>
+                <div className='chat-user-info-profile-picture'>
+                    <ProfilePicture src={chat_info.other_user.profile_picture} />
+                </div>
+                <div className='chat-user-info-username'>
+                    <p>{chat_info.other_user.username}</p>
+                </div>
+            </div>
+            <div className='chat-messages-container'>
+
+            </div>
+            <div className='chat-message-new-message-field'>
+                <div className='new-message-input-field'>
+                    <textarea
+                        placeholder='Message...'
+                        value={messageToSend}
+                        onChange={(e) => setMessageToSend(e.target.value)}
+                    />
+                </div>
+                <div className='new-message-send-button-container'>
+                    <button onClick={handleSendMessage}>Send</button>
+                </div>
+            </div>
         </div>
     ) : (
         <div>
